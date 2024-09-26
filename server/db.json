@@ -1,0 +1,359 @@
+{
+  "persons": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "age": 35,
+      "date": "2024-05-01",
+      "origin": {
+        "country": "USA",
+        "city": "New York",
+        "district": "Manhattan"
+      },
+      "observations": "Healthy",
+      "roomId": "1"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "age": 28,
+      "date": "2024-05-02",
+      "origin": {},
+      "observations": "High productivity",
+      "roomId": "1"
+    },
+    {
+      "id": "3",
+      "name": "Michael Brown",
+      "age": 40,
+      "date": "2024-05-03",
+      "origin": {
+        "country": "Mexico",
+        "city": "Mexico City",
+        "district": "Coyoacán"
+      },
+      "observations": "Strong and active",
+      "roomId": 2
+    },
+    {
+      "id": "4",
+      "name": "Emily Johnson",
+      "age": 32,
+      "date": "2024-05-04",
+      "observations": {},
+      "roomId": 2
+    },
+    {
+      "id": "5",
+      "name": "Carlos García",
+      "age": 45,
+      "date": "2024-05-05",
+      "origin": {
+        "country": "Peru",
+        "city": "Chiclayo",
+        "district": "Chiclayo"
+      },
+      "observations": "Injury on right arm",
+      "roomId": 3
+    },
+    {
+      "id": "6",
+      "name": "Sophia White",
+      "age": 30,
+      "date": "2024-05-06",
+      "origin": {
+        "country": "Spain",
+        "city": "Madrid",
+        "district": "Centro"
+      },
+      "observations": "None",
+      "roomId": 3
+    },
+    {
+      "id": "7",
+      "name": "James Black",
+      "age": 37,
+      "date": "2024-05-07",
+      "origin": {
+        "country": "Australia",
+        "city": "Sydney",
+        "district": "Bondi"
+      },
+      "observations": "Black spot on back",
+      "roomId": 4
+    },
+    {
+      "id": "8",
+      "name": "David Green",
+      "age": 29,
+      "date": "2024-05-08",
+      "origin": {
+        "country": "Brazil",
+        "city": "Rio de Janeiro",
+        "district": "Copacabana"
+      },
+      "observations": "Mark on foot",
+      "roomId": 4
+    },
+    {
+      "id": "9",
+      "name": "Laura Blue",
+      "age": 25,
+      "date": "2024-05-09",
+      "origin": {
+        "country": "Italy",
+        "city": "Rome",
+        "district": "Trastevere"
+      },
+      "observations": "Injured ear",
+      "roomId": 5
+    },
+    {
+      "id": "10",
+      "name": "Lucas Grey",
+      "age": 33,
+      "date": "2024-05-10",
+      "origin": {
+        "country": "France",
+        "city": "Paris",
+        "district": "Montmartre"
+      },
+      "observations": "Injury on left hind leg",
+      "roomId": 5
+    }
+  ],
+  "reservations": [
+    {
+      "id": "1",
+      "name": "Rooming for Team A",
+      "dateStart": "2024-05-01T00:00:00.000Z",
+      "dateEnd": "2024-06-30T00:00:00.000Z",
+      "objective": "Accommodate 100 people",
+      "condition": "Active",
+      "duration": 60
+    },
+    {
+      "id": "2",
+      "name": "Vaccine Program",
+      "dateStart": "2024-07-01",
+      "dateEnd": "2024-07-15",
+      "objective": "Vaccinate all people in the team",
+      "condition": "Active",
+      "duration": 14
+    },
+    {
+      "id": "3",
+      "name": "Team B Rooming",
+      "dateStart": "2024-08-01",
+      "dateEnd": "2024-09-30",
+      "objective": "Accommodate 200 people",
+      "condition": "Finished",
+      "duration": 61
+    },
+    {
+      "id": "4",
+      "name": "Artificial Insemination Program",
+      "dateStart": "2024-06-01",
+      "dateEnd": "2024-07-31",
+      "objective": "Perform artificial insemination on 50 people",
+      "condition": "Active",
+      "duration": 60
+    },
+    {
+      "id": "5",
+      "name": "Disease Control Program",
+      "dateStart": "2024-08-01",
+      "dateEnd": "2024-09-30",
+      "objective": "Conduct tests and preventive treatments on 50 people",
+      "condition": "Finished",
+      "duration": 61
+    },
+    {
+      "id": "6",
+      "name": "Genetic Improvement Program",
+      "dateStart": "2024-10-01",
+      "dateEnd": "2024-12-31",
+      "objective": "Implement genetic improvement programs for 100 people",
+      "condition": "Active",
+      "duration": 91
+    },
+    {
+      "id": "7",
+      "name": "Weight Control Program",
+      "dateStart": "2025-01-01",
+      "dateEnd": "2025-02-28",
+      "objective": "Perform weight control for 300 people",
+      "condition": "Finished",
+      "duration": 59
+    },
+    {
+      "id": "8",
+      "name": "Reproduction Program",
+      "dateStart": "2025-03-01",
+      "dateEnd": "2025-04-30",
+      "objective": "Ensure the successful reproduction of 30 people",
+      "condition": "Active",
+      "duration": 61
+    },
+    {
+      "id": "9",
+      "name": "Deworming Program",
+      "dateStart": "2025-05-01",
+      "dateEnd": "2024-09-24T05:00:00.000Z",
+      "objective": "Deworm 500 people",
+      "condition": "Active",
+      "duration": 61
+    },
+    {
+      "id": "ba22",
+      "name": "Cumpleanos de sergio",
+      "dateStart": "2024-09-28T05:00:00.000Z",
+      "dateEnd": "2024-09-30T05:00:00.000Z",
+      "objective": "Se celebra el cumple de serguei",
+      "condition": "Active",
+      "duration": 2
+    }
+  ],
+  "rooms": [
+    {
+      "id": "1",
+      "name": "Room A",
+      "area": 100,
+      "status": "In process",
+      "reservationId": 1
+    },
+    {
+      "id": "2",
+      "name": "Room B",
+      "area": 200,
+      "status": "Waiting",
+      "reservationId": 1
+    },
+    {
+      "id": "3",
+      "name": "Room C",
+      "area": 150,
+      "status": "Completed",
+      "reservationId": 1
+    },
+    {
+      "id": "4",
+      "name": "Room D",
+      "area": 180,
+      "status": "In process",
+      "reservationId": 5
+    },
+    {
+      "id": "5",
+      "name": "Room E",
+      "area": 220,
+      "status": "Waiting",
+      "reservationId": 5
+    },
+    {
+      "id": "6",
+      "name": "Room F",
+      "area": 190,
+      "status": "Completed",
+      "reservationId": 5
+    },
+    {
+      "id": "7",
+      "name": "Room G",
+      "area": 250,
+      "status": "In process",
+      "reservationId": 6
+    },
+    {
+      "id": "8",
+      "name": "Room H",
+      "area": 300,
+      "status": "Waiting",
+      "reservationId": 6
+    },
+    {
+      "id": "9",
+      "name": "Room I",
+      "area": 280,
+      "status": "Completed",
+      "reservationId": 6
+    },
+    {
+      "id": "10",
+      "name": "Room J",
+      "area": 120,
+      "status": "In process",
+      "reservationId": 2
+    },
+    {
+      "id": "11",
+      "name": "Room K",
+      "area": 180,
+      "status": "Waiting",
+      "reservationId": 2
+    },
+    {
+      "id": "12",
+      "name": "Room L",
+      "area": 200,
+      "status": "Completed",
+      "reservationId": 2
+    },
+    {
+      "id": "13",
+      "name": "Room M",
+      "area": 150,
+      "status": "In process",
+      "reservationId": 3
+    },
+    {
+      "id": "14",
+      "name": "Room N",
+      "area": 210,
+      "status": "Waiting",
+      "reservationId": 3
+    },
+    {
+      "id": "15",
+      "name": "Room O",
+      "area": 240,
+      "status": "Completed",
+      "reservationId": 3
+    },
+    {
+      "id": "16",
+      "name": "Room P",
+      "area": 180,
+      "status": "In process",
+      "reservationId": 4
+    },
+    {
+      "id": "17",
+      "name": "Room Q",
+      "area": 220,
+      "status": "Waiting",
+      "reservationId": 4
+    },
+    {
+      "id": "18",
+      "name": "Room R",
+      "area": 270,
+      "status": "Completed",
+      "reservationId": 4
+    },
+    {
+      "id": "19",
+      "name": "Room S",
+      "area": 190,
+      "status": "In process",
+      "reservationId": 7
+    },
+    {
+      "id": "20",
+      "name": "Room T",
+      "area": 230,
+      "status": "Waiting",
+      "reservationId": 7
+    }
+  ]
+}
