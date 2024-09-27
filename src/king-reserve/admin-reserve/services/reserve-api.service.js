@@ -1,38 +1,42 @@
-import http from "@/shared/services/http-common.js";
+import axios from "axios";
 
-export class ReserveApiService{
+const url_FakeApi = "https://66f71709b5d85f31a341fe55.mockapi.io";
 
-        getAll(){
-            return http.get('/reservations');
+const url = axios.create({
+    baseURL: url_FakeApi, // Corrected property name to baseURL
+});
+
+export class ReserveApiService {
+
+    getAll() {
+        return url.get('/reservations');
+    }
+
+    getById(id) {
+        return url.get(`/reservations/${id}`);
+    }
+
+    create(reserve) {
+        return url.post('/reservations', reserve);
+    }
+
+    update(id, reserve) {
+        return url.put(`/reservations/${id}`, reserve);
+    }
+
+    delete(id) {
+        return url.delete(`/reservations/${id}`);
+    }
+
+    async getTotalReserves() {
+        try {
+            const response = await this.getAll();
+            return response.data.length;
+        } catch (error) {
+            console.error('Error fetching total reserves:', error);
+            throw error;
         }
-
-        getById(id){
-            return http.get(`/reservations/${id}`);
-        }
-
-        create(reserve){
-            return http.post('/reservations',reserve);
-        }
-
-        update(id, reserve){
-            return http.put(`/reservations/${id}`,reserve);
-        }
-
-        delete(id){
-            return http.delete(`/reservations/${id}`);
-        }
-
-
-
-        async getTotalReserves() {
-            try {
-                const response = await this.getAll();
-                return response.data.length;
-            } catch (error) {
-                console.error('Error fetching total vaccines:', error);
-                throw error;
-            }
-        }
+    }
 
     async getReservesCountByCondition() {
         try {
