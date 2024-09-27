@@ -106,59 +106,68 @@ export default {
 
 <style scoped>
 .custom-card {
-  width: 20rem;
-  height: 20rem;
+  width: 18rem; /* Ajusta el tamaño según sea necesario */
+  height: auto; /* Permite que la altura se ajuste al contenido */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0.5rem;
+  padding: 1rem;
+  margin: 1rem; /* Espaciado entre cartas */
+  background-color: #1e1e1e; /* Fondo oscuro */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
 }
 
 .card-title {
-  font-size: 20px;
+  font-size: 1.5rem; /* Tamaño de fuente para el título */
+  color: #ffffff; /* Color del texto */
+  margin-bottom: 0.5rem; /* Espaciado inferior */
 }
 
 .card-content {
   flex-grow: 1;
   overflow-y: auto;
-  margin-top: 0.1rem;
+  margin-top: 0.5rem; /* Espaciado superior */
+  color: #ffffff; /* Color del texto */
 }
 
 .row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem; /* Espaciado entre filas */
 }
 
 .card-footer {
-  margin-top: auto;
+  margin-top: auto; /* Empuja el pie hacia abajo */
 }
 
 .pv-button {
-  margin-top: 1rem;
-  width: 100%;
+  background-color: #00bcd4; /* Color de fondo del botón */
+  color: #ffffff; /* Color del texto del botón */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  padding: 0.5rem 1rem; /* Espaciado interno */
+  cursor: pointer; /* Cambia el cursor al pasar el ratón */
+  transition: background-color 0.3s; /* Transición suave */
 }
 
-.state p {
-  margin: 0;
+.pv-button:hover {
+  background-color: #0097a7; /* Color al pasar el ratón */
+}
+
+.state {
+  font-weight: bold; /* Negrita para el estado */
 }
 
 .state.good {
-  color: green;
+  color: green; /* Color para estado bueno */
 }
 
 .state.warning {
-  color: orange;
+  color: orange; /* Color para estado de advertencia */
 }
 
 .state.bad {
-  color: red;
-}
-
-@media (min-width: 750px) {
-  .custom-card {
-    width: 20rem;
-    height: 20rem;
-  }
+  color: red; /* Color para estado malo */
 }
 </style>

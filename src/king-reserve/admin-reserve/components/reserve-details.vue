@@ -47,7 +47,7 @@ export default {
 <template>
   <div class="reserve-section">
     <div  class="container-title">
-      <router-link to="/reserve">
+      <router-link to="/reservation">
         <pv-button icon="pi pi-arrow-left" class="title-button-2" rounded ></pv-button>
       </router-link>
       <h1 v-if="reserve" class="title">{{ reserve.name }}</h1>

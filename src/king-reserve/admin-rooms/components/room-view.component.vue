@@ -5,7 +5,7 @@ import {Room} from "@/king-reserve/admin-rooms/model/room.entity.js";
 export default {
   name: "room-view",
   components: {},
-  props:{
+  props: {
     room: Room
   },
   data() {
@@ -31,8 +31,8 @@ export default {
 
   },
   methods:{
-    viewPersons(){
-      this.$emit('viewPersons', this.room);
+    viewPersons() {
+      this.$emit('viewPersons', this.room.id);
     }
   }
 }
@@ -44,8 +44,8 @@ export default {
     <pv-speed-dial :model="items" direction="down" mask :style="{ right: '-10px', top: '-15px' }" />
 
     <pv-card class="custom-card">
-      <template #title>{{room.name}}</template>
-
+      <template #title>{{room.name}}
+      </template>
       <template #subtitle>
         <div class="container-subtitle">
           <p style="font-weight:bold">Area:</p>
@@ -72,38 +72,38 @@ export default {
 
 <style scoped>
 .custom-card {
-  width: 18rem; /* Reduce el ancho para hacerlo más compacto */
-  height: auto; /* Permite que la altura se ajuste automáticamente al contenido */
+  width: 18rem;
+  height: auto;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1rem; /* Añade más padding para dar un poco de espacio interno */
-  background-color: black; /* Fondo claro para destacar el contenido */
-  border-radius: 10px; /* Bordes redondeados para un aspecto más moderno */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para darle un efecto elevado */
-  transition: transform 0.3s ease; /* Añade una animación suave cuando se interactúa */
+  padding: 1rem;
+  background-color: black;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
 .custom-card:hover {
-  transform: scale(1.05); /* Efecto de ampliación cuando el usuario pasa el ratón */
+  transform: scale(1.05);
 }
 
 .container-subtitle {
   display: flex;
   gap: 5px;
   align-items: center;
-  font-size: 0.9rem; /* Tamaño de fuente más pequeño para subtítulos */
-  color: #666666; /* Color de texto más suave para contraste */
+  font-size: 0.9rem;
+  color: #666666;
 }
 
 .custom-card p {
-  margin: 0; /* Elimina el margen predeterminado para evitar espacio innecesario */
-  font-size: 1rem; /* Ajusta el tamaño del texto para que sea más uniforme */
+  margin: 0;
+  font-size: 1rem;
 }
 
 .custom-card p:first-of-type {
-  font-weight: bold; /* Destaca los primeros párrafos de cada sección */
+  font-weight: bold;
 }
 
 .flex {
@@ -111,27 +111,15 @@ export default {
 }
 
 .gap-3 {
-  gap: 0.75rem; /* Espaciado entre los botones */
+  gap: 0.75rem;
 }
 
 .w-full {
-  width: 100%; /* Botones a lo largo de todo el ancho */
+  width: 100%;
 }
 
 .mt-1 {
-  margin-top: 0.25rem; /* Añade un pequeño margen superior a los botones */
-}
-
-/* Estilo adicional para los botones */
-.pv-button {
-  background-color: #007ad9; /* Color de fondo del botón */
-  color: white; /* Texto en blanco */
-  border-radius: 5px; /* Bordes redondeados */
-  transition: background-color 0.3s ease; /* Animación para cambio de color */
-}
-
-.pv-button:hover {
-  background-color: #005bb5; /* Color del botón cuando se hace hover */
+  margin-top: 0.25rem;
 }
 </style>
 

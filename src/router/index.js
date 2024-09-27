@@ -3,6 +3,7 @@ import homeComponent from "@/public/page/home.component.vue";
 import notFoundComponent from "@/public/page/not-found.component.vue";
 import reserveManagmentComoponent from "@/king-reserve/admin-reserve/pages/reserve-managment.comoponent.vue";
 import reserveDetails from "@/king-reserve/admin-reserve/components/reserve-details.vue";
+import roomDetailsComponent from "@/king-reserve/admin-rooms/components/room-details.component.vue";
 /**
  * Vue Router instance
  * @type {Router} Vue Router instance creation with default configs
@@ -27,17 +28,17 @@ const router = createRouter({
         },
         {
             path: "/reservation/:reservationId/rooms/:roomsId",
-            component:reserveDetails ,
-            name: "batchDetails",
+            component:roomDetailsComponent ,
+            name: "roomDetails",
             props: true,
-            meta: { title: "Batch Details" }
-        },
+            meta: { title: "Rooms Details" }
+        }
 
     ]
 });
 
 router.beforeEach((to, from, next) => {
-    let baseTitle = 'ACME Learning Center';
+    let baseTitle = 'King Reserve';
     document.title = `${baseTitle} | ${to.meta['title']}`;
     next();
 });

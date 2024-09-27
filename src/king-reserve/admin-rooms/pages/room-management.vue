@@ -40,16 +40,17 @@ export default {
     },
     handleViewRoomDetails(room) {
       this.$router.push({
-        name: "roomDetails",
-        params: { reservationId: room.reservationId, roomId: room.id }
+        name: "personList",
+        params: { reservationId: room.reservationId }
       });
     },
     getRooms() {
       this.roomsService.getAll().then((response) => {
         console.log(response.data);
         let rooms = response.data;
-        this.rooms = rooms.filter(room => room.reservationId ==this.$route.params.reservationId)
-            .map(room => Room.toDisplayableRoom(room));
+        this.rooms = rooms
+            .filter(room => room.reservationId == this.$route.params.reservationId)
+            .map(room => new Room(room.id, room.name, room.area, room.status, room.reservationId));
         console.log("Rooms fetched", this.rooms);
         this.allRooms = [...this.rooms];
       });
@@ -221,7 +222,20 @@ export default {
       @canceled="onCanceledEventHandler"
       @saved="onSavedEventHandler($event)" />
 
-  <RoomFilterPage :visible="visibleFilter" @canceled="onFilterSelected" @filtered="onFilter" @filteredStatus="onFilterForStatus" @filteredArea="onFilterArea" />
+  <div class="app-content">
+
+    <template>
+      <div class="card flex justify-content-center">
+        <pv-sidebar v-model:visible="visibleFilter"  position="right" style="width: 25rem;">
+          <room-filter-page @closeFilter="onFilterSelected"
+                             @filter1="onFilter($event)"
+                             @filter-status="onFilterForStatus($event)"
+                             @filter-area="onFilterArea($event)"
+          />
+        </pv-sidebar>
+      </div>
+    </template>
+  </div>
 
 </template>
 

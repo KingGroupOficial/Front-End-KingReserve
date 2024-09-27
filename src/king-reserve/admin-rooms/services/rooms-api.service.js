@@ -6,7 +6,7 @@ export class RoomsApiService{
         return http.get('/rooms');
     }
 
-    getById(id){
+    getRoomById(id){
         return http.get(`/rooms/${id}`);
     }
 

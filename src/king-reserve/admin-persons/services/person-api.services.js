@@ -21,9 +21,15 @@ export class PersonApiService {
         return http.delete(`/persons/${id}`);
     }
 
+    getByRoomId(roomId) {
+        return http.get(`/api/rooms/${roomId}/persons`);
+    }
+
     findByName(name) {
         return http.get(`/persons?name=${name}`);
     }
+
+
 
     getPersonsGroupedByBatchId() {
         return this.getAll().then(response => {

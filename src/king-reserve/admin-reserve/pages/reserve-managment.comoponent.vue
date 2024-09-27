@@ -219,7 +219,26 @@ export default {
         @canceled="onCanceledEventHandler"
         @saved="onSavedEventHandler"
     />
-    <filter-page-component :visible="visibleFilter" @canceled="onFilterSelected" @filtered="onFilter" @filteredCondition="onFilterForCondition" @filteredDuration="onFilterForDuration" @filteredDate="onFilterDate" />
+    <div class="app-content">
+
+      <template>
+        <div class="card flex justify-content-center">
+          <pv-sidebar v-model:visible="visibleFilter"  position="right" style="width: 25rem;">
+            <FilterPageComponent @closeFilter="onFilterSelected"
+                         @filter1="onFilter($event)"
+                         @filter-condition="onFilterForCondition($event)"
+                         @filter-duration="onFilterForDuration($event)"
+                         @filter-date="onFilterDate($event)"
+
+
+            />
+          </pv-sidebar>
+        </div>
+      </template>
+    </div>
+
+
+
   </section>
 </template>
 

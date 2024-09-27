@@ -6,7 +6,7 @@ export default {
   components: { createAndEdit },
   props: {
     item: null,
-    item2: null,  // Información adicional relacionada con la persona (como origen o habitación)
+    item2: null,
     visible: Boolean,
     statuses: Array
   },
@@ -29,6 +29,7 @@ export default {
   mounted() {
     this.detectScreenSize();
     window.addEventListener('resize', this.detectScreenSize);
+    console.log("Person create and edit", this.item);
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.detectScreenSize);
@@ -61,7 +62,8 @@ export default {
       if (!this.item.origin) {
         this.item.origin = {};
       }
-      this.item.origin = this.item2;  // Vincula el item2 al origen
+      this.item.origin = this.item2;
+      this.item.roomId=this.$route.params.roomId;
       console.log(this.item);
     }
   }

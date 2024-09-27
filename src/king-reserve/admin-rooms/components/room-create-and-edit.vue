@@ -14,9 +14,9 @@ export default {
       submitted: false,
       dateError: '',
       statusOptions:[
-        { name: 'Empty'},
-        { name: 'Busy' },
-        { name: 'Full' }
+        { name: 'In process'},
+        { name: 'Waiting' },
+        { name: 'Completed' }
       ]
     }
   },
