@@ -44,7 +44,7 @@
               <pv-input-icon>
                 <i class="pi pi-search" />
               </pv-input-icon>
-              <pv-input-text placeholder="Search" />
+              <pv-input-text v-model="searchQuery" placeholder="Search" />
             </pv-icon-field>
           </template>
         </pv-toolbar>
@@ -61,16 +61,16 @@
               <pv-input-icon>
                 <i class="pi pi-search" />
               </pv-input-icon>
-              <pv-input-text placeholder="Search" />
+              <pv-input-text v-model="searchQuery" placeholder="Search" />
             </pv-icon-field>
           </template>
         </pv-toolbar>
       </div>
 
-      <!-- Lista de productos -->
+      <!-- Lista de productos filtrados -->
       <div class="product-list">
         <ul>
-          <li v-for="item in items" :key="item.id">
+          <li v-for="item in filteredItems" :key="item.id">
             <div class="product-list-item">
               <div class="product-details">
                 <h5 class="product-title">{{ item.name }}</h5>
@@ -132,8 +132,12 @@
 </template>
 
 <script>
-import { ref } from 'vue';
 import axios from 'axios';
+import { ref, computed } from 'vue'; // Agregar 'computed' para manejar la búsqueda
+
+const http = axios.create({
+  baseURL: 'https://66f72cbdb5d85f31a3422dc2.mockapi.io',
+});
 
 export default {
   setup() {
@@ -142,6 +146,7 @@ export default {
     const displayEditDialog = ref(false);
     const selectedInventory = ref('');
     const items = ref([]);
+    const searchQuery = ref(''); // Agregar búsqueda
     const newItem = ref({
       name: '',
       quantity: 0,
@@ -155,9 +160,20 @@ export default {
     });
 
     const cards = [
-      { title: 'Food', description: 'Food Inventory', icon: 'pi pi-apple' },
-      { title: 'Tools', description: 'Tools Inventory', icon: 'pi pi-wrench' }
+      {title: 'Food', description: 'Food Inventory', icon: 'pi pi-apple'},
+      {title: 'Tools', description: 'Tools Inventory', icon: 'pi pi-wrench'}
     ];
+
+    // Filtrar ítems con búsqueda
+    const filteredItems = computed(() => {
+      if (searchQuery.value === '') {
+        return items.value; // Si no hay búsqueda, mostrar todos
+      } else {
+        return items.value.filter(item =>
+            item.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+        );
+      }
+    });
 
     const showInventoryDialog = async (title) => {
       selectedInventory.value = title;
@@ -167,7 +183,7 @@ export default {
 
     const loadInventoryData = async (title) => {
       try {
-        const response = await axios.get(`http://localhost:3000/${title.toLowerCase()}`);
+        const response = await http.get(`/${title.toLowerCase()}`);
         items.value = response.data;
       } catch (error) {
         console.error('Error loading inventory data:', error);
@@ -175,13 +191,13 @@ export default {
     };
 
     const openAddDialog = () => {
-      newItem.value = { name: '', quantity: 0, nroRoom: 0 };
+      newItem.value = {name: '', quantity: 0, nroRoom: 0};
       displayAddDialog.value = true;
     };
 
     const saveNewItem = async () => {
       const endpoint = selectedInventory.value.toLowerCase();
-      await axios.post(`http://localhost:3000/${endpoint}`, newItem.value);
+      await http.post(`/${endpoint}`, newItem.value);
       await loadInventoryData(selectedInventory.value);
       closeAddDialog();
     };
@@ -191,13 +207,13 @@ export default {
     };
 
     const openEditDialog = (item) => {
-      editItemData.value = { ...item };
+      editItemData.value = {...item};
       displayEditDialog.value = true;
     };
 
     const saveEditedItem = async () => {
-      const endpoint = `http://localhost:3000/${selectedInventory.value.toLowerCase()}/${editItemData.value.id}`;
-      await axios.put(endpoint, editItemData.value);
+      const endpoint = `/${selectedInventory.value.toLowerCase()}/${editItemData.value.id}`;
+      await http.put(endpoint, editItemData.value);
       await loadInventoryData(selectedInventory.value);
       closeEditDialog();
     };
@@ -208,7 +224,7 @@ export default {
 
     const deleteItem = async (item) => {
       const endpoint = selectedInventory.value.toLowerCase();
-      await axios.delete(`http://localhost:3000/${endpoint}/${item.id}`);
+      await http.delete(`/${endpoint}/${item.id}`);
       await loadInventoryData(selectedInventory.value);
     };
 
@@ -222,6 +238,8 @@ export default {
       displayEditDialog,
       selectedInventory,
       items,
+      searchQuery, // Búsqueda
+      filteredItems, // Elementos filtrados
       newItem,
       editItemData,
       cards,
