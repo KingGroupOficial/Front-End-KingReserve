@@ -1,6 +1,8 @@
 <script>
 import {RoomsApiService} from "@/king-reserve/admin-rooms/services/rooms-api.service.js";
 import PersonManagement from "@/king-reserve/admin-persons/pages/person-management.component.vue";
+import {ReserveApiService} from "@/king-reserve/admin-reserve/services/reserve-api.service.js";
+import {Room} from "@/king-reserve/admin-rooms/model/room.entity.js";
 
 export default {
   name: "room-details.component",
@@ -13,7 +15,7 @@ export default {
   },
   created() {
     this.roomService = new RoomsApiService();
-    this.reservationService = new ReservationApiService();
+    this.reservationService = new ReserveApiService();
     this.findRoom();
   },
   methods: {
@@ -21,7 +23,8 @@ export default {
       console.log("Fetching room ID:", this.$route.params.roomId, typeof this.$route.params.roomId);
       this.roomService.getById(this.$route.params.roomId).then((response) => {
         console.log(response.data);
-        this.room = response.data;
+        let _room = response.data;
+        this.room = Room.toDisplayableRoom(_room);
       });
     }
   }
@@ -30,9 +33,9 @@ export default {
 
 <template>
   <div class="principal-container">
-    <h2>{{ room?.name }}</h2>
+    <h2>{{ this.room.name }}</h2>
   </div>
-  <person-management :room-id="room?.id" />
+  <person-management :room-id="this.room.name" />
 </template>
 
 <style scoped>

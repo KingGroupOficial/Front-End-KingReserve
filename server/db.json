@@ -281,7 +281,7 @@
     {
       "id": "10",
       "name": "Room J",
-      "area": 120,
+      "area": 100,
       "status": "In process",
       "reservationId": 2
     },
@@ -290,13 +290,6 @@
       "name": "Room K",
       "area": 180,
       "status": "Waiting",
-      "reservationId": 2
-    },
-    {
-      "id": "12",
-      "name": "Room L",
-      "area": 200,
-      "status": "Completed",
       "reservationId": 2
     },
     {

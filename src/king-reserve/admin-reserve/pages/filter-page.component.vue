@@ -16,6 +16,9 @@ export default {
     };
   },
   methods: {
+    selectReservation(reservation) {
+      this.$emit('reservationSelected', reservation.id);
+    },
     filterForDuration() {
       this.$emit('filteredDuration', { minValue: this.minValue, maxValue: this.maxValue });
       this.close();
