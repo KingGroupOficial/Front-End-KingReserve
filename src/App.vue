@@ -163,7 +163,7 @@ export default {
                           </a>
                           <ul class="list-none py-0 pl-3 pr-0 m-0 hidden overflow-y-hidden transition-all transition-duration-400 transition-ease-in-out">
                             <li>
-                              <router-link to="/staff-view" @click=toggleDrawer() style="text-decoration: none">
+                              <router-link to="/staf-view" @click=toggleDrawer() style="text-decoration: none">
                                 <a v-ripple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
                                   <i class="pi pi-users mr-2"></i>
                                   <span class="font-medium">View Staff</span>
@@ -171,7 +171,7 @@ export default {
                               </router-link>
                             </li>
                             <li>
-                              <router-link to="/staff-manage" @click=toggleDrawer() style="text-decoration: none">
+                              <router-link to="/staff" @click=toggleDrawer() style="text-decoration: none">
                                 <a v-ripple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
                                   <i class="pi pi-users mr-2"></i>
                                   <span class="font-medium">Manage Staff</span>

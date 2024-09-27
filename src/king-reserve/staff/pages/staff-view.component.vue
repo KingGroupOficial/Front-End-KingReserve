@@ -59,7 +59,7 @@ export default {
 
       <!-- Edit Button -->
       <template #center>
-        <router-link to="/staff-manage" rel="noopener">
+        <router-link to="/staff" rel="noopener">
           <pv-button class="mr-2" icon="pi pi-pencil" label="Edit" raised/>
         </router-link>
       </template>

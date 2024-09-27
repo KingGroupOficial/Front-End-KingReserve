@@ -44,7 +44,7 @@ export default {
     </div>
 
     <div class="card">
-      <router-link to="/Statistics" style="text-decoration: none">
+      <router-link to="/stadistic" style="text-decoration: none">
 
         <div class="card-header">
           <img alt="user header" src="https://www.itmplatform.com/lib/uploads/36978940_m.jpg">
@@ -69,7 +69,7 @@ export default {
     </div>
 
     <div class="card">
-      <router-link to="/staff-view" style="text-decoration: none">
+      <router-link to="/staf-view" style="text-decoration: none">
 
         <div class="card-header">
           <img alt="user header" src="/src/public/page/images/staff-home.jpeg">

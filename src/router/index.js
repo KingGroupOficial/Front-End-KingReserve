@@ -6,6 +6,9 @@ import reserveDetails from "@/king-reserve/admin-reserve/components/reserve-deta
 import roomDetailsComponent from "@/king-reserve/admin-rooms/components/room-details.component.vue";
 import PersonManagementComponent from "@/king-reserve/admin-persons/pages/person-management.component.vue";
 import stadisticsTotalComponent from "@/king-reserve/stadistics/page/stadistics-total.component.vue";
+import staffManagementComponent from "@/king-reserve/staff/pages/staff-management.component.vue";
+import staffViewComponent from "@/king-reserve/staff/pages/staff-view.component.vue";
+import inventoryComponent from "@/king-reserve/inventory/components/inventory.component.vue";
 /**
  * Vue Router instance
  * @type {Router} Vue Router instance creation with default configs
@@ -19,6 +22,9 @@ const router = createRouter({
         // Root path
         { path: "/", component: homeComponent, meta: { title: "home"} },
         { path: "/persons", component: PersonManagementComponent, meta: { title: "Persons"}},
+        { path: "/staff", component:staffManagementComponent , meta: { title: "Staff"}},
+        { path: "/staf-view", component:staffViewComponent , meta: { title: "Staff-VIEW"}},
+        {path: "/inventory", component: inventoryComponent, meta: { title: "Inventory"}},
         // Path to Stadistics
         { path: "/stadistic", component: stadisticsTotalComponent, meta: { title: "Stadistics"} },
         // Path to handle unmatched URLs, using notFoundComponent
