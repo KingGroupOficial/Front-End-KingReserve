@@ -157,5 +157,117 @@
       "status": "Available",
       "reservationId": null
     }
+  ],
+  "staff": [
+    {
+      "id": "1",
+      "reserves_id": "1",
+      "name": "Jhons",
+      "last_name": "Miller",
+      "email": "jhonworker@pecuario.pro",
+      "on_job_status": "Working",
+      "job_description": "Clean and maintain hotel rooms"
+    },
+    {
+      "id": "2",
+      "hotels_id": 2,
+      "name": "Francisco",
+      "last_name": "Garces",
+      "email": "franciscoworker@pecuario.pro",
+      "on_job_status": "Available",
+      "job_description": "Serve guests in the restaurant and manage orders",
+      "date_start": "2024-05-01",
+      "date_end": "2024-06-30"
+    },
+    {
+      "id": "3",
+      "hotels_id": 3,
+      "name": "Eloy",
+      "last_name": "Robles",
+      "email": "eloyworker@pecuario.pro",
+      "on_job_status": "Available",
+      "job_description": "Handle guest check-ins and check-outs",
+      "date_start": "2024-05-01",
+      "date_end": "2024-06-30"
+    },
+    {
+      "id": "4",
+      "hotels_id": 4,
+      "name": "Alfred",
+      "last_name": "Santos",
+      "email": "alfredworker@pecuario.pro",
+      "on_job_status": "Working",
+      "job_description": "Supervise cleaning staff and maintain cleanliness standards",
+      "date_start": "2024-05-01",
+      "date_end": "2024-06-30"
+    },
+    {
+      "id": "5",
+      "hotels_id": 5,
+      "name": "Francisco",
+      "last_name": "Vargas",
+      "email": "vargasworker@pecuario.pro",
+      "on_job_status": "Available",
+      "job_description": "Assist guests with luggage and transportation requests",
+      "date_start": "2024-05-01",
+      "date_end": "2024-06-30"
+    },
+    {
+      "id": "6",
+      "hotels_id": 6,
+      "name": "Damian",
+      "last_name": "Zabala",
+      "email": "damianworker@pecuario.pro",
+      "on_job_status": "Available",
+      "job_description": "Coordinate hotel event setups and arrangements",
+      "date_start": "2024-05-01",
+      "date_end": "2024-06-30"
+    },
+    {
+      "id": "7",
+      "hotels_id": "90",
+      "name": "Makanaky",
+      "last_name": "La realeza",
+      "email": "Makanaky@Larealeza.com",
+      "on_job_status": "Available",
+      "job_description": "Assist in hotel room service and guest requests"
+    },
+    {
+      "id": "1",
+      "reserves_id": "1",
+      "name": "Jhons",
+      "last_name": "Miller",
+      "email": "jhonworker@pecuario.pro",
+      "on_job_status": "Working",
+      "job_description": "Clean and maintain hotel rooms"
+    }
+  ],
+  "food": [
+    {
+      "id": "3",
+      "name": "Tallarines verdes",
+      "quantity": 20,
+      "nroRoom": 0
+    }
+  ],
+  "tools": [
+    {
+      "id": "2",
+      "name": "Towels",
+      "quantity": 10,
+      "nroRoom": 0
+    },
+    {
+      "id": "3",
+      "name": "Liquid soap ",
+      "quantity": 7,
+      "nroRoom": 0
+    },
+    {
+      "name": "Soap",
+      "quantity": 34,
+      "nroRoom": 0,
+      "id": "4"
+    }
   ]
 }
