@@ -3,7 +3,7 @@
     {
       "id": "1",
       "name": "John Smith",
-      "age": 30,
+      "age": "31",
       "date": "2024-09-25",
       "country": "USA",
       "city": "Los Angeles",

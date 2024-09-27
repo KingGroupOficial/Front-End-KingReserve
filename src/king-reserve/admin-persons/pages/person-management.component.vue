@@ -1,17 +1,22 @@
 <template>
   <div class="person-management">
     <h3 class="title">Persons Registered in the Hotel</h3>
-
     <div class="custom-toolbar">
-      <button class="custom-button" @click="addPerson">Add Person</button>
-      <button class="custom-button" @click="exportToPDF">Export PDF</button>
+      <div class="search-bar">
+        <input type="text" v-model="searchQuery" placeholder="Search by name..." />
+      </div>
+      <div class="right-toolbar">
+        <button class="custom-button" @click="addPerson">Add Person</button>
+        <button class="custom-button" @click="exportToPDF">Export PDF</button>
+      </div>
     </div>
 
     <div v-if="loading">Loading persons...</div>
     <div v-if="error" class="error">{{ error }}</div>
-    <div v-if="!loading && Object.keys(personsByRoom).length > 0">
-      <div v-for="(persons, roomId) in personsByRoom" :key="roomId" class="room-group">
+    <div v-if="!loading && Object.keys(filteredPersonsByRoom).length > 0">
+      <div v-for="(persons, roomId) in filteredPersonsByRoom" :key="roomId" class="room-group">
         <h4>Staying in: {{ rooms[roomId]?.name || 'Unknown' }}</h4>
+        <br>
         <div class="cards-container">
           <div v-for="person in persons" :key="person.id" class="card" :style="{ backgroundColor: getRoomColor(person.roomId) }">
             <h4>{{ person.name }}</h4>
@@ -29,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div v-if="!loading && Object.keys(personsByRoom).length === 0">No persons found.</div>
+    <div v-if="!loading && Object.keys(filteredPersonsByRoom).length === 0">No persons found.</div>
 
     <person-create-and-edit-component
         :item="person"
@@ -60,7 +65,8 @@ export default {
       error: null,
       isVisibleCard: false,
       isEdit: false,
-      submitted: false
+      submitted: false,
+      searchQuery: ''
     };
   },
   computed: {
@@ -72,6 +78,21 @@ export default {
           acc[person.roomId] = [];
         }
         acc[person.roomId].push(person);
+        return acc;
+      }, {});
+    },
+    filteredPersonsByRoom() {
+      if (!this.searchQuery) {
+        return this.personsByRoom;
+      }
+      const query = this.searchQuery.toLowerCase();
+      return Object.keys(this.personsByRoom).reduce((acc, roomId) => {
+        const filteredPersons = this.personsByRoom[roomId].filter(person =>
+            person.name.toLowerCase().includes(query)
+        );
+        if (filteredPersons.length) {
+          acc[roomId] = filteredPersons;
+        }
         return acc;
       }, {});
     }
@@ -192,34 +213,44 @@ export default {
     },
     exportToPDF() {
       const doc = new jsPDF();
-
       doc.setFontSize(18);
-      doc.text('Persons Registered in the Hotel', 14, 22);
+      doc.text('Persons Registered in the Hotel', 105, 22, { align: 'center' }); // Centered title
+      doc.setFontSize(12);
 
-      let y = 30;
-      this.persons.forEach((person, index) => {
-        doc.setFontSize(12);
-        doc.text(`Person ${index + 1}:`, 14, y);
-        y += 6;
-        doc.text(`Name: ${person.name}`, 14, y);
-        y += 6;
-        doc.text(`Age: ${person.age}`, 14, y);
-        y += 6;
-        doc.text(`Date: ${person.date}`, 14, y);
-        y += 6;
-        doc.text(`Country: ${person.country || 'Not specified'}`, 14, y);
-        y += 6;
-        doc.text(`City: ${person.city || 'Not specified'}`, 14, y);
-        y += 6;
-        doc.text(`District: ${person.district || 'Not specified'}`, 14, y);
-        y += 10; // Add some space before the next person
+      const headers = ['Name', 'Age', 'Date', 'Country', 'City', 'District'];
+      const data = this.persons.map(person => [
+        person.name,
+        person.age,
+        person.date,
+        person.country || 'Not specified',
+        person.city || 'Not specified',
+        person.district || 'Not specified'
+      ]);
+
+      const startX = 10;
+      const startY = 40;
+      const rowHeight = 10;
+      const colWidths = [40, 20, 30, 40, 40, 40];
+
+      // Draw headers
+      headers.forEach((header, index) => {
+        doc.text(header, startX + colWidths.slice(0, index).reduce((a, b) => a + b, 0), startY);
+      });
+
+      // Draw data rows
+      data.forEach((row, rowIndex) => {
+        row.forEach((cell, colIndex) => {
+          doc.text(cell.toString(), startX + colWidths.slice(0, colIndex).reduce((a, b) => a + b, 0), startY + (rowIndex + 1) * rowHeight);
+        });
       });
 
       doc.save('persons.pdf');
     }
+
   }
 };
 </script>
+
 <style scoped>
 .person-management {
   padding: 20px;
@@ -232,15 +263,49 @@ export default {
   margin-bottom: 20px;
 }
 
+.custom-toolbar {
+  display: flex;
+  justify-content: space-between; /* Distribute space between elements */
+  align-items: center; /* Align items vertically */
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  flex: 1; /* Take up remaining space */
+}
+
+.search-bar input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.right-toolbar {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+
 .room-group {
   margin-bottom: 40px;
   text-align: center;
+  border: 2px solid #27AE60; /* Add border to room group */
+  border-radius: 12px; /* Optional: Add border radius */
+  padding: 20px; /* Optional: Add padding */
 }
 
 .room-group h4 {
   font-size: 24px;
   color: white;
   margin-bottom: 10px;
+  transition: font-size 0.3s ease, color 0.3s ease;
+}
+
+.room-group h4:hover {
+  font-size: 26px;
+  color: #27AE60; /* Cambia a un color dorado al pasar el ratón */
 }
 
 .cards-container {
@@ -326,4 +391,9 @@ export default {
   min-width: 120px;
   font-size: 16px;
 }
+
+h3 {
+  color: #32C793;
+}
+
 </style>

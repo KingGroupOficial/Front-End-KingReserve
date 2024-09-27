@@ -155,7 +155,6 @@ export default {
 </template>
 
 <style scoped>
-
 .animated-title {
   color: #34d399;
   font-size: 3rem;
@@ -175,24 +174,32 @@ export default {
   }
 }
 
+.container {
+  display: flex;
+  flex-wrap: wrap; /* Permitir que las tarjetas se envuelvan a la siguiente línea */
+  justify-content: center; /* Centrar las tarjetas horizontalmente */
+  gap: 20px; /* Espacio entre tarjetas */
+}
+
 .card {
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto 2.5rem;
+  flex: 1 1 calc(33.333% - 20px); /* Ajustar el ancho de las tarjetas (3 por fila) */
+  max-width: 400px; /* Establecer un ancho máximo para las tarjetas */
+  margin: 10px; /* Añadir margen */
   background-color: #18181b;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  padding: 20px;
+  padding: 20px; /* Aumentar el padding para que sea más espacioso */
+  transition: transform 0.3s ease; /* Transición suave para el transform */
 }
 
 .card:hover {
-  opacity: 0.7;
+  transform: scale(1.1); /* Aumentar el tamaño de la tarjeta en un 10% al pasar el cursor */
+  opacity: 0.9; /* Cambiar la opacidad al pasar el cursor */
 }
 
-.card-header{
+.card-header {
   position: relative;
-  height: 20.5rem;
+  height: 200px; /* Aumentar la altura fija para el encabezado de la tarjeta */
   padding: 3px;
 }
 
@@ -205,7 +212,7 @@ export default {
 
 .title p {
   text-align: center;
-  font-size: 30px;
+  font-size: 28px; /* Aumentar el tamaño de la fuente */
   font-weight: 700;
   color: #f7f7f7;
 }
@@ -218,7 +225,7 @@ export default {
 .card-body p {
   color: #f7f7f7;
   text-align: center;
-  font-size: 20px;
+  font-size: 18px; /* Aumentar el tamaño de la fuente */
   font-weight: 500;
   padding: 5px;
   margin-bottom: 15px;
@@ -232,5 +239,4 @@ export default {
 .card-body .footer-button {
   margin-top: 10px;
 }
-
 </style>
