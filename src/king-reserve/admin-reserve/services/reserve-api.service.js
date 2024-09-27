@@ -22,9 +22,7 @@ export class ReserveApiService{
             return http.delete(`/reservations/${id}`);
         }
 
-        findByName(name){
-            return http.get(`/reservations?name=${name}`);
-        }
+
 
         async getTotalReserves() {
             try {
@@ -35,4 +33,24 @@ export class ReserveApiService{
                 throw error;
             }
         }
+
+        // Api para conseguir la cantidad de las condiciones de la reserva
+    async getReserveConditionCount() {
+        try {
+            const response = await http.get('/reservations');
+            const reservations = response.data;
+            return reservations.reduce((acc, reservation) => {
+                const condition = reservation.condition;
+                if (acc[condition]) {
+                    acc[condition]++;
+                } else {
+                    acc[condition] = 1;
+                }
+                return acc;
+            }, {});
+        } catch (error) {
+            console.error('Error fetching reservation conditions:', error);
+            throw error;
+        }
+    }
 }

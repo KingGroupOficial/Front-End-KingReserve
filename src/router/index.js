@@ -5,6 +5,7 @@ import reserveManagmentComoponent from "@/king-reserve/admin-reserve/pages/reser
 import reserveDetails from "@/king-reserve/admin-reserve/components/reserve-details.vue";
 import roomDetailsComponent from "@/king-reserve/admin-rooms/components/room-details.component.vue";
 import PersonManagementComponent from "@/king-reserve/admin-persons/pages/person-management.component.vue";
+import stadisticsTotalComponent from "@/king-reserve/stadistics/page/stadistics-total.component.vue";
 /**
  * Vue Router instance
  * @type {Router} Vue Router instance creation with default configs
@@ -18,6 +19,8 @@ const router = createRouter({
         // Root path
         { path: "/", component: homeComponent, meta: { title: "home"} },
         { path: "/persons", component: PersonManagementComponent, meta: { title: "Persons"}},
+        // Path to Stadistics
+        { path: "/stadistic", component: stadisticsTotalComponent, meta: { title: "Stadistics"} },
         // Path to handle unmatched URLs, using notFoundComponent
         { path: "/:catchAll(.*)", component: notFoundComponent, meta: { title: "Not Found" } },
         { path: "/reservation", component: reserveManagmentComoponent, meta: { title: "Reservation" }},
