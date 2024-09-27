@@ -1,9 +1,15 @@
 <template>
   <div class="container">
-    <h1 class="animated-title" style="margin-bottom: 80px;">Management Inventory</h1>
+    <!-- Cabecera con logo y título -->
+    <div class="header">
+      <img src="https://i.imgur.com/hfmmUAR.png" alt="King Reserve Logo" class="logo" />
+      <h1 class="animated-title">Management Inventory</h1>
+    </div>
+
+    <!-- Contenedor de tarjetas -->
     <div class="cards-container">
       <div class="card" v-for="card in cards" :key="card.title">
-        <pv-card>
+        <pv-card class="custom-card">
           <template #title>
             <div class="card-title">
               {{ card.title }}
@@ -15,149 +21,124 @@
           </template>
           <template #footer>
             <div class="card-footer">
-              <pv-button label="View" @click="showInventoryDialog(card.title)"></pv-button>
+              <pv-button label="View" class="custom-button" @click="showInventoryDialog(card.title)"></pv-button>
             </div>
           </template>
         </pv-card>
       </div>
     </div>
+
+    <!-- Dialogo para cada inventario -->
+    <pv-dialog v-model:visible="displayDialog" :header="selectedInventory" :style="{ width: '50vw' }" :modal="true">
+      <div>Inventory For {{ selectedInventory }}</div>
+
+      <!-- Si el inventario es de comida o herramientas, mostramos contenido específico -->
+      <div v-if="selectedInventory === 'Food'">
+        <h4>Food Inventory Description</h4>
+        <pv-toolbar>
+          <template #start>
+            <pv-button icon="pi pi-plus" class="mr-2 custom-add-button-long" @click="openAddDialog" />
+          </template>
+          <template #center>
+            <pv-icon-field iconPosition="left">
+              <pv-input-icon>
+                <i class="pi pi-search" />
+              </pv-input-icon>
+              <pv-input-text placeholder="Search" />
+            </pv-icon-field>
+          </template>
+          <template #end>
+            <pv-split-button label="Save" class="custom-save-button" :model="items1"></pv-split-button>
+          </template>
+        </pv-toolbar>
+      </div>
+
+      <div v-else-if="selectedInventory === 'Tools'">
+        <h4>Tools Inventory Description</h4>
+        <pv-toolbar>
+          <template #start>
+            <pv-button icon="pi pi-plus" class="mr-2 custom-add-button-long" @click="openAddDialog" />
+          </template>
+          <template #center>
+            <pv-icon-field iconPosition="left">
+              <pv-input-icon>
+                <i class="pi pi-search" />
+              </pv-input-icon>
+              <pv-input-text placeholder="Search" />
+            </pv-icon-field>
+          </template>
+          <template #end>
+            <pv-split-button label="Save" class="custom-save-button" :model="items1"></pv-split-button>
+          </template>
+        </pv-toolbar>
+      </div>
+
+      <!-- Lista de productos -->
+      <div class="product-list">
+        <ul>
+          <li v-for="item in items" :key="item.id">
+            <div class="product-list-item">
+              <div class="product-details">
+                <h5 class="product-title">{{ item.name }}</h5>
+                <div class="product-quantity">Quantity: {{ item.quantity }}</div>
+              </div>
+              <div class="product-action">
+                <pv-button icon="pi pi-pencil" class="p-button-rounded p-button-success custom-button mr-2" @click="openEditDialog(item)"></pv-button>
+                <pv-button icon="pi pi-trash" class="p-button-rounded p-button-danger custom-delete-button" @click="deleteItem(item)"></pv-button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <template #footer>
+        <pv-button label="Close" class="custom-close-button" @click="closeDialog"></pv-button>
+        <pv-button label="Add" class="custom-add-button" @click="openAddDialog"></pv-button>
+      </template>
+    </pv-dialog>
+
+    <!-- Dialogo para agregar ítems -->
+    <pv-dialog v-model:visible="displayAddDialog" :header="'Add ' + selectedInventory" :style="{ width: '30vw' }" :modal="true">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <pv-input-text v-model="newItem.name" id="name" placeholder="Enter item name" />
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <pv-input-number v-model="newItem.quantity" id="quantity" placeholder="Enter item quantity" />
+      </div>
+      <div class="form-group">
+        <label for="nroRoom">Nro. of Room</label>
+        <pv-input-number v-model="newItem.nroRoom" id="nroRoom" :min="0" mode="decimal" showButtons :step="1" />
+      </div>
+
+      <template #footer>
+        <pv-button label="Cancel" class="custom-close-button" @click="closeAddDialog"></pv-button>
+        <pv-button label="Save" class="custom-save-button" @click="saveNewItem"></pv-button>
+      </template>
+    </pv-dialog>
+
+    <!-- Dialogo para editar ítems -->
+    <pv-dialog v-model:visible="displayEditDialog" :header="'Edit ' + selectedInventory" :style="{ width: '30vw' }" :modal="true">
+      <div class="form-group">
+        <label for="editName">Name</label>
+        <pv-input-text v-model="editItemData.name" id="editName" placeholder="Enter item name" />
+      </div>
+      <div class="form-group">
+        <label for="editQuantity">Quantity</label>
+        <pv-input-number v-model="editItemData.quantity" id="editQuantity" placeholder="Enter item quantity" />
+      </div>
+
+      <template #footer>
+        <pv-button label="Cancel" class="custom-close-button" @click="closeEditDialog"></pv-button>
+        <pv-button label="Save" class="custom-save-button" @click="saveEditedItem"></pv-button>
+      </template>
+    </pv-dialog>
   </div>
-
-  <pv-dialog v-model:visible="displayDialog" :header="selectedInventory" :style="{ width: '50vw' }" :modal="true">
-    <div>Inventory For {{ selectedInventory }}</div>
-
-    <div v-if="selectedInventory === 'Food'">
-      <h4>Food Inventory Description</h4>
-      <pv-toolbar>
-        <template #start>
-          <pv-button icon="pi pi-plus" class="mr-2" severity="secondary" @click="openAddDialog" />
-          <pv-button icon="pi pi-print" class="mr-2" severity="secondary" />
-          <pv-button icon="pi pi-upload" severity="secondary" />
-        </template>
-        <template #center>
-          <pv-icon-field iconPosition="left">
-            <pv-input-icon>
-              <i class="pi pi-search" />
-            </pv-input-icon>
-            <pv-input-text placeholder="Search" />
-          </pv-icon-field>
-        </template>
-        <template #end>
-          <pv-split-button label="Save" :model="items1"></pv-split-button>
-        </template>
-      </pv-toolbar>
-    </div>
-    <div v-else-if="selectedInventory === 'Vaccine'">
-      <h4>Vaccine Inventory Description</h4>
-      <pv-toolbar>
-        <template #start>
-          <pv-button icon="pi pi-plus" class="mr-2" severity="secondary" @click="openAddDialog" />
-          <pv-button icon="pi pi-print" class="mr-2" severity="secondary" />
-          <pv-button icon="pi pi-upload" severity="secondary" />
-        </template>
-        <template #center>
-          <pv-icon-field iconPosition="left">
-            <pv-input-icon>
-              <i class="pi pi-search" />
-            </pv-input-icon>
-            <pv-input-text placeholder="Search" />
-          </pv-icon-field>
-        </template>
-        <template #end>
-          <pv-split-button label="Save" :model="items1"></pv-split-button>
-        </template>
-      </pv-toolbar>
-    </div>
-    <div v-else-if="selectedInventory === 'Tools'">
-      <h4>Tools Inventory Description</h4>
-      <pv-toolbar>
-        <template #start>
-          <pv-button icon="pi pi-plus" class="mr-2" severity="secondary" @click="openAddDialog" />
-          <pv-button icon="pi pi-print" class="mr-2" severity="secondary" />
-          <pv-button icon="pi pi-upload" severity="secondary" />
-        </template>
-        <template #center>
-          <pv-icon-field iconPosition="left">
-            <pv-input-icon>
-              <i class="pi pi-search" />
-            </pv-input-icon>
-            <pv-input-text placeholder="Search" />
-          </pv-icon-field>
-        </template>
-        <template #end>
-          <pv-split-button label="Save" :model="items1"></pv-split-button>
-        </template>
-      </pv-toolbar>
-    </div>
-
-    <div class="product-list">
-      <ul>
-        <li v-for="item in items" :key="item.id">
-          <div class="product-list-item">
-            <div class="product-details">
-              <h5 class="product-title">{{ item.name }}</h5>
-              <img :src="item.image" alt="Item Image" class="product-image" @error="onImageError"/>
-              <div class="product-quantity">Quantity: {{ item.quantity }}</div>
-            </div>
-            <div class="product-action">
-              <pv-button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" @click="openEditDialog(item)"></pv-button>
-              <pv-button icon="pi pi-trash" class="p-button-rounded p-button-danger" @click="deleteItem(item)"></pv-button>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <template #footer>
-      <pv-button label="Close" @click="closeDialog"></pv-button>
-      <pv-button label="Add" @click="openAddDialog"></pv-button>
-    </template>
-  </pv-dialog>
-
-  <pv-dialog v-model:visible="displayAddDialog" :header="'Add ' + selectedInventory" :style="{ width: '30vw' }" :modal="true">
-    <div class="form-group">
-      <label for="name">Name</label>
-      <pv-input-text v-model="newItem.name" id="name" placeholder="Enter item name" />
-    </div>
-    <div class="form-group">
-      <label for="quantity">Quantity</label>
-      <pv-input-number v-model="newItem.quantity" id="quantity" placeholder="Enter item quantity" />
-    </div>
-    <div class="form-group" v-if="selectedInventory === 'Food'">
-      <label for="image">Image URL</label>
-      <pv-input-text v-model="newItem.image" id="image" placeholder="Enter image URL" />
-    </div>
-
-    <template #footer>
-      <pv-button label="Cancel" @click="closeAddDialog"></pv-button>
-      <pv-button label="Save" @click="saveNewItem"></pv-button>
-    </template>
-  </pv-dialog>
-
-  <pv-dialog v-model:visible="displayEditDialog" :header="'Edit ' + selectedInventory" :style="{ width: '30vw' }" :modal="true">
-    <div class="form-group">
-      <label for="editName">Name</label>
-      <pv-input-text v-model="editItemData.name" id="editName" placeholder="Enter item name" />
-    </div>
-    <div class="form-group">
-      <label for="editQuantity">Quantity</label>
-      <pv-input-number v-model="editItemData.quantity" id="editQuantity" placeholder="Enter item quantity" />
-    </div>
-    <div class="form-group" v-if="selectedInventory === 'Food'">
-      <label for="editImage">Image URL</label>
-      <pv-input-text v-model="editItemData.image" id="editImage" placeholder="Enter image URL" />
-    </div>
-
-    <template #footer>
-      <pv-button label="Cancel" @click="closeEditDialog"></pv-button>
-      <pv-button label="Save" @click="saveEditedItem"></pv-button>
-    </template>
-  </pv-dialog>
 </template>
 
 <script>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 export default {
@@ -170,61 +151,41 @@ export default {
     const newItem = ref({
       name: '',
       quantity: 0,
-      image: ''
+      nroRoom: 0,
     });
     const editItemData = ref({
       id: null,
       name: '',
       quantity: 0,
-      image: ''
+      nroRoom: 0,
     });
     const items1 = ref([
-      {
-        label: 'Update',
-        icon: 'pi pi-refresh'
-      },
-      {
-        label: 'Delete',
-        icon: 'pi pi-times'
-      }
+      { label: 'Update', icon: 'pi pi-refresh' },
+      { label: 'Delete', icon: 'pi pi-times' }
     ]);
 
     const cards = [
-      { title: 'Food', description: 'Inventory', icon: 'pi pi-apple' },
-      { title: 'Vaccine', description: 'Inventory', icon: 'pi pi-pen-to-square' },
-      { title: 'Tools', description: 'Inventory', icon: 'pi pi-wrench' }
+      { title: 'Food', description: 'Food Inventory', icon: 'pi pi-apple' },
+      { title: 'Tools', description: 'Tools Inventory', icon: 'pi pi-wrench' }
     ];
 
     const showInventoryDialog = async (title) => {
-      console.log(`Opening dialog for ${title}`);
       selectedInventory.value = title;
       await loadInventoryData(title);
       displayDialog.value = true;
-      console.log(`Dialog state: ${displayDialog.value}`);
     };
 
-    const router = useRouter();
     const loadInventoryData = async (title) => {
-      console.log(`Loading inventory data for ${title}`);
       try {
-        if (title === 'Food') {
-          const response = await axios.get('http://localhost:3000/food');
-          items.value = response.data;
-          console.log('Loaded food items:', items.value);
-        } else if (title === 'Vaccine') {
-          await router.push('/vaccine');
-        } else if (title === 'Tools') {
-          const response = await axios.get('http://localhost:3000/tools');
-          items.value = response.data;
-          console.log('Loaded tools items:', items.value);
-        }
+        const response = await axios.get(`http://localhost:3000/${title.toLowerCase()}`);
+        items.value = response.data;
       } catch (error) {
         console.error('Error loading inventory data:', error);
-        // Manejar el error de manera adecuada, por ejemplo, mostrar un mensaje al usuario
       }
     };
+
     const openAddDialog = () => {
-      newItem.value = { name: '', quantity: 0, image: '' };
+      newItem.value = { name: '', quantity: 0, nroRoom: 0 };
       displayAddDialog.value = true;
     };
 
@@ -245,48 +206,24 @@ export default {
     };
 
     const saveEditedItem = async () => {
-      try {
-        const endpoint = `http://localhost:3000/food/${editItemData.value.id}`; // Ensure correct endpoint with ID
-        const response = await axios.put(endpoint, editItemData.value);
-        if (response.status === 200) {
-          // ... success handling
-        } else {
-          console.error('Error updating item:', response.data);
-          // ... error handling
-        }
-      } catch (error) {
-        console.error('Error updating item:', error);
-        // ... error handling
-      }
+      const endpoint = `http://localhost:3000/${selectedInventory.value.toLowerCase()}/${editItemData.value.id}`;
+      await axios.put(endpoint, editItemData.value);
+      await loadInventoryData(selectedInventory.value);
+      closeEditDialog();
     };
-
 
     const closeEditDialog = () => {
       displayEditDialog.value = false;
     };
 
     const deleteItem = async (item) => {
-      try {
-        const endpoint = selectedInventory.value.toLowerCase();
-        const response = await axios.delete(`http://localhost:3000/${endpoint}/${item.id}`);
-        if (response.status === 200) {
-          await loadInventoryData(selectedInventory.value);
-        } else {
-          console.error('Error deleting item:', response.data);
-
-        }
-      } catch (error) {
-        console.error('Error deleting item:', error);
-
-      }
+      const endpoint = selectedInventory.value.toLowerCase();
+      await axios.delete(`http://localhost:3000/${endpoint}/${item.id}`);
+      await loadInventoryData(selectedInventory.value);
     };
 
     const closeDialog = () => {
       displayDialog.value = false;
-    };
-
-    const onImageError = (event) => {
-      event.target.src = 'https://example.com/images/default.jpg'; // Fallback image
     };
 
     return {
@@ -307,27 +244,40 @@ export default {
       openEditDialog,
       saveEditedItem,
       closeEditDialog,
-      deleteItem,
-      onImageError
+      deleteItem
     };
   }
 };
 </script>
 
 <style scoped>
+/* Estilos generales */
 .container {
+  background-color: #e7d5b0;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   padding: 20px;
 }
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.logo {
+  width: 250px;
+  margin-bottom: 20px;
+}
+
 .animated-title {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: bold;
   animation: fadeIn 2s ease-in-out;
   text-align: center;
+  color: #4d3b29;
 }
 
 @keyframes fadeIn {
@@ -340,19 +290,20 @@ export default {
     transform: translateY(0);
   }
 }
+
 .cards-container {
   display: flex;
-  justify-content: center;
-  gap: 40px;
+  justify-content: space-around;
   flex-wrap: wrap;
+  gap: 40px;
 }
 
-.card {
-  border: 1px solid #ccc;
+.custom-card {
+  border: none;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+  background-color: #fef7e0;
+  transition: transform 0.3s, box-shadow 0.3s;
   width: 300px;
   height: 300px;
   display: flex;
@@ -360,8 +311,9 @@ export default {
   justify-content: space-between;
 }
 
-.card:hover {
+.custom-card:hover {
   transform: scale(1.05);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .card-title {
@@ -369,21 +321,82 @@ export default {
   flex-direction: column;
   align-items: center;
   font-size: 1.5rem;
+  color: #4d3b29;
+  margin-bottom: 10px;
 }
 
 .card-icon {
   font-size: 3rem;
   margin-top: 10px;
+  color: #f4a261;
 }
 
 .card-description {
   text-align: center;
   margin: 20px 0;
+  color: #4d3b29;
+}
+
+.custom-button {
+  background-color: #f4a261;
+  border: none;
+  color: white;
+  font-weight: bold;
+  width: 100%;
+}
+
+.custom-button:hover {
+  background-color: #e76f51;
 }
 
 .card-footer {
   display: flex;
   justify-content: center;
+}
+
+.custom-close-button {
+  background-color: #ca8342;
+  border: none;
+  color: white;
+  font-weight: bold;
+  width: 100px;
+}
+
+.custom-close-button:hover {
+  background-color: #ae6e3e;
+}
+
+.custom-add-button-long {
+  background-color: #32cd32;
+  border: none;
+  color: white;
+  font-weight: bold;
+  width: 50px;
+  height: 40px;
+}
+
+.custom-add-button {
+  background-color: #f4a261;
+  border: none;
+  color: white;
+  font-weight: bold;
+  width: 100px;
+}
+
+.custom-add-button:hover {
+  background-color: #e76f51;
+}
+
+.custom-save-button {
+  background-color: #32cd32;
+  border: none;
+  color: white;
+  font-weight: bold;
+  width: 100px;
+}
+
+.custom-save-button:hover {
+  background-color: #28a745;
 }
 
 .product-list-item {
@@ -405,12 +418,6 @@ export default {
   margin-bottom: 0.5rem;
 }
 
-.product-image {
-  max-width: 50px;
-  max-height: 50px;
-  margin-bottom: 0.5rem;
-}
-
 .product-quantity {
   font-size: 0.875rem;
   margin-top: 0.5rem;
@@ -419,6 +426,18 @@ export default {
 .product-action {
   display: flex;
   justify-content: flex-end;
+}
+
+.custom-delete-button {
+  background-color: #f95e5a;
+  border: none;
+  color: white;
+  font-weight: bold;
+  width: 40px;
+}
+
+.custom-delete-button:hover {
+  background-color: #e63946;
 }
 
 .form-group {
