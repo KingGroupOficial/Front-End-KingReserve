@@ -1,4 +1,10 @@
-import http from "@/shared/services/http-common.js";
+import axios from "axios";
+
+const url_FakeApi = "https://66f729b0b5d85f31a34226e9.mockapi.io";
+
+const http = axios.create({
+    baseURL: url_FakeApi, // Corrected property name to baseURL
+});
 
 export class PersonApiService {
     getAll() {
@@ -28,8 +34,6 @@ export class PersonApiService {
     findByName(name) {
         return http.get(`/persons?name=${name}`);
     }
-
-
 
     getPersonsGroupedByBatchId() {
         return this.getAll().then(response => {
