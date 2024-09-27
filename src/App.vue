@@ -143,14 +143,6 @@ export default {
                                 </li>
                               </ul>
                             </li>
-                            <li>
-                              <router-link to="/Statistics" @click=toggleDrawer() style="text-decoration: none">
-                                <a v-ripple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                  <i class="pi pi-chart-line mr-2"></i>
-                                  <span class="font-medium">Subscripciones Statistics</span>
-                                </a>
-                              </router-link>
-                            </li>
                           </ul>
                         </li>
                         <li>

@@ -34,22 +34,24 @@ export class ReserveApiService{
             }
         }
 
-        // Api para conseguir la cantidad de las condiciones de la reserva
-    async getReserveConditionCount() {
+    async getReservesCountByCondition() {
         try {
-            const response = await http.get('/reservations');
-            const reservations = response.data;
-            return reservations.reduce((acc, reservation) => {
-                const condition = reservation.condition;
-                if (acc[condition]) {
-                    acc[condition]++;
-                } else {
-                    acc[condition] = 1;
+            const response = await this.getAll();
+            const reserves = response.data;
+
+            const conditionCounts = { Finished: 0, Active: 0 };
+
+            reserves.forEach((reserve) => {
+                if (reserve.condition === 'Finished') {
+                    conditionCounts.Finished++;
+                } else if (reserve.condition === 'Active') {
+                    conditionCounts.Active++;
                 }
-                return acc;
-            }, {});
+            });
+
+            return conditionCounts;
         } catch (error) {
-            console.error('Error fetching reservation conditions:', error);
+            console.error('Error counting reserves by condition:', error);
             throw error;
         }
     }

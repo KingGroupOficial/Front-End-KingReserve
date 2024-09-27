@@ -37,31 +37,17 @@ export default {
 </template>
 
 <style scoped>
-.count-reserve-card {
-  background-color: #34d399;
-  border: 1px solid #34d399;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+h3 {
+  color: black;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.8rem; /* Increased font size */
 }
 
-.card-header {
-  display: flex;
-  align-items: center;
-}
-
-.card-icon {
-  color: #27AE60;
-  font-size: 2em;
-  margin-right: 10px;
-}
-
-.card-content {
-  margin-top: 10px;
-  font-size: 1.2em;
-  color: #333;
+p {
+  color: black;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.8rem; /* Increased font size */
 }
 </style>

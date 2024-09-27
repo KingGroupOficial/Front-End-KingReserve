@@ -14,16 +14,73 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="dashboard">
     <h2>Statistics Overview</h2>
-    <CountPersons />
-    <CountReserve />
+    <br>
+    <div class="dashboard-cards">
+      <div class="card">
+        <i class="pi pi-users card-icon"></i>
+        <CountPersons />
+      </div>
+      <div class="card">
+        <i class="pi pi-chart-bar card-icon"></i>
+        <CountReserve />
+      </div>
+      <div class="card">
+        <i class="pi pi-chart-line card-icon"></i>
+        <GraficBarCondition />
+      </div>
+    </div>
   </div>
 </template>
 
+
 <style scoped>
+.dashboard {
+  padding: 20px;
+}
+
 h2 {
-  color: #2C3E50;
+  color: white;
   margin-bottom: 20px;
+  text-align: center;
+  font-size: 3rem
+}
+
+.dashboard-cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-icon {
+  font-size: 2rem;
+  color: #4CAF50; /* Green color of the project */
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.card i {
+  margin-bottom: 10px;
 }
 </style>

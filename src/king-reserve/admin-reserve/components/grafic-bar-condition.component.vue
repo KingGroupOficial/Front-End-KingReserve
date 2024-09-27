@@ -1,89 +1,76 @@
+
+<template>
+  <div class="chart-container">
+    <Bar v-if="chartData" :data="chartData" :options="chartOptions" />
+    <p v-else>Loading...</p>
+  </div>
+</template>
+
 <script>
 import { Bar } from 'vue-chartjs';
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import { ReserveApiService } from "@/king-reserve/admin-reserve/services/reserve-api.service.js";
 
-ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 export default {
-  name: "grafic-bar-condition",
+  name: 'BarChartComponent',
   components: {
-    BarChart: Bar
+    Bar
   },
   data() {
     return {
-      conditionData: {
-        labels: [], // Inicializa como un array vacío
-        datasets: [
-          {
-            label: 'Reservation Conditions',
-            backgroundColor: '#42A5F5',
-            data: [] // Inicializa como un array vacío
-          }
-        ]
-      },
+      chartData: null,
       chartOptions: {
         responsive: true,
-        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true
+          }
+        },
         scales: {
           y: {
             beginAtZero: true
           }
         }
-      },
-      isLoading: true
+      }
     };
   },
-
-  created() {
-    this.reserveService = new ReserveApiService(); // Inicializa el servicio
-    this.fetchConditionData(); // Llama a la función para obtener datos
+  async mounted() {
+    await this.loadReservesByCondition();
   },
   methods: {
-    async fetchConditionData() {
+    async loadReservesByCondition() {
       try {
-        const data = await this.reserveService.getReserveConditionCount();
-        console.log("Raw data from API:", data); // Registra los datos crudos para ver su estructura
-        this.conditionData.labels = Object.keys(data);
-        this.conditionData.datasets[0].data = Object.values(data);
-
-        // Registra la cantidad de cada condición
-        console.log("Condition Counts:");
-        this.conditionData.labels.forEach((label, index) => {
-          console.log(`${label}: ${this.conditionData.datasets[0].data[index]}`);
-        });
+        const reserveApiService = new ReserveApiService();
+        const conditionCounts = await reserveApiService.getReservesCountByCondition();
+        if (conditionCounts) {
+          this.chartData = {
+            labels: ['Finished', 'Active'],
+            datasets: [{
+              label: 'Number of Reservations',
+              backgroundColor: ['#4CAF50', '#FFC107'],
+              data: [
+                conditionCounts.Finished || 0,
+                conditionCounts.Active || 0
+              ]
+            }]
+          };
+        }
       } catch (error) {
-        console.error("Error fetching reservation conditions:", error);
-      } finally {
-        this.isLoading = false;
+        console.error('Error loading reserves by condition:', error);
       }
     }
-
   }
 };
 </script>
 
-<template>
-  <div class="grafic-bar-condition">
-    <h3>Reservation Conditions</h3>
-    <BarChart v-if="!isLoading && conditionData.labels.length > 0"
-              :chart-data="conditionData"
-              :options="chartOptions"
-              style="height: 400px;">
-    </BarChart>
-    <p v-else-if="isLoading">Loading...</p>
-    <p v-else>No data available.</p>
-  </div>
-</template>
-
-
 <style scoped>
-.grafic-bar-condition {
-  margin: 20px;
+.chart-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-h3 {
-  color: #2C3E50;
-  margin-bottom: 20px;
-}
+
 </style>
