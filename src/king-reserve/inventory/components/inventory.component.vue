@@ -37,7 +37,7 @@
         <h4>Food Inventory Description</h4>
         <pv-toolbar>
           <template #start>
-            <pv-button icon="pi pi-plus" class="mr-2 custom-add-button-long" @click="openAddDialog" />
+            <pv-button icon="pi pi-plus" class="custom-plus-button mr-2" @click="openAddDialog" />
           </template>
           <template #center>
             <pv-icon-field iconPosition="left">
@@ -46,9 +46,6 @@
               </pv-input-icon>
               <pv-input-text placeholder="Search" />
             </pv-icon-field>
-          </template>
-          <template #end>
-            <pv-split-button label="Save" class="custom-save-button" :model="items1"></pv-split-button>
           </template>
         </pv-toolbar>
       </div>
@@ -57,7 +54,7 @@
         <h4>Tools Inventory Description</h4>
         <pv-toolbar>
           <template #start>
-            <pv-button icon="pi pi-plus" class="mr-2 custom-add-button-long" @click="openAddDialog" />
+            <pv-button icon="pi pi-plus" class="custom-plus-button mr-2" @click="openAddDialog" />
           </template>
           <template #center>
             <pv-icon-field iconPosition="left">
@@ -66,9 +63,6 @@
               </pv-input-icon>
               <pv-input-text placeholder="Search" />
             </pv-icon-field>
-          </template>
-          <template #end>
-            <pv-split-button label="Save" class="custom-save-button" :model="items1"></pv-split-button>
           </template>
         </pv-toolbar>
       </div>
@@ -83,8 +77,8 @@
                 <div class="product-quantity">Quantity: {{ item.quantity }}</div>
               </div>
               <div class="product-action">
-                <pv-button icon="pi pi-pencil" class="p-button-rounded p-button-success custom-button mr-2" @click="openEditDialog(item)"></pv-button>
-                <pv-button icon="pi pi-trash" class="p-button-rounded p-button-danger custom-delete-button" @click="deleteItem(item)"></pv-button>
+                <pv-button icon="pi pi-pencil" class="p-button-rounded custom-edit-button mr-2" @click="openEditDialog(item)" />
+                <pv-button icon="pi pi-trash" class="p-button-rounded custom-delete-button" @click="deleteItem(item)" />
               </div>
             </div>
           </li>
@@ -92,8 +86,8 @@
       </div>
 
       <template #footer>
-        <pv-button label="Close" class="custom-close-button" @click="closeDialog"></pv-button>
-        <pv-button label="Add" class="custom-add-button" @click="openAddDialog"></pv-button>
+        <pv-button label="Close" @click="closeDialog" class="custom-close-button"></pv-button>
+        <pv-button label="Add" @click="openAddDialog" class="custom-add-button"></pv-button>
       </template>
     </pv-dialog>
 
@@ -113,8 +107,8 @@
       </div>
 
       <template #footer>
-        <pv-button label="Cancel" class="custom-close-button" @click="closeAddDialog"></pv-button>
-        <pv-button label="Save" class="custom-save-button" @click="saveNewItem"></pv-button>
+        <pv-button label="Cancel" @click="closeAddDialog" class="custom-close-button"></pv-button>
+        <pv-button label="Save" @click="saveNewItem" class="custom-add-button"></pv-button>
       </template>
     </pv-dialog>
 
@@ -130,8 +124,8 @@
       </div>
 
       <template #footer>
-        <pv-button label="Cancel" class="custom-close-button" @click="closeEditDialog"></pv-button>
-        <pv-button label="Save" class="custom-save-button" @click="saveEditedItem"></pv-button>
+        <pv-button label="Cancel" @click="closeEditDialog" class="custom-close-button"></pv-button>
+        <pv-button label="Save" @click="saveEditedItem" class="custom-add-button"></pv-button>
       </template>
     </pv-dialog>
   </div>
@@ -159,10 +153,6 @@ export default {
       quantity: 0,
       nroRoom: 0,
     });
-    const items1 = ref([
-      { label: 'Update', icon: 'pi pi-refresh' },
-      { label: 'Delete', icon: 'pi pi-times' }
-    ]);
 
     const cards = [
       { title: 'Food', description: 'Food Inventory', icon: 'pi pi-apple' },
@@ -235,7 +225,6 @@ export default {
       newItem,
       editItemData,
       cards,
-      items1,
       showInventoryDialog,
       closeDialog,
       openAddDialog,
@@ -354,49 +343,31 @@ export default {
   justify-content: center;
 }
 
-.custom-close-button {
-  background-color: #ca8342;
-  border: none;
+.custom-plus-button {
+  background-color: #63d99e;
+  border-color: #63d99e;
+}
+
+.custom-delete-button {
+  background-color: #d1655d;
+  border-color: #d1655d;
+}
+
+.custom-edit-button {
+  background-color: #63d99e;
+  border-color: #63d99e;
+}
+
+.custom-close-button, .custom-add-button {
+  background-color: #c97b47;
+  border-color: #c97b47;
   color: white;
-  font-weight: bold;
-  width: 100px;
+  margin-right: 10px;
 }
 
-.custom-close-button:hover {
-  background-color: #ae6e3e;
-}
-
-.custom-add-button-long {
-  background-color: #32cd32;
-  border: none;
-  color: white;
-  font-weight: bold;
-  width: 50px;
-  height: 40px;
-}
-
-.custom-add-button {
-  background-color: #f4a261;
-  border: none;
-  color: white;
-  font-weight: bold;
-  width: 100px;
-}
-
-.custom-add-button:hover {
-  background-color: #e76f51;
-}
-
-.custom-save-button {
-  background-color: #32cd32;
-  border: none;
-  color: white;
-  font-weight: bold;
-  width: 100px;
-}
-
-.custom-save-button:hover {
-  background-color: #28a745;
+.custom-close-button:hover, .custom-add-button:hover {
+  background-color: #b3683a;
+  border-color: #b3683a;
 }
 
 .product-list-item {
@@ -426,18 +397,6 @@ export default {
 .product-action {
   display: flex;
   justify-content: flex-end;
-}
-
-.custom-delete-button {
-  background-color: #f95e5a;
-  border: none;
-  color: white;
-  font-weight: bold;
-  width: 40px;
-}
-
-.custom-delete-button:hover {
-  background-color: #e63946;
 }
 
 .form-group {
