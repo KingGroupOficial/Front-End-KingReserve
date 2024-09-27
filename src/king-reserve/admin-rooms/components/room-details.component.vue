@@ -1,10 +1,11 @@
 <script>
 import { RoomsApiService } from "@/king-reserve/admin-rooms/services/rooms-api.service.js";
 import { Room } from "@/king-reserve/admin-rooms/model/room.entity.js";
+import PersonManagement from "@/king-reserve/admin-persons/pages/person-management.component.vue";
 
 export default {
   name: "room-details",
-  components: {person},
+  components: {PersonManagement},
   data() {
     return {
       room: null,

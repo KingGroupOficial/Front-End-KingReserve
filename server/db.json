@@ -11,7 +11,7 @@
         "district": "Manhattan"
       },
       "observations": "Healthy",
-      "roomId": "1"
+      "roomId": null
     },
     {
       "id": "2",
@@ -20,7 +20,7 @@
       "date": "2024-05-02",
       "origin": {},
       "observations": "High productivity",
-      "roomId": "1"
+      "roomId": null
     },
     {
       "id": "3",
@@ -216,34 +216,6 @@
   ],
   "rooms": [
     {
-      "id": "1",
-      "name": "Room A",
-      "area": 100,
-      "status": "In process",
-      "reservationId": 1
-    },
-    {
-      "id": "2",
-      "name": "Room B",
-      "area": 200,
-      "status": "Waiting",
-      "reservationId": 1
-    },
-    {
-      "id": "3",
-      "name": "Room C",
-      "area": 150,
-      "status": "Completed",
-      "reservationId": 1
-    },
-    {
-      "id": "4",
-      "name": "Room D",
-      "area": 180,
-      "status": "In process",
-      "reservationId": 5
-    },
-    {
       "id": "5",
       "name": "Room E",
       "area": 220,
@@ -347,6 +319,20 @@
       "area": 230,
       "status": "Waiting",
       "reservationId": 7
+    },
+    {
+      "id": "6712",
+      "name": "Maycol",
+      "area": 120,
+      "status": "In process",
+      "reservationId": "1"
+    },
+    {
+      "id": "8fee",
+      "name": "example",
+      "area": 120,
+      "status": "Completed",
+      "reservationId": "1"
     }
   ]
 }
