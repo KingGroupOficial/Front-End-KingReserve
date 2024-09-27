@@ -65,6 +65,17 @@
       "district": "ate",
       "observations": "usa lentes ",
       "roomId": "6"
+    },
+    {
+      "id": "2ca9",
+      "name": "Maycol Jhordan Rojas Velasquez",
+      "age": "20",
+      "date": "2024-08-29",
+      "country": "Perú",
+      "city": "Lima",
+      "district": "ate",
+      "observations": "sufre de hazma ",
+      "roomId": "5"
     }
   ],
   "reservations": [

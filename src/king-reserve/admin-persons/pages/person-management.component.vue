@@ -1,24 +1,30 @@
 <template>
   <div class="person-management">
-    <h3>Persons Registered in the Hotel</h3>
-    <button @click="addPerson">Add Person</button>
+    <h3 class="title">Persons Registered in the Hotel</h3>
+
+    <div class="custom-toolbar">
+      <button class="custom-button" @click="addPerson">Add Person</button>
+      <button class="custom-button" @click="exportToPDF">Export PDF</button>
+    </div>
+
     <div v-if="loading">Loading persons...</div>
     <div v-if="error" class="error">{{ error }}</div>
     <div v-if="!loading && Object.keys(personsByRoom).length > 0">
       <div v-for="(persons, roomId) in personsByRoom" :key="roomId" class="room-group">
         <h4>Staying in: {{ rooms[roomId]?.name || 'Unknown' }}</h4>
         <div class="cards-container">
-          <div v-for="person in persons" :key="person.id" class="card">
+          <div v-for="person in persons" :key="person.id" class="card" :style="{ backgroundColor: getRoomColor(person.roomId) }">
             <h4>{{ person.name }}</h4>
             <p><strong>Age:</strong> {{ person.age }}</p>
             <p><strong>Date:</strong> {{ person.date }}</p>
             <p><strong>Country:</strong> {{ person.country || 'Not specified' }}</p>
             <p><strong>City:</strong> {{ person.city || 'Not specified' }}</p>
             <p><strong>District:</strong> {{ person.district || 'Not specified' }}</p>
-            <p><strong>Room:</strong> {{ rooms[person.roomId]?.name || 'Unknown' }}</p>
-            <p><strong>Observations:</strong> {{ person.observations || 'No observations' }}</p>
-            <button @click="editPerson(person)">Edit</button>
-            <button @click="deletePerson(person.id)">Delete</button>
+            <p class="footer"><strong>Staying at:</strong> {{ rooms[person.roomId]?.name || 'Rooms a stranger' }}</p>
+            <div class="button-container">
+              <button class="button" @click="editPerson(person)"><i class="pi pi-pencil"></i> Edit</button>
+              <button class="button" @click="deletePerson(person.id)"><i class="pi pi-trash"></i> Delete</button>
+            </div>
           </div>
         </div>
       </div>
@@ -39,10 +45,11 @@
 import { PersonApiService } from "@/king-reserve/admin-persons/services/person-api.services.js";
 import PersonCreateAndEditComponent from "@/king-reserve/admin-persons/components/person-create-and-edit.component.vue";
 import { RoomsApiService } from "@/king-reserve/admin-rooms/services/rooms-api.service.js";
+import jsPDF from "jspdf";
 
 export default {
   name: "person-management",
-  components: {PersonCreateAndEditComponent},
+  components: { PersonCreateAndEditComponent },
   data() {
     return {
       persons: [],
@@ -75,6 +82,14 @@ export default {
     this.fetchPersons();
   },
   methods: {
+    getRoomColor(roomId) {
+      const colors = {
+        8: '#A3E4D7', // Light green
+        7: '#76D7C4', // Medium green
+        5: '#48C9B0', // Teal
+      };
+      return colors[roomId] || '#E0E0E0'; // Default color if not found
+    },
     async fetchPersons() {
       this.loading = true;
       this.error = null;
@@ -113,7 +128,7 @@ export default {
       this.isVisibleCard = true;
     },
     editPerson(person) {
-      this.person = {...person};
+      this.person = { ...person };
       this.isEdit = true;
       this.isVisibleCard = true;
     },
@@ -174,39 +189,141 @@ export default {
     },
     validateForm() {
       return this.person.name && this.person.age && this.person.date && this.person.roomId && this.person.country && this.person.city && this.person.district;
+    },
+    exportToPDF() {
+      const doc = new jsPDF();
+
+      doc.setFontSize(18);
+      doc.text('Persons Registered in the Hotel', 14, 22);
+
+      let y = 30;
+      this.persons.forEach((person, index) => {
+        doc.setFontSize(12);
+        doc.text(`Person ${index + 1}:`, 14, y);
+        y += 6;
+        doc.text(`Name: ${person.name}`, 14, y);
+        y += 6;
+        doc.text(`Age: ${person.age}`, 14, y);
+        y += 6;
+        doc.text(`Date: ${person.date}`, 14, y);
+        y += 6;
+        doc.text(`Country: ${person.country || 'Not specified'}`, 14, y);
+        y += 6;
+        doc.text(`City: ${person.city || 'Not specified'}`, 14, y);
+        y += 6;
+        doc.text(`District: ${person.district || 'Not specified'}`, 14, y);
+        y += 10; // Add some space before the next person
+      });
+
+      doc.save('persons.pdf');
     }
   }
 };
 </script>
-
 <style scoped>
 .person-management {
   padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
 }
 
 .room-group {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.room-group h4 {
+  font-size: 24px;
+  color: white;
+  margin-bottom: 10px;
 }
 
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
+  justify-items: center;
 }
 
 .card {
-  background-color: #32C793;
-  border: 1px solid #32C793;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #27AE60;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card:hover {
+  transform: scale(1.05);
 }
 
 .card h4 {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: black;
+}
+
+.card p {
+  margin: 5px 0;
+  color: black;
+}
+
+.footer {
+  margin-top: auto;
+  font-weight: bold;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.button {
+  background-color: #27AE60;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin: 5px;
+  flex: 1;
+}
+
+.button:hover {
+  background-color: #1E824C;
+  transform: scale(1.05);
 }
 
 .error {
   color: red;
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.custom-button {
+  font-weight: bold;
+  padding: 12px 20px;
+  background-color: #28a745;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s, transform 0.2s;
+  margin: 0 5px;
+  flex: 1;
+  min-width: 120px;
+  font-size: 16px;
 }
 </style>
