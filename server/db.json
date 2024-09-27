@@ -5,121 +5,66 @@
       "name": "John Doe",
       "age": 35,
       "date": "2024-05-01",
-      "origin": {
-        "country": "USA",
-        "city": "New York",
-        "district": "Manhattan"
-      },
+      "country": "USA",
+      "city": "New York",
+      "district": "Manhattan",
       "observations": "Healthy",
-      "roomId": null
-    },
-    {
-      "id": "2",
-      "name": "Jane Smith",
-      "age": 28,
-      "date": "2024-05-02",
-      "origin": {},
-      "observations": "High productivity",
-      "roomId": null
+      "roomId": 6
     },
     {
       "id": "3",
       "name": "Michael Brown",
       "age": 40,
       "date": "2024-05-03",
-      "origin": {
-        "country": "Mexico",
-        "city": "Mexico City",
-        "district": "Coyoacán"
-      },
+      "country": "Mexico",
+      "city": "Mexico City",
+      "district": "Coyoacán",
       "observations": "Strong and active",
-      "roomId": 2
-    },
-    {
-      "id": "4",
-      "name": "Emily Johnson",
-      "age": 32,
-      "date": "2024-05-04",
-      "observations": {},
-      "roomId": 2
-    },
-    {
-      "id": "5",
-      "name": "Carlos García",
-      "age": 45,
-      "date": "2024-05-05",
-      "origin": {
-        "country": "Peru",
-        "city": "Chiclayo",
-        "district": "Chiclayo"
-      },
-      "observations": "Injury on right arm",
-      "roomId": 3
-    },
-    {
-      "id": "6",
-      "name": "Sophia White",
-      "age": 30,
-      "date": "2024-05-06",
-      "origin": {
-        "country": "Spain",
-        "city": "Madrid",
-        "district": "Centro"
-      },
-      "observations": "None",
-      "roomId": 3
-    },
-    {
-      "id": "7",
-      "name": "James Black",
-      "age": 37,
-      "date": "2024-05-07",
-      "origin": {
-        "country": "Australia",
-        "city": "Sydney",
-        "district": "Bondi"
-      },
-      "observations": "Black spot on back",
-      "roomId": 4
+      "roomId": "8"
     },
     {
       "id": "8",
       "name": "David Green",
       "age": 29,
       "date": "2024-05-08",
-      "origin": {
-        "country": "Brazil",
-        "city": "Rio de Janeiro",
-        "district": "Copacabana"
-      },
+      "country": "Brazil",
+      "city": "Rio de Janeiro",
+      "district": "Copacabana",
       "observations": "Mark on foot",
-      "roomId": 4
+      "roomId": "6"
     },
     {
       "id": "9",
       "name": "Laura Blue",
       "age": 25,
       "date": "2024-05-09",
-      "origin": {
-        "country": "Italy",
-        "city": "Rome",
-        "district": "Trastevere"
-      },
+      "country": "Italy",
+      "city": "Rome",
+      "district": "Trastevere",
       "observations": "Injured ear",
-      "roomId": 5
+      "roomId": "8fee"
     },
     {
       "id": "10",
       "name": "Lucas Grey",
       "age": 33,
       "date": "2024-05-10",
-      "origin": {
-        "country": "France",
-        "city": "Paris",
-        "district": "Montmartre"
-      },
+      "country": "France",
+      "city": "Paris",
+      "district": "Montmartre",
       "observations": "Injury on left hind leg",
-      "roomId": 5
+      "roomId": "5"
+    },
+    {
+      "id": "456f",
+      "name": "Hanna Velasquez ",
+      "age": "20",
+      "date": "2024-08-27",
+      "country": "Perú",
+      "city": "Lima",
+      "district": "ate",
+      "observations": "usa lentes ",
+      "roomId": "6"
     }
   ],
   "reservations": [
@@ -319,13 +264,6 @@
       "area": 230,
       "status": "Waiting",
       "reservationId": 7
-    },
-    {
-      "id": "6712",
-      "name": "Maycol",
-      "area": 120,
-      "status": "In process",
-      "reservationId": "1"
     },
     {
       "id": "8fee",

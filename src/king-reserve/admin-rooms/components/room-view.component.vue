@@ -60,11 +60,6 @@ export default {
         </div>
       </template>
 
-      <template #footer>
-        <div class="flex gap-3 mt-1">
-          <pv-button label="View Persons" class="w-full" @click="viewPersons" />
-        </div>
-      </template>
     </pv-card>
 
   </div>
