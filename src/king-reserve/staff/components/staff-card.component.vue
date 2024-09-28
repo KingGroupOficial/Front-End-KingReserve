@@ -1,5 +1,5 @@
 <script>
-import {Staff} from "../model/staff.entity.js"
+import { Staff } from "../model/staff.entity.js";
 
 export default {
   name: "staff-card",
@@ -7,69 +7,71 @@ export default {
   props: {
     staff: Staff,
   },
-
   computed: {
-    cardColor(){
+    cardColor() {
       switch (this.staff.on_job_status) {
-        case 'Available':
-          return { opacity: 1 }
-        case 'Working':
-          return { opacity: 0.5 }
+        case "Available":
+          return { opacity: 1 };
+        case "Working":
+          return { opacity: 0.5 };
         default:
-          return { opacity: 1 }
+          return { opacity: 1 };
       }
     },
   },
-
-}
+};
 </script>
 
 <template>
   <div class="card-container">
-    <pv-toast/>
+    <pv-toast />
     <pv-card class="custom-card" v-bind:style="cardColor">
-
-      <template #header >
+      <template #header>
         <div class="card-header">
           <i class="pi pi-user" style="font-size: 2.5rem"></i>
         </div>
       </template>
 
-      <template #title >
-        <div class="card-title"> {{ staff.name + " " + staff.last_name }} </div>
+      <template #title>
+        <div class="card-title">{{ staff.name + " " + staff.last_name }}</div>
       </template>
 
       <template #subtitle>
-        <div> Work on reserve: {{ staff.reserves_id }} </div>
+        <div>{{ $t('staffCard.workOnReserve') }}: {{ staff.reserves_id }}</div>
       </template>
 
       <template #content>
         <div>
-          <p style="font-weight: bold">Job Description:</p>
+          <p style="font-weight: bold">{{ $t('staffCard.jobDescription') }}:</p>
           {{ staff.job_description }}
         </div>
         <div>
-          <br/>
-          <p style="font-weight: bold">Status:</p>
-          <pv-avatar :label="staff.on_job_status" class="mr-2" style="background-color: #34d399; color: #020617; width: 10rem;" />
+          <br />
+          <p style="font-weight: bold">{{ $t('staffCard.status') }}:</p>
+          <pv-avatar
+              :label="staff.on_job_status"
+              class="mr-2"
+              style="background-color: #34d399; color: #020617; width: 10rem;"
+          />
         </div>
       </template>
 
       <template #footer>
         <div class="gap-3 mt-1">
-          <p style="font-weight: bold">Email:</p>
-          <pv-avatar :label="staff.email" class="mr-2" style="background-color: #34d399; color: #020617; width: 20rem;" />
+          <p style="font-weight: bold">{{ $t('staffCard.email') }}:</p>
+          <pv-avatar
+              :label="staff.email"
+              class="mr-2"
+              style="background-color: #34d399; color: #020617; width: 20rem;"
+          />
         </div>
       </template>
-
     </pv-card>
   </div>
-
 </template>
 
 <style scoped>
-
-.card-header{
+.card-header {
   display: flex;
   justify-content: center;
   margin: 1rem;
@@ -82,7 +84,7 @@ export default {
   object-fit: cover;
 }
 
-.card-container{
+.card-container {
   position: relative;
 }
 
@@ -91,7 +93,7 @@ export default {
   margin: 0.5rem;
 }
 
-.card-title{
+.card-title {
   font-size: 25px;
 }
 
@@ -101,5 +103,4 @@ export default {
     height: 30rem;
   }
 }
-
 </style>

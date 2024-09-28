@@ -1,4 +1,5 @@
 <script>
+import { useI18n } from 'vue-i18n';
 import ReserveView from "@/king-reserve/admin-reserve/components/reserve-view.vue";
 import { ReserveApiService } from "@/king-reserve/admin-reserve/services/reserve-api.service.js";
 import { Reservation } from "@/king-reserve/admin-reserve/model/reserve.entity.js";
@@ -8,6 +9,10 @@ import FilterPageComponent from "@/king-reserve/admin-reserve/pages/filter-page.
 export default {
   name: "reserve-management",
   components: { FilterPageComponent, ReserveView, ReserveCreateAndEditComponent },
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
     return {
       title: {singular: 'Reservation', plural: 'Reservations'},
@@ -168,16 +173,17 @@ export default {
   }
 }
 </script>
+
 <template>
   <section class="reserve-section" :style="{ position: 'relative'} ">
     <pv-toast/>
     <div class="container-title">
-      <p class="container-title--title">My Reservations</p>
+      <p class="container-title--title">{{ t('myReservations') }}</p>
       <div>
         <div class="button-group-desktop" v-if="!deleteFlag">
-          <pv-button class="mr-2 title-button btn-action" icon="pi pi-plus" label="New" severity="secondary"
+          <pv-button class="mr-2 title-button btn-action" icon="pi pi-plus" :label="t('new')" severity="secondary"
                      @click="onNewItemEventHandler"></pv-button>
-          <pv-button class="mr-2 title-button btn-action" icon="pi pi-filter" label="Filter" severity="secondary" text
+          <pv-button class="mr-2 title-button btn-action" icon="pi pi-filter" :label="t('filter')" severity="secondary" text
                      @click="onFilterSelected"></pv-button>
           <pv-button class="mr-2 title-button btn-action" icon="pi pi-trash" severity="secondary" text
                      @click="deleteAction"></pv-button>
@@ -193,9 +199,9 @@ export default {
         </div>
 
         <div v-if="deleteFlag">
-          <pv-button class="mr-2 title-button btn-action" icon="pi pi-trash" severity="secondary" label="Delete"
+          <pv-button class="mr-2 title-button btn-action" icon="pi pi-trash" severity="secondary" :label="t('delete')"
                      @click="deleteSelection"></pv-button>
-          <pv-button class="mr-2 title-button btn-action" severity="secondary" v-if="deleteFlag" text label="Cancel"
+          <pv-button class="mr-2 title-button btn-action" severity="secondary" v-if="deleteFlag" text :label="t('cancel')"
                      @click="deleteAction"></pv-button>
         </div>
       </div>
@@ -204,7 +210,7 @@ export default {
     <div class="on-filter flex display-flex align-items-center flex-direction-row justify-content-space-between"
          v-if="wasFilter">
       <div class="filter-total-results flex gap-3">
-        <p>Total Results:</p>
+        <p>{{ t('totalResults') }}:</p>
         <p>{{ reservations.length.toString() }}</p>
       </div>
       <pv-button class="mr-2 title-button" icon="pi pi-times" text rounded severity="secondary"
@@ -245,7 +251,6 @@ export default {
     </div>
   </section>
 </template>
-
 
 <style scoped>
 .reserve-section {

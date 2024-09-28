@@ -2,14 +2,14 @@
   <div class="filter-container">
     <div class="card">
       <pv-stepper orientation="vertical">
-        <pv-stepper-panel header="Duration">
+        <pv-stepper-panel :header="$t('duration')">
           <template #content="{ prevCallback }">
             <div class="flex flex-column h-12.5rem">
               <div class="surface-border border-round surface-ground flex-auto flex flex-column justify-content-center align-items-center font-medium">
 
                 <div class="flex-auto flex justify-content-center align-items-center font-medium">
                   <div class="input-number-duration ">
-                    <p class="custom-paragraph">MIN</p>
+                    <p class="custom-paragraph">{{ $t('min') }}</p>
                     <pv-input-number v-model="minValue" showButtons buttonLayout="vertical" style="width: 3rem" :min="0" :max="99">
                       <template #incrementbuttonicon>
                         <span class="pi pi-plus" />
@@ -21,7 +21,7 @@
                   </div>
 
                   <div :class="['input-number-duration', { 'hidden': minValue === null }]">
-                    <p class="custom-paragraph">MAX</p>
+                    <p class="custom-paragraph">{{ $t('max') }}</p>
                     <pv-input-number v-model="maxValue" showButtons buttonLayout="vertical" style="width: 3rem" :min="this.minValue" :max="99">
                       <template #incrementbuttonicon>
                         <span class="pi pi-plus" />
@@ -33,35 +33,35 @@
                   </div>
                 </div>
 
-                <p class="custom-paragraph">The duration is in days</p>
+                <p class="custom-paragraph">{{ $t('durationInDays') }}</p>
 
               </div>
             </div>
             <div class="flex py-4 container-buttons-actions">
-              <pv-button label="Filter" severity="Primary" class="container-buttons-actions__filter" @click="filterForDuration" />
-              <pv-button label="Cancel" severity="secondary" @click="close" />
+              <pv-button :label="$t('filter')" severity="Primary" class="container-buttons-actions__filter" @click="filterForDuration" />
+              <pv-button :label="$t('cancel')" severity="secondary" @click="close" />
             </div>
           </template>
         </pv-stepper-panel>
 
-        <pv-stepper-panel header="Date">
+        <pv-stepper-panel :header="$t('date')">
           <template #content="{ prevCallback }">
             <div class="flex flex-column h-12rem">
               <div class="surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium container-dates">
                 <pv-float-label>
                   <pv-calendar class="calendar-dates" v-model="initialDateValue" showIcon iconDisplay="input" inputId="initialDate" />
-                  <label for="initialDate">Initial Date</label>
+                  <label for="initialDate">{{ $t('initialDate') }}</label>
                 </pv-float-label>
 
                 <pv-float-label>
                   <pv-calendar class="calendar-dates" v-model="finalDateValue" showIcon iconDisplay="input" inputId="finalDate" />
-                  <label for="finalDate">Final Date</label>
+                  <label for="finalDate">{{ $t('finalDate') }}</label>
                 </pv-float-label>
               </div>
             </div>
             <div class="flex py-4 container-buttons-actions">
-              <pv-button label="Filter" severity="Primary" class="container-buttons-actions__filter" @click="filterForDate" />
-              <pv-button label="Cancel" severity="secondary" @click="close" />
+              <pv-button :label="$t('filter')" severity="Primary" class="container-buttons-actions__filter" @click="filterForDate" />
+              <pv-button :label="$t('cancel')" severity="secondary" @click="close" />
             </div>
           </template>
         </pv-stepper-panel>
@@ -71,10 +71,16 @@
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: "filter-page",
   props: {
     visible: Boolean,
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {

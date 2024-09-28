@@ -1,14 +1,15 @@
 <script>
 import { StaffApiService } from "../services/staff-api.service.js";
-import { Staff } from "../model/staff.entity.js"
-import StaffEdit from "../components/staff-edit.component.vue"
+import { Staff } from "../model/staff.entity.js";
+import StaffEdit from "../components/staff-edit.component.vue";
 import StaffCreateAndEdit from "../components/staff-create-and-edit.component.vue";
+
 export default {
   name: "staff-management",
   components: { StaffCreateAndEdit, StaffEdit },
   data() {
     return {
-      title: { singular: 'Staff', plural: 'Staffs' },
+      title: {singular: 'Staff', plural: 'Staffs'},
       staffs: [],
       staff: {},
       origin: {},
@@ -32,11 +33,11 @@ export default {
   },
   methods: {
     showWarningMessage() {
-      alert("Warning! You are entering the page to manage sensitive information.");
+      alert(this.$t('staffManagement.warningMessage'));
     },
 
     notifySuccessfulAction(message) {
-      this.$toast.add({severity: "success", summary: "Success", detail: message, life: 3000});
+      this.$toast.add({severity: "success", summary: this.$t('success'), detail: message, life: 3000});
     },
 
     findIndexById(id) {
@@ -91,7 +92,7 @@ export default {
           .then(() => {
             this.staffs = this.staffs.filter((t) => t.id !== this.staff.id);
             this.staff = {};
-            this.notifySuccessfulAction("Staff Deleted");
+            this.notifySuccessfulAction(this.$t('staffManagement.staffDeleted'));
           });
     },
 
@@ -101,7 +102,7 @@ export default {
           this.staffs = this.staffs.filter((t) => t.id !== staff.id);
         });
       });
-      this.notifySuccessfulAction("Staff Deleted");
+      this.notifySuccessfulAction(this.$t('staffManagement.staffDeleted'));
     },
 
     createStaff() {
@@ -110,7 +111,7 @@ export default {
           .then((response) => {
             this.staff = Staff.toDisplayableStaff(response.data);
             this.staffs.push(this.staff);
-            this.notifySuccessfulAction("Staff Created");
+            this.notifySuccessfulAction(this.$t('staffManagement.staffCreated'));
             this.createAndEditDialogIsVisible = false;
           })
           .catch((error) => {
@@ -123,7 +124,7 @@ export default {
       this.staffService.update(this.staff.id, this.staff)
           .then((response) => {
             this.staffs[this.findIndexById(response.data.id)] = Staff.toDisplayableStaff(response.data);
-            this.notifySuccessfulAction("Staff Updated");
+            this.notifySuccessfulAction(this.$t('staffManagement.staffUpdated'));
           })
           .catch((error) => {
             console.error('Error updating staff:', error);
@@ -147,17 +148,17 @@ export default {
     >
       <template #custom-columns>
         <!-- Id Column -->
-        <pv-column :sortable="true" field="id" header="Id" style="min-width: 6rem"/>
+        <pv-column :sortable="true" field="id" :header="$t('id')" style="min-width: 6rem"/>
         <!-- Email Column -->
-        <pv-column :sortable="true" field="email" header="Email" style="min-width: 6rem"/>
+        <pv-column :sortable="true" field="email" :header="$t('email')" style="min-width: 6rem"/>
         <!-- Name Column -->
-        <pv-column :sortable="true" field="name" header="Name" style="min-width: 6rem"/>
+        <pv-column :sortable="true" field="name" :header="$t('name')" style="min-width: 6rem"/>
         <!-- Last Name Column -->
-        <pv-column :sortable="true" field="last_name" header="Last Name" style="min-width: 6rem"/>
+        <pv-column :sortable="true" field="last_name" :header="$t('lastName')" style="min-width: 6rem"/>
         <!-- Status Column -->
-        <pv-column :sortable="false" field="on_job_status" header="Status" style="min-width: 6rem"/>
+        <pv-column :sortable="false" field="on_job_status" :header="$t('status')" style="min-width: 6rem"/>
         <!-- Job Description Column -->
-        <pv-column :sortable="false" field="job_description" header="Job" style="min-width: 6rem"/>
+        <pv-column :sortable="false" field="job_description" :header="$t('jobDescription')" style="min-width: 6rem"/>
       </template>
     </staff-edit>
 

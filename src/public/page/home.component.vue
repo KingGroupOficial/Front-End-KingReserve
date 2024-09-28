@@ -1,7 +1,12 @@
 <script>
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: "home",
-
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0);
@@ -12,7 +17,7 @@ export default {
 
 <template>
   <div>
-    <h1 class="animated-title" style="margin-bottom: 80px;">Welcome to King Reserve</h1>
+    <h1 class="animated-title" style="margin-bottom: 80px;">{{ t('welcome') }}</h1>
   </div>
 
   <div class="container">
@@ -23,16 +28,15 @@ export default {
         </div>
 
         <div class="title">
-          <p>Reservations</p>
+          <p>{{ t('reservations') }}</p>
         </div>
 
         <div class="card-body">
-          <p>Manage your reservations</p>
+          <p>{{ t('manageReservations') }}</p>
         </div>
 
         <div class="footer-button">
           <pv-button class="custom-button">
-            <!-- Ícono de calendario para las reservas -->
             <i class="pi pi-calendar" style="font-size: 2rem"></i>
           </pv-button>
         </div>
@@ -46,16 +50,15 @@ export default {
         </div>
 
         <div class="title">
-          <p>Reports</p>
+          <p>{{ t('reports') }}</p>
         </div>
 
         <div class="card-body">
-          <p>Data, reports and statistics in real time</p>
+          <p>{{ t('dataReports') }}</p>
         </div>
 
         <div class="footer-button">
           <pv-button class="custom-button">
-            <!-- Ícono de gráfico para los informes -->
             <i class="pi pi-chart-line" style="font-size: 2rem"></i>
           </pv-button>
         </div>
@@ -69,16 +72,15 @@ export default {
         </div>
 
         <div class="title">
-          <p>Staff</p>
+          <p>{{ t('staff') }}</p>
         </div>
 
         <div class="card-body">
-          <p>Connect and lead with your entire staff</p>
+          <p>{{ t('connectStaff') }}</p>
         </div>
 
         <div class="footer-button">
           <pv-button class="custom-button">
-            <!-- Ícono de usuario para el staff -->
             <i class="pi pi-users" style="font-size: 2rem"></i>
           </pv-button>
         </div>
@@ -92,16 +94,15 @@ export default {
         </div>
 
         <div class="title">
-          <p>Inventory</p>
+          <p>{{ t('inventory') }}</p>
         </div>
 
         <div class="card-body">
-          <p>Keep personalized control of your inventory</p>
+          <p>{{ t('manageInventory') }}</p>
         </div>
 
         <div class="footer-button">
           <pv-button class="custom-button">
-            <!-- Ícono de caja para el inventario -->
             <i class="pi pi-box" style="font-size: 2rem"></i>
           </pv-button>
         </div>
@@ -115,16 +116,15 @@ export default {
         </div>
 
         <div class="title">
-          <p>Services</p>
+          <p>{{ t('services') }}</p>
         </div>
 
         <div class="card-body">
-          <p>Connect the different services for your hotel</p>
+          <p>{{ t('connectServices') }}</p>
         </div>
 
         <div class="footer-button">
           <pv-button class="custom-button">
-            <!-- Ícono de herramientas para los servicios -->
             <i class="pi pi-cog" style="font-size: 2rem"></i>
           </pv-button>
         </div>
@@ -225,7 +225,6 @@ export default {
   margin-top: 10px;
 }
 
-/* Estilos personalizados para los botones */
 .custom-button {
   background-color: #f4a261;
   border: none;

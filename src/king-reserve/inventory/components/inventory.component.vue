@@ -3,7 +3,7 @@
     <!-- Cabecera con logo y título -->
     <div class="header">
       <img src="https://i.imgur.com/hfmmUAR.png" alt="King Reserve Logo" class="logo" />
-      <h1 class="animated-title">Management Inventory</h1>
+      <h1 class="animated-title">{{ $t('inventoryManagement.title') }}</h1>
     </div>
 
     <!-- Contenedor de tarjetas -->
@@ -12,16 +12,16 @@
         <pv-card class="custom-card">
           <template #title>
             <div class="card-title">
-              {{ card.title }}
+              {{ $t(`inventoryManagement.cards.${card.title}.title`) }}
               <i :class="card.icon" class="card-icon"></i>
             </div>
           </template>
           <template #content>
-            <div class="card-description">{{ card.description }}</div>
+            <div class="card-description">{{ $t(`inventoryManagement.cards.${card.title}.description`) }}</div>
           </template>
           <template #footer>
             <div class="card-footer">
-              <pv-button label="View" class="custom-button" @click="showInventoryDialog(card.title)"></pv-button>
+              <pv-button :label="$t('inventoryManagement.view')" class="custom-button" @click="showInventoryDialog(card.title)"></pv-button>
             </div>
           </template>
         </pv-card>
@@ -30,11 +30,11 @@
 
     <!-- Dialogo para cada inventario -->
     <pv-dialog v-model:visible="displayDialog" :header="selectedInventory" :style="{ width: '50vw' }" :modal="true">
-      <div>Inventory For {{ selectedInventory }}</div>
+      <div>{{ $t('inventoryManagement.inventoryFor') }} {{ selectedInventory }}</div>
 
       <!-- Si el inventario es de comida o herramientas, mostramos contenido específico -->
       <div v-if="selectedInventory === 'Food'">
-        <h4>Food Inventory Description</h4>
+        <h4>{{ $t('inventoryManagement.foodDescription') }}</h4>
         <pv-toolbar>
           <template #start>
             <pv-button icon="pi pi-plus" class="custom-plus-button mr-2" @click="openAddDialog" />
@@ -44,14 +44,14 @@
               <pv-input-icon>
                 <i class="pi pi-search" />
               </pv-input-icon>
-              <pv-input-text v-model="searchQuery" placeholder="Search" />
+              <pv-input-text v-model="searchQuery" :placeholder="$t('inventoryManagement.search')" />
             </pv-icon-field>
           </template>
         </pv-toolbar>
       </div>
 
       <div v-else-if="selectedInventory === 'Tools'">
-        <h4>Tools Inventory Description</h4>
+        <h4>{{ $t('inventoryManagement.toolsDescription') }}</h4>
         <pv-toolbar>
           <template #start>
             <pv-button icon="pi pi-plus" class="custom-plus-button mr-2" @click="openAddDialog" />
@@ -61,7 +61,7 @@
               <pv-input-icon>
                 <i class="pi pi-search" />
               </pv-input-icon>
-              <pv-input-text v-model="searchQuery" placeholder="Search" />
+              <pv-input-text v-model="searchQuery" :placeholder="$t('inventoryManagement.search')" />
             </pv-icon-field>
           </template>
         </pv-toolbar>
@@ -74,7 +74,7 @@
             <div class="product-list-item">
               <div class="product-details">
                 <h5 class="product-title">{{ item.name }}</h5>
-                <div class="product-quantity">Quantity: {{ item.quantity }}</div>
+                <div class="product-quantity">{{ $t('inventoryManagement.quantity') }}: {{ item.quantity }}</div>
               </div>
               <div class="product-action">
                 <pv-button icon="pi pi-pencil" class="p-button-rounded custom-edit-button mr-2" @click="openEditDialog(item)" />
@@ -86,46 +86,46 @@
       </div>
 
       <template #footer>
-        <pv-button label="Close" @click="closeDialog" class="custom-close-button"></pv-button>
-        <pv-button label="Add" @click="openAddDialog" class="custom-add-button"></pv-button>
+        <pv-button :label="$t('inventoryManagement.close')" @click="closeDialog" class="custom-close-button"></pv-button>
+        <pv-button :label="$t('inventoryManagement.add')" @click="openAddDialog" class="custom-add-button"></pv-button>
       </template>
     </pv-dialog>
 
     <!-- Dialogo para agregar ítems -->
-    <pv-dialog v-model:visible="displayAddDialog" :header="'Add ' + selectedInventory" :style="{ width: '30vw' }" :modal="true">
+    <pv-dialog v-model:visible="displayAddDialog" :header="$t('inventoryManagement.add') + ' ' + selectedInventory" :style="{ width: '30vw' }" :modal="true">
       <div class="form-group">
-        <label for="name">Name</label>
-        <pv-input-text v-model="newItem.name" id="name" placeholder="Enter item name" />
+        <label for="name">{{ $t('inventoryManagement.name') }}</label>
+        <pv-input-text v-model="newItem.name" id="name" :placeholder="$t('inventoryManagement.enterName')" />
       </div>
       <div class="form-group">
-        <label for="quantity">Quantity</label>
-        <pv-input-number v-model="newItem.quantity" id="quantity" placeholder="Enter item quantity" />
+        <label for="quantity">{{ $t('inventoryManagement.quantity') }}</label>
+        <pv-input-number v-model="newItem.quantity" id="quantity" :placeholder="$t('inventoryManagement.enterQuantity')" />
       </div>
       <div class="form-group">
-        <label for="nroRoom">Nro. of Room</label>
+        <label for="nroRoom">{{ $t('inventoryManagement.nroRoom') }}</label>
         <pv-input-number v-model="newItem.nroRoom" id="nroRoom" :min="0" mode="decimal" showButtons :step="1" />
       </div>
 
       <template #footer>
-        <pv-button label="Cancel" @click="closeAddDialog" class="custom-close-button"></pv-button>
-        <pv-button label="Save" @click="saveNewItem" class="custom-add-button"></pv-button>
+        <pv-button :label="$t('inventoryManagement.cancel')" @click="closeAddDialog" class="custom-close-button"></pv-button>
+        <pv-button :label="$t('inventoryManagement.save')" @click="saveNewItem" class="custom-add-button"></pv-button>
       </template>
     </pv-dialog>
 
     <!-- Dialogo para editar ítems -->
-    <pv-dialog v-model:visible="displayEditDialog" :header="'Edit ' + selectedInventory" :style="{ width: '30vw' }" :modal="true">
+    <pv-dialog v-model:visible="displayEditDialog" :header="$t('inventoryManagement.edit') + ' ' + selectedInventory" :style="{ width: '30vw' }" :modal="true">
       <div class="form-group">
-        <label for="editName">Name</label>
-        <pv-input-text v-model="editItemData.name" id="editName" placeholder="Enter item name" />
+        <label for="editName">{{ $t('inventoryManagement.name') }}</label>
+        <pv-input-text v-model="editItemData.name" id="editName" :placeholder="$t('inventoryManagement.enterName')" />
       </div>
       <div class="form-group">
-        <label for="editQuantity">Quantity</label>
-        <pv-input-number v-model="editItemData.quantity" id="editQuantity" placeholder="Enter item quantity" />
+        <label for="editQuantity">{{ $t('inventoryManagement.quantity') }}</label>
+        <pv-input-number v-model="editItemData.quantity" id="editQuantity" :placeholder="$t('inventoryManagement.enterQuantity')" />
       </div>
 
       <template #footer>
-        <pv-button label="Cancel" @click="closeEditDialog" class="custom-close-button"></pv-button>
-        <pv-button label="Save" @click="saveEditedItem" class="custom-add-button"></pv-button>
+        <pv-button :label="$t('inventoryManagement.cancel')" @click="closeEditDialog" class="custom-close-button"></pv-button>
+        <pv-button :label="$t('inventoryManagement.save')" @click="saveEditedItem" class="custom-add-button"></pv-button>
       </template>
     </pv-dialog>
   </div>
@@ -133,7 +133,7 @@
 
 <script>
 import axios from 'axios';
-import { ref, computed } from 'vue'; // Agregar 'computed' para manejar la búsqueda
+import { ref, computed } from 'vue';
 
 const http = axios.create({
   baseURL: 'https://66f72cbdb5d85f31a3422dc2.mockapi.io',
@@ -146,7 +146,7 @@ export default {
     const displayEditDialog = ref(false);
     const selectedInventory = ref('');
     const items = ref([]);
-    const searchQuery = ref(''); // Agregar búsqueda
+    const searchQuery = ref('');
     const newItem = ref({
       name: '',
       quantity: 0,
@@ -160,14 +160,13 @@ export default {
     });
 
     const cards = [
-      {title: 'Food', description: 'Food Inventory', icon: 'pi pi-apple'},
-      {title: 'Tools', description: 'Tools Inventory', icon: 'pi pi-wrench'}
+      { title: 'Food', description: 'Food Inventory', icon: 'pi pi-apple' },
+      { title: 'Tools', description: 'Tools Inventory', icon: 'pi pi-wrench' }
     ];
 
-    // Filtrar ítems con búsqueda
     const filteredItems = computed(() => {
       if (searchQuery.value === '') {
-        return items.value; // Si no hay búsqueda, mostrar todos
+        return items.value;
       } else {
         return items.value.filter(item =>
             item.name.toLowerCase().includes(searchQuery.value.toLowerCase())
@@ -191,7 +190,7 @@ export default {
     };
 
     const openAddDialog = () => {
-      newItem.value = {name: '', quantity: 0, nroRoom: 0};
+      newItem.value = { name: '', quantity: 0, nroRoom: 0 };
       displayAddDialog.value = true;
     };
 
@@ -207,7 +206,7 @@ export default {
     };
 
     const openEditDialog = (item) => {
-      editItemData.value = {...item};
+      editItemData.value = { ...item };
       displayEditDialog.value = true;
     };
 
@@ -238,8 +237,8 @@ export default {
       displayEditDialog,
       selectedInventory,
       items,
-      searchQuery, // Búsqueda
-      filteredItems, // Elementos filtrados
+      searchQuery,
+      filteredItems,
       newItem,
       editItemData,
       cards,

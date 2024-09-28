@@ -1,40 +1,40 @@
 <template>
   <div class="person-management">
-    <h3 class="title">Persons Registered in the Hotel</h3>
+    <h3 class="title">{{ t('personsRegistered') }}</h3>
     <div class="custom-toolbar">
       <div class="search-bar">
-        <input type="text" v-model="searchQuery" placeholder="Search by name..." />
+        <input type="text" v-model="searchQuery" :placeholder="t('searchByName')" />
       </div>
       <div class="right-toolbar">
-        <button class="custom-button" @click="addPerson">Add Person</button>
-        <button class="custom-button" @click="exportToPDF">Export PDF</button>
+        <button class="custom-button" @click="addPerson">{{ t('addPerson') }}</button>
+        <button class="custom-button" @click="exportToPDF">{{ t('exportPDF') }}</button>
       </div>
     </div>
 
-    <div v-if="loading">Loading persons...</div>
+    <div v-if="loading">{{ t('loadingPersons') }}</div>
     <div v-if="error" class="error">{{ error }}</div>
     <div v-if="!loading && Object.keys(filteredPersonsByRoom).length > 0">
       <div v-for="(persons, roomId) in filteredPersonsByRoom" :key="roomId" class="room-group">
-        <h4>Staying in: {{ rooms[roomId]?.name || 'Unknown' }}</h4>
+        <h4>{{ t('stayingIn') }}: {{ rooms[roomId]?.name || t('unknown') }}</h4>
         <br>
         <div class="cards-container">
           <div v-for="person in persons" :key="person.id" class="card" :style="{ backgroundColor: getRoomColor(person.roomId) }">
             <h4>{{ person.name }}</h4>
-            <p><strong>Age:</strong> {{ person.age }}</p>
-            <p><strong>Date:</strong> {{ person.date }}</p>
-            <p><strong>Country:</strong> {{ person.country || 'Not specified' }}</p>
-            <p><strong>City:</strong> {{ person.city || 'Not specified' }}</p>
-            <p><strong>District:</strong> {{ person.district || 'Not specified' }}</p>
-            <p class="footer"><strong>Staying at:</strong> {{ rooms[person.roomId]?.name || 'Rooms a stranger' }}</p>
+            <p><strong>{{ t('age') }}:</strong> {{ person.age }}</p>
+            <p><strong>{{ t('date') }}:</strong> {{ person.date }}</p>
+            <p><strong>{{ t('country') }}:</strong> {{ person.country || t('notSpecified') }}</p>
+            <p><strong>{{ t('city') }}:</strong> {{ person.city || t('notSpecified') }}</p>
+            <p><strong>{{ t('district') }}:</strong> {{ person.district || t('notSpecified') }}</p>
+            <p class="footer"><strong>{{ t('stayingAt') }}:</strong> {{ rooms[person.roomId]?.name || t('roomsAStranger') }}</p>
             <div class="button-container">
-              <button class="button" @click="editPerson(person)"><i class="pi pi-pencil"></i> Edit</button>
-              <button class="button" @click="deletePerson(person.id)"><i class="pi pi-trash"></i> Delete</button>
+              <button class="button" @click="editPerson(person)"><i class="pi pi-pencil"></i> {{ t('edit') }}</button>
+              <button class="button" @click="deletePerson(person.id)"><i class="pi pi-trash"></i> {{ t('delete') }}</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="!loading && Object.keys(filteredPersonsByRoom).length === 0">No persons found.</div>
+    <div v-if="!loading && Object.keys(filteredPersonsByRoom).length === 0">{{ t('noPersonsFound') }}</div>
 
     <person-create-and-edit-component
         :item="person"
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
 import { PersonApiService } from "@/king-reserve/admin-persons/services/person-api.services.js";
 import PersonCreateAndEditComponent from "@/king-reserve/admin-persons/components/person-create-and-edit.component.vue";
 import { RoomsApiService } from "@/king-reserve/admin-rooms/services/rooms-api.service.js";
@@ -55,6 +56,10 @@ import jsPDF from "jspdf";
 export default {
   name: "person-management",
   components: { PersonCreateAndEditComponent },
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
     return {
       persons: [],
@@ -214,17 +219,17 @@ export default {
     exportToPDF() {
       const doc = new jsPDF();
       doc.setFontSize(18);
-      doc.text('Persons Registered in the Hotel', 105, 22, { align: 'center' }); // Centered title
+      doc.text(this.t('personsRegistered'), 105, 22, { align: 'center' }); // Centered title
       doc.setFontSize(12);
 
-      const headers = ['Name', 'Age', 'Date', 'Country', 'City', 'District'];
+      const headers = [this.t('name'), this.t('age'), this.t('date'), this.t('country'), this.t('city'), this.t('district')];
       const data = this.persons.map(person => [
         person.name,
         person.age,
         person.date,
-        person.country || 'Not specified',
-        person.city || 'Not specified',
-        person.district || 'Not specified'
+        person.country || this.t('notSpecified'),
+        person.city || this.t('notSpecified'),
+        person.district || this.t('notSpecified')
       ]);
 
       const startX = 10;

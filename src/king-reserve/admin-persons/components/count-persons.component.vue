@@ -2,7 +2,7 @@
   <div class="count-persons-card">
     <div class="card-header">
       <i class="fas fa-users card-icon"></i>
-      <h3>Personas Hospedadas</h3>
+      <h3>{{ t('personsHosted') }}</h3>
     </div>
     <div class="card-content">
       <p> <strong>{{ totalPersons }}</strong></p>
@@ -11,10 +11,15 @@
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
 import { PersonApiService } from "@/king-reserve/admin-persons/services/person-api.services.js";
 
 export default {
   name: "count-persons",
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
     return {
       totalPersons: 0
@@ -50,6 +55,4 @@ p {
   text-align: center;
   font-size: 1.8rem; /* Increased font size */
 }
-
-
 </style>

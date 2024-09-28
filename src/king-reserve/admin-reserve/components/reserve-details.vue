@@ -1,10 +1,15 @@
 <script>
+import { useI18n } from 'vue-i18n';
 import roomManagement from "@/king-reserve/admin-rooms/pages/room-management.vue";
-import {ReserveApiService} from "@/king-reserve/admin-reserve/services/reserve-api.service.js";
+import { ReserveApiService } from "@/king-reserve/admin-reserve/services/reserve-api.service.js";
 
 export default {
   name: "reserve-details",
-  components: {roomManagement},
+  components: { roomManagement },
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
     return {
       reserve: null,

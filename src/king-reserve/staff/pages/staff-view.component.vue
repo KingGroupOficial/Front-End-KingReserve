@@ -1,22 +1,21 @@
 <script>
 import StaffCard from "../components/staff-card.component.vue";
-import {StaffApiService} from "../services/staff-api.service.js";
-import {Staff} from "../model/staff.entity.js"
+import { StaffApiService } from "../services/staff-api.service.js";
+import { Staff } from "../model/staff.entity.js";
 
 export default {
   name: "staff-view",
-  components: {StaffCard},
+  components: { StaffCard },
   props: {},
   data() {
     return {
-      title: {singular: 'Staff', plural: 'Staffs'},
+      title: { singular: 'Staff', plural: 'Staffs' },
       staff: {},
       staffs: [],
       staffService: null,
       isVisibleCard: false,
-      visibleFilter:false
-    }
-
+      visibleFilter: false
+    };
   },
   created() {
     this.staffService = new StaffApiService();
@@ -36,50 +35,41 @@ export default {
           date_end: staff.dateEnd,
         });
       });
-
     });
   },
-  methods: {
-
-  }
-}
+  methods: {}
+};
 </script>
 
 <template>
   <section class="staff-section">
-    <pv-toast/>
+    <pv-toast />
 
     <!-- Title -->
     <div class="container-title">
-      <h2 class="title"> Staff View </h2>
+      <h2 class="title">{{ $t('staffCard.title') }}</h2>
     </div>
 
     <!-- Toolbar -->
     <pv-toolbar class="mb-4">
-
       <!-- Edit Button -->
       <template #center>
-        <router-link to="/staff-manage" rel="noopener">
-          <pv-button class="mr-2" icon="pi pi-pencil" label="Edit" raised/>
+        <router-link to="/staff" rel="noopener">
+          <pv-button class="mr-2" icon="pi pi-pencil" :label="$t('edit')" raised />
         </router-link>
       </template>
-
     </pv-toolbar>
-
 
     <!-- Cards -->
     <div class="container-staff">
       <div v-for="staff in staffs" :key="staff.id" class="card">
-        <staff-card :staff="staff"/>
+        <staff-card :staff="staff" />
       </div>
     </div>
-
   </section>
-
 </template>
 
 <style scoped>
-
 .staff-section {
   padding: 20px;
   position: relative;
@@ -99,7 +89,5 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
 }
-
 </style>

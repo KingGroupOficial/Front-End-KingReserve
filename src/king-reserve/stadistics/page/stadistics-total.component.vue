@@ -1,4 +1,5 @@
 <script>
+import { useI18n } from 'vue-i18n';
 import CountPersons from "@/king-reserve/admin-persons/components/count-persons.component.vue";
 import CountReserve from "@/king-reserve/admin-reserve/components/count-reserve.component.vue";
 import GraficBarCondition from "@/king-reserve/admin-reserve/components/grafic-bar-condition.component.vue";
@@ -9,13 +10,17 @@ export default {
     GraficBarCondition,
     CountReserve,
     CountPersons,
+  },
+  setup() {
+    const {t} = useI18n();
+    return {t};
   }
 }
 </script>
 
 <template>
   <div class="dashboard">
-    <h2>Statistics Overview</h2>
+    <h2>{{ t('statisticsOverview') }}</h2>
     <br>
     <div class="dashboard-cards">
       <div class="card">
@@ -33,7 +38,6 @@ export default {
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .dashboard {

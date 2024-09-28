@@ -5,8 +5,8 @@
         <div class="progress-bar"></div>
       </div>
       <div class="content">
-        <h1 style="font-size: 40px;">Page not found</h1>
-        <p>Sorry, the page you are looking for does not exist.</p>
+        <h1 style="font-size: 40px;">{{ t('pageNotFound') }}</h1>
+        <p>{{ t('pageNotFoundMessage') }}</p>
         <img class="sad-face" :class="{ 'fade-in': showSadFace }" src="/src/public/page/images/cute-cow-sitting-alone-cartoon-vector.png" alt="page not found" style="max-width: 300px; height: auto;">
       </div>
     </div>
@@ -14,11 +14,17 @@
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
+
 export default {
   data() {
     return {
       showSadFace: false
     };
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   mounted() {
     const progressBar = document.querySelector('.progress-bar');
@@ -54,7 +60,6 @@ export default {
 .card:hover {
   transform: translateY(-10px);
 }
-
 
 @keyframes progress {
   0% { width: 0; }

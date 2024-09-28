@@ -1,6 +1,6 @@
 <script>
-
-import {Room} from "@/king-reserve/admin-rooms/model/room.entity.js";
+import { useI18n } from 'vue-i18n';
+import { Room } from "@/king-reserve/admin-rooms/model/room.entity.js";
 
 export default {
   name: "room-view",
@@ -8,19 +8,22 @@ export default {
   props: {
     room: Room
   },
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
-
     return {
       items: [
         {
-          label: 'Update',
+          label: this.t('update'),
           icon: 'pi pi-pencil',
           command: () => {
             this.$emit('Edit', this.room);
           }
         },
         {
-          label: 'Delete',
+          label: this.t('delete'),
           icon: 'pi pi-trash',
           command: () => {
             this.$emit('Delete', this.room);
@@ -28,9 +31,8 @@ export default {
         }
       ]
     }
-
   },
-  methods:{
+  methods: {
     viewPersons() {
       this.$emit('viewPersons', this.room.id);
     }
@@ -40,28 +42,22 @@ export default {
 
 <template>
   <div :style="{ position: 'relative'} ">
-
     <pv-speed-dial :model="items" direction="down" mask :style="{ right: '-10px', top: '-15px' }" />
-
     <pv-card class="custom-card">
-      <template #title>{{room.name}}
-      </template>
+      <template #title>{{ room.name }}</template>
       <template #subtitle>
         <div class="container-subtitle">
-          <p style="font-weight:bold">Area:</p>
-          <p>{{room.area}}</p>
+          <p style="font-weight:bold">{{ t('area') }}:</p>
+          <p>{{ room.area }}</p>
         </div>
       </template>
-
       <template #content>
         <div>
-          <p style="font-weight:bold">Status</p>
-          <p>{{room.status}}</p>
+          <p style="font-weight:bold">{{ t('status') }}</p>
+          <p>{{ room.status }}</p>
         </div>
       </template>
-
     </pv-card>
-
   </div>
 </template>
 
@@ -117,4 +113,3 @@ export default {
   margin-top: 0.25rem;
 }
 </style>
-

@@ -2,11 +2,11 @@
   <section>
     <pv-toast />
     <div class="container-title">
-      <h2 class="title"> My Rooms</h2>
+      <h2 class="title">{{ t('roomManagement.myRooms') }}</h2>
       <div>
         <div class="button-group-desktop" v-if="!deleteFlag">
-          <pv-button class="mr-2 title-button btn-new" icon="pi pi-plus" label="New" severity="secondary" @click="onNewItemEventHandler"></pv-button>
-          <pv-button class="mr-2 title-button btn-action" icon="pi pi-filter" label="Filter" severity="secondary" text @click="onFilterSelected"></pv-button>
+          <pv-button class="mr-2 title-button btn-new" icon="pi pi-plus" :label="t('roomManagement.new')" severity="secondary" @click="onNewItemEventHandler"></pv-button>
+          <pv-button class="mr-2 title-button btn-action" icon="pi pi-filter" :label="t('roomManagement.filter')" severity="secondary" text @click="onFilterSelected"></pv-button>
           <pv-button class="mr-2 title-button btn-action" icon="pi pi-trash" severity="secondary" text @click="deleteAction"></pv-button>
         </div>
         <div class="button-group-mobile" v-if="!deleteFlag">
@@ -15,15 +15,14 @@
           <pv-button class="mr-2 icon-button btn-action" icon="pi pi-trash" severity="secondary" text @click="deleteAction"></pv-button>
         </div>
         <div v-if="deleteFlag">
-          <pv-button class="mr-2 title-button" icon="pi pi-trash" severity="success" label="Delete" @click="deleteSelection"></pv-button>
-          <pv-button class="mr-2 title-button" severity="secondary" v-if="deleteFlag" label="Cancel" @click="deleteAction"></pv-button>
+          <pv-button class="mr-2 title-button" icon="pi pi-trash" severity="success" :label="t('roomManagement.delete')" @click="deleteSelection"></pv-button>
+          <pv-button class="mr-2 title-button" severity="secondary" v-if="deleteFlag" :label="t('roomManagement.cancel')" @click="deleteAction"></pv-button>
         </div>
       </div>
     </div>
     <div class="on-filter flex display-flex align-items-center flex-direction-row justify-content-space-between" v-if="wasFilter !== false">
       <div class="filter-total-results flex gap-3">
-        <!-- Asegúrate de que rooms esté definido antes de usar length -->
-        <p v-if="rooms"> Total Results:</p>
+        <p v-if="rooms">{{ t('roomManagement.totalResults') }}:</p>
         <p v-if="rooms">{{ rooms.length.toString() }}</p>
       </div>
       <pv-button class="mr-2 title-button" icon="pi pi-times" text rounded severity="secondary" @click="closeFilter"></pv-button>
@@ -60,6 +59,7 @@
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
 import RoomView from "../components/room-view.component.vue";
 import { Room } from "../model/room.entity.js";
 import RoomFilterPage from "./room-filter-page.component.vue";
@@ -69,6 +69,10 @@ import { RoomsApiService } from "@/king-reserve/admin-rooms/services/rooms-api.s
 export default {
   name: "room-management",
   components: { RoomFilterPage, RoomCreateAndEdit, RoomView },
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
     return {
       room: {},
@@ -247,10 +251,12 @@ export default {
   gap: 20px;
   width: 100%;
 }
-.title{
-  font-weight:500;
-  font-size:25px;
+
+.title {
+  font-weight: 500;
+  font-size: 25px;
 }
+
 .container-title {
   display: flex;
   justify-content: space-between;
@@ -258,6 +264,7 @@ export default {
   border-bottom: 1px solid #4d3b29; /* Marrón oscuro */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .title-button, .icon-button {
   background-color: #f4a261; /* Naranja */
   border: none;
@@ -288,7 +295,7 @@ export default {
   display: flex;
 }
 
-.on-filter{
+.on-filter {
   width: 100%;
   justify-content: space-between;
 }
@@ -301,9 +308,11 @@ export default {
     align-items: center;
     padding-bottom: 0px;
   }
+
   .button-group-desktop {
     display: flex;
   }
+
   .button-group-mobile {
     display: none;
   }

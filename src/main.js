@@ -52,6 +52,8 @@ import RadioButton from 'primevue/radiobutton';
 import SplitButton from "primevue/splitbutton";
 import Badge from 'primevue/badge';
 import ProgressBar from 'primevue/progressbar';
+import i18n from "@/i18n.js";
+import SelectButton from "primevue/selectbutton";
 
 
 createApp(App)
@@ -60,6 +62,7 @@ createApp(App)
     .use(ToastService)
     .use(DialogService)
     .use(ConfirmationService)
+    .use(i18n)
     .component('Chart', Chart)
     .component('ConfirmDialog', ConfirmDialog)
     .component('pv-progress-bar',ProgressBar)
@@ -90,10 +93,12 @@ createApp(App)
     .component('pv-checkbox', Checkbox)
     .component('pv-rating', Rating)
     .component('pv-avatar',Avatar)
+    .component('pv-select-button', SelectButton)
     .component('pv-speed-dial',SpeedDial)
     .component('pv-calendar',Calendar)
     .component('pv-split-button', SplitButton)
     .directive('styleclass', StyleClass)
     .directive('ripple', Ripple)
+
     .mount('#app')
 

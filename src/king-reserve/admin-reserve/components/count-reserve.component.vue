@@ -1,8 +1,13 @@
 <script>
+import { useI18n } from 'vue-i18n';
 import { ReserveApiService } from "@/king-reserve/admin-reserve/services/reserve-api.service.js";
 
 export default {
   name: "count-reserve",
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
     return {
       totalReserves: 0
@@ -28,7 +33,7 @@ export default {
   <div class="count-reserve-card">
     <div class="card-header">
       <i class="fas fa-calendar-check card-icon"></i>
-      <h3>Total Reservations</h3>
+      <h3>{{ t('totalReservations') }}</h3>
     </div>
     <div class="card-content">
       <p><strong>{{ totalReserves }}</strong></p>

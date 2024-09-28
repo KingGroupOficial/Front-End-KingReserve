@@ -1,4 +1,5 @@
 <script>
+import { useI18n } from 'vue-i18n';
 import { Reservation } from "@/king-reserve/admin-reserve/model/reserve.entity.js";
 
 export default {
@@ -8,6 +9,10 @@ export default {
       type: Object,
       required: true
     }
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -49,7 +54,6 @@ export default {
         return 'bad';
       }
     }
-
   }
 };
 </script>
@@ -69,12 +73,12 @@ export default {
           <!-- Primera fila -->
           <div class="row">
             <div>
-              <p>Start</p>
+              <p>{{ t('start') }}</p>
               <p>{{ formatDate(reserve.dateStart) }}</p>
             </div>
 
             <div>
-              <p>End</p>
+              <p>{{ t('end') }}</p>
               <p>{{ formatDate(reserve.dateEnd) }}</p>
             </div>
           </div>
@@ -82,14 +86,13 @@ export default {
           <!-- Segunda fila -->
           <div class="row">
             <div>
-              <p>Duration</p>
-              <p>{{ reserve.duration }} days</p>
+              <p>{{ t('duration') }}</p>
+              <p>{{ reserve.duration }} {{ t('days') }}</p>
             </div>
           </div>
 
-
           <div class="state" :class="getConditionClass(reserve.condition)">
-            <p>Condition</p>
+            <p>{{ t('condition') }}</p>
             <p>{{ reserve.condition }}</p>
           </div>
         </div>
