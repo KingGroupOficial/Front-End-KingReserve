@@ -265,13 +265,13 @@ export default {
 
 .custom-toolbar {
   display: flex;
-  justify-content: space-between; /* Distribute space between elements */
-  align-items: center; /* Align items vertically */
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 
 .search-bar {
-  flex: 1; /* Take up remaining space */
+  flex: 1;
 }
 
 .search-bar input {
@@ -285,15 +285,15 @@ export default {
 
 .right-toolbar {
   display: flex;
-  gap: 10px; /* Space between buttons */
+  gap: 10px;
 }
 
 .room-group {
   margin-bottom: 40px;
   text-align: center;
-  border: 2px solid #27AE60; /* Add border to room group */
-  border-radius: 12px; /* Optional: Add border radius */
-  padding: 20px; /* Optional: Add padding */
+  border: 2px solid #4d3b29; /* Marrón oscuro */
+  border-radius: 12px;
+  padding: 20px;
 }
 
 .room-group h4 {
@@ -305,7 +305,7 @@ export default {
 
 .room-group h4:hover {
   font-size: 26px;
-  color: #27AE60; /* Cambia a un color dorado al pasar el ratón */
+  color: #4d3b29; /* Marrón oscuro al pasar el ratón */
 }
 
 .cards-container {
@@ -316,7 +316,7 @@ export default {
 }
 
 .card {
-  border: 1px solid #27AE60;
+  border: 1px solid #4d3b29; /* Marrón oscuro */
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -355,8 +355,8 @@ export default {
 }
 
 .button {
-  background-color: #27AE60;
-  color: black;
+  background-color: #f4a261; /* Naranja */
+  color: white;
   border: none;
   border-radius: 5px;
   padding: 10px 15px;
@@ -367,7 +367,7 @@ export default {
 }
 
 .button:hover {
-  background-color: #1E824C;
+  background-color: #e76f51; /* Naranja oscuro */
   transform: scale(1.05);
 }
 
@@ -381,7 +381,7 @@ export default {
 .custom-button {
   font-weight: bold;
   padding: 12px 20px;
-  background-color: #28a745;
+  background-color: #f4a261; /* Naranja */
   border: none;
   color: white;
   border-radius: 5px;
@@ -390,6 +390,10 @@ export default {
   flex: 1;
   min-width: 120px;
   font-size: 16px;
+}
+
+.custom-button:hover {
+  background-color: #e76f51; /* Naranja oscuro */
 }
 
 h3 {
