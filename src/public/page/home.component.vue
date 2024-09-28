@@ -1,7 +1,12 @@
 <script>
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: "home",
-
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0);
@@ -11,83 +16,72 @@ export default {
 </script>
 
 <template>
-
   <div>
-    <h1 class="animated-title" style="margin-bottom: 80px;">Welcome to King Reserve</h1>
+    <h1 class="animated-title" style="margin-bottom: 80px;">{{ t('welcome') }}</h1>
   </div>
 
   <div class="container">
-
     <div class="card">
       <router-link to="/reservation" style="text-decoration: none">
-
         <div class="card-header">
           <img alt="user header" src="/src/public/page/images/home-reservations.jpg">
         </div>
 
         <div class="title">
-          <p>Reservations</p>
+          <p>{{ t('reservations') }}</p>
         </div>
 
         <div class="card-body">
-          <p>
-            Manage your reservations
-          </p>
+          <p>{{ t('manageReservations') }}</p>
         </div>
 
         <div class="footer-button">
-          <pv-button>
-            <i class="pi pi-arrow-up-right" style="font-size: 2rem"></i>
+          <pv-button class="custom-button">
+            <i class="pi pi-calendar" style="font-size: 2rem"></i>
           </pv-button>
         </div>
       </router-link>
     </div>
 
     <div class="card">
-      <router-link to="/Statistics" style="text-decoration: none">
-
+      <router-link to="/stadistic" style="text-decoration: none">
         <div class="card-header">
           <img alt="user header" src="https://www.itmplatform.com/lib/uploads/36978940_m.jpg">
         </div>
 
         <div class="title">
-          <p>Reports</p>
+          <p>{{ t('reports') }}</p>
         </div>
 
         <div class="card-body">
-          <p>
-            Data, reports and statistics in real time
-          </p>
+          <p>{{ t('dataReports') }}</p>
         </div>
 
         <div class="footer-button">
-          <pv-button>
-            <i class="pi pi-arrow-up-right" style="font-size: 2rem"></i>
+          <pv-button class="custom-button">
+            <i class="pi pi-chart-line" style="font-size: 2rem"></i>
           </pv-button>
         </div>
       </router-link>
     </div>
 
     <div class="card">
-      <router-link to="/staff-view" style="text-decoration: none">
-
+      <router-link to="/staf-view" style="text-decoration: none">
         <div class="card-header">
           <img alt="user header" src="/src/public/page/images/staff-home.jpeg">
         </div>
 
         <div class="title">
-          <p>Staff</p>
+          <p>{{ t('staff') }}</p>
         </div>
 
         <div class="card-body">
-          <p>
-            Connect and lead with your entire staff
-          </p>
+          <p>{{ t('connectStaff') }}</p>
         </div>
 
         <div class="footer-button">
-          <pv-button>
-            <i class="pi pi-arrow-up-right" style="font-size: 2rem"></i>
+          <pv-button class="custom-button">
+            <i class="pi pi-users" style="font-size: 2rem"></i>
           </pv-button>
         </div>
       </router-link>
@@ -95,24 +89,21 @@ export default {
 
     <div class="card">
       <router-link to="/inventory" style="text-decoration: none">
-
         <div class="card-header">
           <img alt="user header" src="/src/public/page/images/inventory-home.jpg">
         </div>
 
         <div class="title">
-          <p>Inventory</p>
+          <p>{{ t('inventory') }}</p>
         </div>
 
         <div class="card-body">
-          <p>
-            Keep personalized control of your inventory
-          </p>
+          <p>{{ t('manageInventory') }}</p>
         </div>
 
         <div class="footer-button">
-          <pv-button>
-            <i class="pi pi-arrow-up-right" style="font-size: 2rem"></i>
+          <pv-button class="custom-button">
+            <i class="pi pi-box" style="font-size: 2rem"></i>
           </pv-button>
         </div>
       </router-link>
@@ -120,42 +111,35 @@ export default {
 
     <div class="card">
       <router-link to="/veterinarians" style="text-decoration: none">
-
         <div class="card-header">
           <img alt="user header" src="/src/public/page/images/services-home.jpg">
         </div>
 
         <div class="title">
-          <p>Services</p>
+          <p>{{ t('services') }}</p>
         </div>
 
         <div class="card-body">
-          <p>
-            Connect the different services for your hotel
-          </p>
+          <p>{{ t('connectServices') }}</p>
         </div>
 
         <div class="footer-button">
-          <pv-button>
-            <i class="pi pi-arrow-up-right" style="font-size: 2rem"></i>
+          <pv-button class="custom-button">
+            <i class="pi pi-cog" style="font-size: 2rem"></i>
           </pv-button>
         </div>
       </router-link>
     </div>
-
   </div>
 
   <div style="text-align: center">
-    <pv-button>
-      <i class="pi pi-sort-up-fill" @click="scrollToTop"></i>
+    <pv-button class="scroll-top-button">
+      <i class="pi pi-arrow-up" @click="scrollToTop"></i>
     </pv-button>
   </div>
-
-
 </template>
 
 <style scoped>
-
 .animated-title {
   color: #34d399;
   font-size: 3rem;
@@ -175,24 +159,32 @@ export default {
   }
 }
 
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
 .card {
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto 2.5rem;
+  flex: 1 1 calc(33.333% - 20px);
+  max-width: 400px;
+  margin: 10px;
   background-color: #18181b;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   padding: 20px;
+  transition: transform 0.3s ease;
 }
 
 .card:hover {
-  opacity: 0.7;
+  transform: scale(1.1);
+  opacity: 0.9;
 }
 
-.card-header{
+.card-header {
   position: relative;
-  height: 20.5rem;
+  height: 200px;
   padding: 3px;
 }
 
@@ -205,7 +197,7 @@ export default {
 
 .title p {
   text-align: center;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 700;
   color: #f7f7f7;
 }
@@ -218,7 +210,7 @@ export default {
 .card-body p {
   color: #f7f7f7;
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   padding: 5px;
   margin-bottom: 15px;
@@ -233,4 +225,24 @@ export default {
   margin-top: 10px;
 }
 
+.custom-button {
+  background-color: #f4a261;
+  border: none;
+  color: white;
+  font-weight: bold;
+}
+
+.custom-button:hover {
+  background-color: #e76f51;
+}
+
+.scroll-top-button {
+  background-color: #c97b47;
+  border-color: #c97b47;
+  color: white;
+}
+
+.scroll-top-button:hover {
+  background-color: #b3683a;
+}
 </style>

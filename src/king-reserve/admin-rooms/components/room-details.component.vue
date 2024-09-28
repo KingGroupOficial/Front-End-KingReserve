@@ -1,38 +1,41 @@
 <script>
-import {RoomsApiService} from "@/king-reserve/admin-rooms/services/rooms-api.service.js";
+import { useI18n } from 'vue-i18n';
+import { RoomsApiService } from "@/king-reserve/admin-rooms/services/rooms-api.service.js";
+import { Room } from "@/king-reserve/admin-rooms/model/room.entity.js";
 import PersonManagement from "@/king-reserve/admin-persons/pages/person-management.component.vue";
 
 export default {
-  name: "room-details.component",
-  components: {PersonManagement},
+  name: "room-details",
+  components: { PersonManagement },
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
     return {
       room: null,
-      roomService: null,
+      roomService: null
     };
   },
   created() {
     this.roomService = new RoomsApiService();
-    this.reservationService = new ReservationApiService();
     this.findRoom();
   },
   methods: {
     findRoom() {
-      console.log("Fetching room ID:", this.$route.params.roomId, typeof this.$route.params.roomId);
-      this.roomService.getById(this.$route.params.roomId).then((response) => {
-        console.log(response.data);
-        this.room = response.data;
+      this.roomService.getRoomById(this.$route.params.roomId).then((response) => {
+        this.room = Room.toDisplayableRoom(response.data);
       });
     }
   }
-}
+};
 </script>
 
 <template>
   <div class="principal-container">
-    <h2>{{ room?.name }}</h2>
+    <h2>{{ t('roomDetails') }}: {{ room.name }}</h2>
+    <person-management :room-id="room.id"/>
   </div>
-  <person-management :room-id="room?.id" />
 </template>
 
 <style scoped>

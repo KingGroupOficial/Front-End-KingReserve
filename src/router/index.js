@@ -3,6 +3,12 @@ import homeComponent from "@/public/page/home.component.vue";
 import notFoundComponent from "@/public/page/not-found.component.vue";
 import reserveManagmentComoponent from "@/king-reserve/admin-reserve/pages/reserve-managment.comoponent.vue";
 import reserveDetails from "@/king-reserve/admin-reserve/components/reserve-details.vue";
+import roomDetailsComponent from "@/king-reserve/admin-rooms/components/room-details.component.vue";
+import PersonManagementComponent from "@/king-reserve/admin-persons/pages/person-management.component.vue";
+import stadisticsTotalComponent from "@/king-reserve/stadistics/page/stadistics-total.component.vue";
+import staffManagementComponent from "@/king-reserve/staff/pages/staff-management.component.vue";
+import staffViewComponent from "@/king-reserve/staff/pages/staff-view.component.vue";
+import inventoryComponent from "@/king-reserve/inventory/components/inventory.component.vue";
 /**
  * Vue Router instance
  * @type {Router} Vue Router instance creation with default configs
@@ -15,6 +21,12 @@ const router = createRouter({
         { path: "/home", component: homeComponent, meta: { title: "Home"} },
         // Root path
         { path: "/", component: homeComponent, meta: { title: "home"} },
+        { path: "/persons", component: PersonManagementComponent, meta: { title: "Persons"}},
+        { path: "/staff", component:staffManagementComponent , meta: { title: "Staff"}},
+        { path: "/staf-view", component:staffViewComponent , meta: { title: "Staff-VIEW"}},
+        {path: "/inventory", component: inventoryComponent, meta: { title: "Inventory"}},
+        // Path to Stadistics
+        { path: "/stadistic", component: stadisticsTotalComponent, meta: { title: "Stadistics"} },
         // Path to handle unmatched URLs, using notFoundComponent
         { path: "/:catchAll(.*)", component: notFoundComponent, meta: { title: "Not Found" } },
         { path: "/reservation", component: reserveManagmentComoponent, meta: { title: "Reservation" }},
@@ -24,20 +36,13 @@ const router = createRouter({
             name: "reserveDetails",
             props: true,
             meta: { title: "Reserve details" }
-        },
-        {
-            path: "/reservation/:reservationId/rooms/:roomsId",
-            component:reserveDetails ,
-            name: "batchDetails",
-            props: true,
-            meta: { title: "Batch Details" }
-        },
+        }
 
     ]
 });
 
 router.beforeEach((to, from, next) => {
-    let baseTitle = 'ACME Learning Center';
+    let baseTitle = 'King Reserve';
     document.title = `${baseTitle} | ${to.meta['title']}`;
     next();
 });

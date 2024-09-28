@@ -1,4 +1,10 @@
-import http from "@/shared/services/http-common.js";
+import axios from "axios";
+
+const url_FakeApi = "https://66f729b0b5d85f31a34226e9.mockapi.io";
+
+const http = axios.create({
+    baseURL: url_FakeApi, // Corrected property name to baseURL
+});
 
 export class PersonApiService {
     getAll() {
@@ -19,6 +25,10 @@ export class PersonApiService {
 
     delete(id) {
         return http.delete(`/persons/${id}`);
+    }
+
+    getByRoomId(roomId) {
+        return http.get(`/api/rooms/${roomId}/persons`);
     }
 
     findByName(name) {

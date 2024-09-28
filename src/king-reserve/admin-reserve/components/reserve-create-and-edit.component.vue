@@ -3,31 +3,31 @@ import createAndEdit from "../../../shared/components/create-and-edit.component.
 
 export default {
   name: "reserve-create-and-edit",
-  components:{ createAndEdit},
-  props:{
-    item:null,
+  components: { createAndEdit },
+  props: {
+    item: null,
     visible: Boolean,
-    edit:Boolean
+    edit: Boolean
   },
   data() {
     return {
       submitted: false,
-      dateError: ''
-    }
+      dateError: '',
+      conditions: ['Active', 'Finished'] // Define the allowed conditions
+    };
   },
-  methods:{
+  methods: {
     canceledEventHandler() {
       this.$emit('canceled');
       this.submitted = false;
     },
     savedEventHandler() {
-      console.log("Enviar de reserve",this.item);
+      console.log("Enviar de reserve", this.item);
       this.submitted = true;
-      //&& this.item.objective && this.validateDates()
-       if (this.item.name&& this.item.objective && this.validateDates()) {
+      if (this.item.name && this.item.objective && this.validateDates()) {
         console.log("si entre");
-          this.$emit('saved2', this.item);
-       }
+        this.$emit('saved2', this.item);
+      }
     },
     validateDates() {
       if (this.item.dateEnd <= this.item.dateStart) {
@@ -38,27 +38,26 @@ export default {
       return true;
     }
   }
-}
+};
 </script>
 
 <template>
   <create-and-edit :entity="item" :edit="edit" :visible="visible" entityName="Campaign" @canceled="canceledEventHandler" @saved="savedEventHandler">
     <template #content>
-
       <div class="p-fluid">
         <div class="field mt-5">
           <pv-float-label>
             <label for="name">Name</label>
-            <pv-input-text id="name" v-model="item.name" :class="{'p-invalid': submitted && !item.name}"/>
+            <pv-input-text id="name" v-model="item.name" :class="{'p-invalid': submitted && !item.name}" />
             <small v-if="submitted && !item.name" class="p-invalid">Name is required.</small>
           </pv-float-label>
         </div>
 
         <div class="field mt-5">
           <pv-float-label>
-            <label for="objective">Mensaje</label>
-            <pv-input-text id="objective" v-model="item.objective" :class="{'p-invalid': submitted && !item.objective}"/>
-            <small v-if="submitted && !item.objective" class="p-invalid">Mensaje is required.</small>
+            <label for="objective">Objective</label>
+            <pv-input-text id="objective" v-model="item.objective" :class="{'p-invalid': submitted && !item.objective}" />
+            <small v-if="submitted && !item.objective" class="p-invalid">Objective is required.</small>
           </pv-float-label>
         </div>
 
@@ -77,13 +76,25 @@ export default {
           </pv-float-label>
         </div>
 
-      </div>
+        <div class="field mt-5">
+          <pv-float-label>
+            <label for="condition">Condition</label>
+            <pv-dropdown id="condition" v-model="item.condition" :options="conditions" :class="{'p-invalid': submitted && !item.condition}" />
+            <small v-if="submitted && !item.condition" class="p-invalid">Condition is required.</small>
+          </pv-float-label>
+        </div>
 
+        <div class="field mt-5">
+          <pv-float-label>
+            <label for="duration">Duration</label>
+            <pv-input-number id="duration" v-model="item.duration" :class="{'p-invalid': submitted && !item.duration}" />
+            <small v-if="submitted && !item.duration" class="p-invalid">Duration is required.</small>
+          </pv-float-label>
+        </div>
+      </div>
     </template>
   </create-and-edit>
-
 </template>
 
 <style scoped>
-
 </style>

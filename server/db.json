@@ -2,358 +2,272 @@
   "persons": [
     {
       "id": "1",
-      "name": "John Doe",
-      "age": 35,
-      "date": "2024-05-01",
-      "origin": {
-        "country": "USA",
-        "city": "New York",
-        "district": "Manhattan"
-      },
-      "observations": "Healthy",
-      "roomId": "1"
+      "name": "John Smith",
+      "age": "31",
+      "date": "2024-09-25",
+      "country": "USA",
+      "city": "Los Angeles",
+      "district": "Hollywood",
+      "observations": "No allergies",
+      "roomId": "101"
     },
     {
       "id": "2",
-      "name": "Jane Smith",
+      "name": "Emma Johnson",
       "age": 28,
-      "date": "2024-05-02",
-      "origin": {},
-      "observations": "High productivity",
-      "roomId": "1"
+      "date": "2024-09-25",
+      "country": "Canada",
+      "city": "Toronto",
+      "district": "Downtown",
+      "observations": "Vegetarian",
+      "roomId": "102"
     },
     {
       "id": "3",
-      "name": "Michael Brown",
-      "age": 40,
-      "date": "2024-05-03",
-      "origin": {
-        "country": "Mexico",
-        "city": "Mexico City",
-        "district": "Coyoacán"
-      },
-      "observations": "Strong and active",
-      "roomId": 2
+      "name": "Liam Brown",
+      "age": 35,
+      "date": "2024-09-25",
+      "country": "UK",
+      "city": "London",
+      "district": "Westminster",
+      "observations": "Allergic to peanuts",
+      "roomId": "103"
     },
     {
       "id": "4",
-      "name": "Emily Johnson",
-      "age": 32,
-      "date": "2024-05-04",
-      "observations": {},
-      "roomId": 2
+      "name": "Sophia Davis",
+      "age": 22,
+      "date": "2024-09-25",
+      "country": "Australia",
+      "city": "Sydney",
+      "district": "Bondi",
+      "observations": "No special requirements",
+      "roomId": "104"
     },
     {
       "id": "5",
-      "name": "Carlos García",
-      "age": 45,
-      "date": "2024-05-05",
-      "origin": {
-        "country": "Peru",
-        "city": "Chiclayo",
-        "district": "Chiclayo"
-      },
-      "observations": "Injury on right arm",
-      "roomId": 3
+      "name": "James Wilson",
+      "age": 40,
+      "date": "2024-09-25",
+      "country": "Germany",
+      "city": "Berlin",
+      "district": "Mitte",
+      "observations": "Gluten-free diet",
+      "roomId": "105"
     },
     {
       "id": "6",
-      "name": "Sophia White",
-      "age": 30,
-      "date": "2024-05-06",
-      "origin": {
-        "country": "Spain",
-        "city": "Madrid",
-        "district": "Centro"
-      },
-      "observations": "None",
-      "roomId": 3
-    },
-    {
-      "id": "7",
-      "name": "James Black",
-      "age": 37,
-      "date": "2024-05-07",
-      "origin": {
-        "country": "Australia",
-        "city": "Sydney",
-        "district": "Bondi"
-      },
-      "observations": "Black spot on back",
-      "roomId": 4
-    },
-    {
-      "id": "8",
-      "name": "David Green",
-      "age": 29,
-      "date": "2024-05-08",
-      "origin": {
-        "country": "Brazil",
-        "city": "Rio de Janeiro",
-        "district": "Copacabana"
-      },
-      "observations": "Mark on foot",
-      "roomId": 4
-    },
-    {
-      "id": "9",
-      "name": "Laura Blue",
-      "age": 25,
-      "date": "2024-05-09",
-      "origin": {
-        "country": "Italy",
-        "city": "Rome",
-        "district": "Trastevere"
-      },
-      "observations": "Injured ear",
-      "roomId": 5
-    },
-    {
-      "id": "10",
-      "name": "Lucas Grey",
-      "age": 33,
-      "date": "2024-05-10",
-      "origin": {
-        "country": "France",
-        "city": "Paris",
-        "district": "Montmartre"
-      },
-      "observations": "Injury on left hind leg",
-      "roomId": 5
+      "name": "Olivia Garcia",
+      "age": 27,
+      "date": "2024-09-25",
+      "country": "Mexico",
+      "city": "Cancun",
+      "district": "Hotel Zone",
+      "observations": "Prefers a quiet room",
+      "roomId": "106"
     }
   ],
   "reservations": [
     {
       "id": "1",
-      "name": "Rooming for Team A",
-      "dateStart": "2024-05-01T00:00:00.000Z",
-      "dateEnd": "2024-06-30T00:00:00.000Z",
-      "objective": "Accommodate 100 people",
-      "condition": "Active",
-      "duration": 60
+      "name": "Conference Room Booking",
+      "dateStart": "2024-09-26T00:00:00.000Z",
+      "dateEnd": "2024-09-28T00:00:00.000Z",
+      "objective": "Accommodate business meetings for 50 people",
+      "condition": "Finished",
+      "duration": 2
     },
     {
       "id": "2",
-      "name": "Vaccine Program",
-      "dateStart": "2024-07-01",
-      "dateEnd": "2024-07-15",
-      "objective": "Vaccinate all people in the team",
+      "name": "Family Vacation Package",
+      "dateStart": "2024-09-30T00:00:00.000Z",
+      "dateEnd": "2024-10-05T00:00:00.000Z",
+      "objective": "Family vacation for 4 people",
       "condition": "Active",
-      "duration": 14
+      "duration": 5
     },
     {
       "id": "3",
-      "name": "Team B Rooming",
-      "dateStart": "2024-08-01",
-      "dateEnd": "2024-09-30",
-      "objective": "Accommodate 200 people",
+      "name": "Wedding Reception",
+      "dateStart": "2024-10-10T00:00:00.000Z",
+      "dateEnd": "2024-10-11T00:00:00.000Z",
+      "objective": "Host a wedding for 100 guests",
       "condition": "Finished",
-      "duration": 61
+      "duration": 1
     },
     {
       "id": "4",
-      "name": "Artificial Insemination Program",
-      "dateStart": "2024-06-01",
-      "dateEnd": "2024-07-31",
-      "objective": "Perform artificial insemination on 50 people",
+      "name": "Corporate Retreat",
+      "dateStart": "2024-10-15T00:00:00.000Z",
+      "dateEnd": "2024-10-17T00:00:00.000Z",
+      "objective": "Corporate team building for 20 people",
       "condition": "Active",
-      "duration": 60
+      "duration": 2
     },
     {
       "id": "5",
-      "name": "Disease Control Program",
-      "dateStart": "2024-08-01",
-      "dateEnd": "2024-09-30",
-      "objective": "Conduct tests and preventive treatments on 50 people",
-      "condition": "Finished",
-      "duration": 61
-    },
-    {
-      "id": "6",
-      "name": "Genetic Improvement Program",
-      "dateStart": "2024-10-01",
-      "dateEnd": "2024-12-31",
-      "objective": "Implement genetic improvement programs for 100 people",
-      "condition": "Active",
-      "duration": 91
-    },
-    {
-      "id": "7",
-      "name": "Weight Control Program",
-      "dateStart": "2025-01-01",
-      "dateEnd": "2025-02-28",
-      "objective": "Perform weight control for 300 people",
-      "condition": "Finished",
-      "duration": 59
-    },
-    {
-      "id": "8",
-      "name": "Reproduction Program",
-      "dateStart": "2025-03-01",
-      "dateEnd": "2025-04-30",
-      "objective": "Ensure the successful reproduction of 30 people",
-      "condition": "Active",
-      "duration": 61
-    },
-    {
-      "id": "9",
-      "name": "Deworming Program",
-      "dateStart": "2025-05-01",
-      "dateEnd": "2024-09-24T05:00:00.000Z",
-      "objective": "Deworm 500 people",
-      "condition": "Active",
-      "duration": 61
-    },
-    {
-      "id": "ba22",
-      "name": "Cumpleanos de sergio",
-      "dateStart": "2024-09-28T05:00:00.000Z",
-      "dateEnd": "2024-09-30T05:00:00.000Z",
-      "objective": "Se celebra el cumple de serguei",
+      "name": "Annual Sales Meeting",
+      "dateStart": "2024-11-01T00:00:00.000Z",
+      "dateEnd": "2024-11-03T00:00:00.000Z",
+      "objective": "Sales meeting for 30 attendees",
       "condition": "Active",
       "duration": 2
     }
   ],
   "rooms": [
     {
+      "id": "101",
+      "name": "Deluxe Room A",
+      "area": 350,
+      "status": "Available",
+      "reservationId": "1"
+    },
+    {
+      "id": "102",
+      "name": "Deluxe Room B",
+      "area": 300,
+      "status": "Available",
+      "reservationId": "2"
+    },
+    {
+      "id": "103",
+      "name": "Suite Room",
+      "area": 500,
+      "status": "Reserved",
+      "reservationId": "3"
+    },
+    {
+      "id": "104",
+      "name": "Family Room",
+      "area": 400,
+      "status": "Available",
+      "reservationId": "4"
+    },
+    {
+      "id": "105",
+      "name": "Standard Room",
+      "area": 200,
+      "status": "Occupied",
+      "reservationId": null
+    },
+    {
+      "id": "106",
+      "name": "Economy Room",
+      "area": 150,
+      "status": "Available",
+      "reservationId": null
+    }
+  ],
+  "staff": [
+    {
       "id": "1",
-      "name": "Room A",
-      "area": 100,
-      "status": "In process",
-      "reservationId": 1
+      "reserves_id": "1",
+      "name": "Jhons",
+      "last_name": "Miller",
+      "email": "jhonworker@pecuario.pro",
+      "on_job_status": "Working",
+      "job_description": "Clean and maintain hotel rooms"
     },
     {
       "id": "2",
-      "name": "Room B",
-      "area": 200,
-      "status": "Waiting",
-      "reservationId": 1
+      "hotels_id": 2,
+      "name": "Francisco",
+      "last_name": "Garces",
+      "email": "franciscoworker@pecuario.pro",
+      "on_job_status": "Available",
+      "job_description": "Serve guests in the restaurant and manage orders",
+      "date_start": "2024-05-01",
+      "date_end": "2024-06-30"
     },
     {
       "id": "3",
-      "name": "Room C",
-      "area": 150,
-      "status": "Completed",
-      "reservationId": 1
+      "hotels_id": 3,
+      "name": "Eloy",
+      "last_name": "Robles",
+      "email": "eloyworker@pecuario.pro",
+      "on_job_status": "Available",
+      "job_description": "Handle guest check-ins and check-outs",
+      "date_start": "2024-05-01",
+      "date_end": "2024-06-30"
     },
     {
       "id": "4",
-      "name": "Room D",
-      "area": 180,
-      "status": "In process",
-      "reservationId": 5
+      "hotels_id": 4,
+      "name": "Alfred",
+      "last_name": "Santos",
+      "email": "alfredworker@pecuario.pro",
+      "on_job_status": "Working",
+      "job_description": "Supervise cleaning staff and maintain cleanliness standards",
+      "date_start": "2024-05-01",
+      "date_end": "2024-06-30"
     },
     {
       "id": "5",
-      "name": "Room E",
-      "area": 220,
-      "status": "Waiting",
-      "reservationId": 5
+      "hotels_id": 5,
+      "name": "Francisco",
+      "last_name": "Vargas",
+      "email": "vargasworker@pecuario.pro",
+      "on_job_status": "Available",
+      "job_description": "Assist guests with luggage and transportation requests",
+      "date_start": "2024-05-01",
+      "date_end": "2024-06-30"
     },
     {
       "id": "6",
-      "name": "Room F",
-      "area": 190,
-      "status": "Completed",
-      "reservationId": 5
+      "hotels_id": 6,
+      "name": "Damian",
+      "last_name": "Zabala",
+      "email": "damianworker@pecuario.pro",
+      "on_job_status": "Available",
+      "job_description": "Coordinate hotel event setups and arrangements",
+      "date_start": "2024-05-01",
+      "date_end": "2024-06-30"
     },
     {
       "id": "7",
-      "name": "Room G",
-      "area": 250,
-      "status": "In process",
-      "reservationId": 6
+      "hotels_id": "90",
+      "name": "Makanaky",
+      "last_name": "La realeza",
+      "email": "Makanaky@Larealeza.com",
+      "on_job_status": "Available",
+      "job_description": "Assist in hotel room service and guest requests"
     },
     {
-      "id": "8",
-      "name": "Room H",
-      "area": 300,
-      "status": "Waiting",
-      "reservationId": 6
+      "id": "1",
+      "reserves_id": "1",
+      "name": "Jhons",
+      "last_name": "Miller",
+      "email": "jhonworker@pecuario.pro",
+      "on_job_status": "Working",
+      "job_description": "Clean and maintain hotel rooms"
+    }
+  ],
+  "food": [
+    {
+      "id": "3",
+      "name": "Tallarines verdes",
+      "quantity": 20,
+      "nroRoom": 0
+    }
+  ],
+  "tools": [
+    {
+      "id": "2",
+      "name": "Towels",
+      "quantity": 10,
+      "nroRoom": 0
     },
     {
-      "id": "9",
-      "name": "Room I",
-      "area": 280,
-      "status": "Completed",
-      "reservationId": 6
+      "id": "3",
+      "name": "Liquid soap ",
+      "quantity": 7,
+      "nroRoom": 0
     },
     {
-      "id": "10",
-      "name": "Room J",
-      "area": 120,
-      "status": "In process",
-      "reservationId": 2
-    },
-    {
-      "id": "11",
-      "name": "Room K",
-      "area": 180,
-      "status": "Waiting",
-      "reservationId": 2
-    },
-    {
-      "id": "12",
-      "name": "Room L",
-      "area": 200,
-      "status": "Completed",
-      "reservationId": 2
-    },
-    {
-      "id": "13",
-      "name": "Room M",
-      "area": 150,
-      "status": "In process",
-      "reservationId": 3
-    },
-    {
-      "id": "14",
-      "name": "Room N",
-      "area": 210,
-      "status": "Waiting",
-      "reservationId": 3
-    },
-    {
-      "id": "15",
-      "name": "Room O",
-      "area": 240,
-      "status": "Completed",
-      "reservationId": 3
-    },
-    {
-      "id": "16",
-      "name": "Room P",
-      "area": 180,
-      "status": "In process",
-      "reservationId": 4
-    },
-    {
-      "id": "17",
-      "name": "Room Q",
-      "area": 220,
-      "status": "Waiting",
-      "reservationId": 4
-    },
-    {
-      "id": "18",
-      "name": "Room R",
-      "area": 270,
-      "status": "Completed",
-      "reservationId": 4
-    },
-    {
-      "id": "19",
-      "name": "Room S",
-      "area": 190,
-      "status": "In process",
-      "reservationId": 7
-    },
-    {
-      "id": "20",
-      "name": "Room T",
-      "area": 230,
-      "status": "Waiting",
-      "reservationId": 7
+      "name": "Soap",
+      "quantity": 34,
+      "nroRoom": 0,
+      "id": "4"
     }
   ]
 }

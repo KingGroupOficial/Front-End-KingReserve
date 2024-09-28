@@ -1,12 +1,12 @@
-import { Origin } from "./origin.entity.js";
-
 export class Person {
-    constructor(id, name, age, date, origin, observations, roomId) {
+    constructor(id, name, age, date, country, city, district, observations, roomId) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.date = date;
-        this.origin = origin;
+        this.country = country;
+        this.city = city;
+        this.district = district;
         this.observations = observations;
         this.roomId = roomId;
     }
@@ -17,7 +17,9 @@ export class Person {
             displayablePerson.name,
             displayablePerson.age,
             displayablePerson.date,
-            displayablePerson.origin,
+            displayablePerson.country,
+            displayablePerson.city,
+            displayablePerson.district,
             displayablePerson.observations,
             displayablePerson.roomId
         );
@@ -29,7 +31,9 @@ export class Person {
             name: person.name,
             age: person.age,
             date: person.date,
-            origin: person.origin,
+            country: person.country,
+            city: person.city,
+            district: person.district,
             observations: person.observations,
             roomId: person.roomId
         };

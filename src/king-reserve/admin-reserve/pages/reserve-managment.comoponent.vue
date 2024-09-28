@@ -1,4 +1,5 @@
 <script>
+import { useI18n } from 'vue-i18n';
 import ReserveView from "@/king-reserve/admin-reserve/components/reserve-view.vue";
 import { ReserveApiService } from "@/king-reserve/admin-reserve/services/reserve-api.service.js";
 import { Reservation } from "@/king-reserve/admin-reserve/model/reserve.entity.js";
@@ -8,9 +9,13 @@ import FilterPageComponent from "@/king-reserve/admin-reserve/pages/filter-page.
 export default {
   name: "reserve-management",
   components: { FilterPageComponent, ReserveView, ReserveCreateAndEditComponent },
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
     return {
-      title: { singular: 'Reservation', plural: 'Reservations' },
+      title: {singular: 'Reservation', plural: 'Reservations'},
       reservation: {},
       reservations: [],
       allReservations: [],
@@ -38,10 +43,10 @@ export default {
   },
   methods: {
     notifySuccessfulAction(message) {
-      this.$toast.add({ severity: "contrast", summary: "Success", detail: message, life: 3000 });
+      this.$toast.add({severity: "contrast", summary: "Success", detail: message, life: 3000});
     },
     handleViewMore(reservation) {
-      this.$router.push({ name: 'reserveDetails', params: { reservationId: reservation.id } });
+      this.$router.push({name: 'reserveDetails', params: {reservationId: reservation.id}});
     },
     findIndexById(id) {
       return this.reservations.findIndex((reservation) => reservation.id === id);
@@ -171,44 +176,55 @@ export default {
 
 <template>
   <section class="reserve-section" :style="{ position: 'relative'} ">
-    <pv-toast />
+    <pv-toast/>
     <div class="container-title">
-      <p class="container-title--title">My Reservations</p>
+      <p class="container-title--title">{{ t('myReservations') }}</p>
       <div>
         <div class="button-group-desktop" v-if="!deleteFlag">
-          <pv-button class="mr-2 title-button btn-action" icon="pi pi-plus" label="New" severity="secondary" @click="onNewItemEventHandler"></pv-button>
-          <pv-button class="mr-2 title-button btn-action" icon="pi pi-filter" label="Filter" severity="secondary" text @click="onFilterSelected"></pv-button>
-          <pv-button class="mr-2 title-button btn-action" icon="pi pi-trash" severity="secondary" text @click="deleteAction"></pv-button>
+          <pv-button class="mr-2 title-button btn-action" icon="pi pi-plus" :label="t('new')" severity="secondary"
+                     @click="onNewItemEventHandler"></pv-button>
+          <pv-button class="mr-2 title-button btn-action" icon="pi pi-filter" :label="t('filter')" severity="secondary" text
+                     @click="onFilterSelected"></pv-button>
+          <pv-button class="mr-2 title-button btn-action" icon="pi pi-trash" severity="secondary" text
+                     @click="deleteAction"></pv-button>
         </div>
 
         <div class="button-group-mobile" v-if="!deleteFlag">
-          <pv-button class="mr-2 icon-button btn-action" icon="pi pi-plus" severity="secondary" @click="onNewItemEventHandler"></pv-button>
-          <pv-button class="mr-2 icon-button btn-action" icon="pi pi-filter" severity="secondary" @click="onFilterSelected"></pv-button>
-          <pv-button class="mr-2 icon-button btn-action" icon="pi pi-trash" severity="secondary" @click="deleteAction"></pv-button>
+          <pv-button class="mr-2 icon-button btn-action" icon="pi pi-plus" severity="secondary"
+                     @click="onNewItemEventHandler"></pv-button>
+          <pv-button class="mr-2 icon-button btn-action" icon="pi pi-filter" severity="secondary"
+                     @click="onFilterSelected"></pv-button>
+          <pv-button class="mr-2 icon-button btn-action" icon="pi pi-trash" severity="secondary"
+                     @click="deleteAction"></pv-button>
         </div>
 
         <div v-if="deleteFlag">
-          <pv-button class="mr-2 title-button btn-action" icon="pi pi-trash" severity="secondary" label="Delete" @click="deleteSelection"></pv-button>
-          <pv-button class="mr-2 title-button btn-action" severity="secondary" v-if="deleteFlag" text label="Cancel" @click="deleteAction"></pv-button>
+          <pv-button class="mr-2 title-button btn-action" icon="pi pi-trash" severity="secondary" :label="t('delete')"
+                     @click="deleteSelection"></pv-button>
+          <pv-button class="mr-2 title-button btn-action" severity="secondary" v-if="deleteFlag" text :label="t('cancel')"
+                     @click="deleteAction"></pv-button>
         </div>
-
       </div>
     </div>
 
-    <div class="on-filter flex display-flex align-items-center flex-direction-row justify-content-space-between " v-if="wasFilter">
+    <div class="on-filter flex display-flex align-items-center flex-direction-row justify-content-space-between"
+         v-if="wasFilter">
       <div class="filter-total-results flex gap-3">
-        <p>Total Results:</p>
+        <p>{{ t('totalResults') }}:</p>
         <p>{{ reservations.length.toString() }}</p>
       </div>
-      <pv-button class="mr-2 title-button" icon="pi pi-times" text rounded severity="secondary" @click="closeFilter"></pv-button>
+      <pv-button class="mr-2 title-button" icon="pi pi-times" text rounded severity="secondary"
+                 @click="closeFilter"></pv-button>
     </div>
 
     <div class="container-cards">
       <div v-for="reservation in reservations" :key="reservation.id" class="card">
         <div class="flex align-items-center" v-if="deleteFlag">
-          <pv-checkbox v-model="selectedReservations" :inputId="reservation.id" name="reservation" :value="reservation.id"></pv-checkbox>
+          <pv-checkbox v-model="selectedReservations" :inputId="reservation.id" name="reservation"
+                       :value="reservation.id"></pv-checkbox>
         </div>
-        <reserve-view :reserve="reservation" @viewMore="handleViewMore" @Edit="onEditItemEventHandler" @Delete="onDeleteItemEventHandler" />
+        <reserve-view :reserve="reservation" @viewMore="handleViewMore" @Edit="onEditItemEventHandler"
+                      @Delete="onDeleteItemEventHandler"/>
       </div>
     </div>
 
@@ -219,7 +235,20 @@ export default {
         @canceled="onCanceledEventHandler"
         @saved="onSavedEventHandler"
     />
-    <filter-page-component :visible="visibleFilter" @canceled="onFilterSelected" @filtered="onFilter" @filteredCondition="onFilterForCondition" @filteredDuration="onFilterForDuration" @filteredDate="onFilterDate" />
+    <div class="app-content">
+      <template>
+        <div class="card flex justify-content-center">
+          <pv-sidebar v-model:visible="visibleFilter" position="right" style="width: 25rem;">
+            <FilterPageComponent @closeFilter="onFilterSelected"
+                                 @filter1="onFilter($event)"
+                                 @filter-condition="onFilterForCondition($event)"
+                                 @filter-duration="onFilterForDuration($event)"
+                                 @filter-date="onFilterDate($event)"
+            />
+          </pv-sidebar>
+        </div>
+      </template>
+    </div>
   </section>
 </template>
 
@@ -227,10 +256,12 @@ export default {
 .reserve-section {
   padding: 20px;
 }
+
 .on-filter {
   width: 100%;
   justify-content: space-between;
 }
+
 .container-cards {
   display: flex;
   justify-content: center;
@@ -240,24 +271,66 @@ export default {
   gap: 20px;
   width: 100%;
 }
+
 .container-title {
   margin-top: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 8px;
-  border-bottom: #32C793 1px solid;
+  border-bottom: #4d3b29 1px solid; /* Color marrón oscuro */
 }
-.title-button {
-  height: 50px;
+
+.title-button, .icon-button {
+  background-color: #f4a261; /* Color naranja */
+  border: none;
   color: white;
-  font-size: 15px;
-  font-weight: 500;
-  text-align: center;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.title-button:hover, .icon-button:hover {
+  background-color: #e76f51; /* Hover más oscuro */
+}
+
+.btn-action {
+  background-color: #f4a261; /* Naranja para botones de acción */
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
 .btn-action:hover {
-  color: #32C793;
+  background-color: #e76f51; /* Hover naranja oscuro */
+}
+
+.scroll-top-button {
+  background-color: #c97b47; /* Marrón anaranjado para botón de scroll */
+  border-color: #c97b47;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.scroll-top-button:hover {
+  background-color: #b3683a; /* Hover marrón más oscuro */
+}
+
+.pv-button {
+  background-color: #f4a261; /* Naranja */
+  color: white;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.pv-button:hover {
+  background-color: #e76f51; /* Hover en naranja oscuro */
 }
 
 .filter-total-results p {
@@ -285,6 +358,7 @@ export default {
     align-items: center;
     padding-bottom: 0;
   }
+
   .button-group-desktop {
     display: flex;
   }
