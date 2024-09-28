@@ -1,10 +1,70 @@
+<template>
+  <section>
+    <pv-toast />
+    <div class="container-title">
+      <h2 class="title"> My Rooms</h2>
+      <div>
+        <div class="button-group-desktop" v-if="!deleteFlag">
+          <pv-button class="mr-2 title-button btn-new" icon="pi pi-plus" label="New" severity="secondary" @click="onNewItemEventHandler"></pv-button>
+          <pv-button class="mr-2 title-button btn-action" icon="pi pi-filter" label="Filter" severity="secondary" text @click="onFilterSelected"></pv-button>
+          <pv-button class="mr-2 title-button btn-action" icon="pi pi-trash" severity="secondary" text @click="deleteAction"></pv-button>
+        </div>
+        <div class="button-group-mobile" v-if="!deleteFlag">
+          <pv-button class="mr-2 icon-button btn-new" icon="pi pi-plus" severity="secondary" @click="onNewItemEventHandler"></pv-button>
+          <pv-button class="mr-2 icon-button btn-action" icon="pi pi-filter" severity="secondary" text></pv-button>
+          <pv-button class="mr-2 icon-button btn-action" icon="pi pi-trash" severity="secondary" text @click="deleteAction"></pv-button>
+        </div>
+        <div v-if="deleteFlag">
+          <pv-button class="mr-2 title-button" icon="pi pi-trash" severity="success" label="Delete" @click="deleteSelection"></pv-button>
+          <pv-button class="mr-2 title-button" severity="secondary" v-if="deleteFlag" label="Cancel" @click="deleteAction"></pv-button>
+        </div>
+      </div>
+    </div>
+    <div class="on-filter flex display-flex align-items-center flex-direction-row justify-content-space-between" v-if="wasFilter !== false">
+      <div class="filter-total-results flex gap-3">
+        <!-- Asegúrate de que rooms esté definido antes de usar length -->
+        <p v-if="rooms"> Total Results:</p>
+        <p v-if="rooms">{{ rooms.length.toString() }}</p>
+      </div>
+      <pv-button class="mr-2 title-button" icon="pi pi-times" text rounded severity="secondary" @click="closeFilter"></pv-button>
+    </div>
+    <div class="container-cards">
+      <div v-for="room in rooms" :key="room.id">
+        <div class="flex align-items-center" v-if="deleteFlag">
+          <pv-checkbox v-model="selectedRooms" :inputId="room.id" name="room" :value="room.id"></pv-checkbox>
+        </div>
+        <room-view :room="room" @viewDetails="handleViewRoomDetails" @Edit="onEditItemEventHandler" @Delete="onDeleteItemEventHandler" />
+      </div>
+    </div>
+  </section>
+  <room-create-and-edit
+      :item="room"
+      :visible="isVisibleCard"
+      :edit="isEdit"
+      @canceled="onCanceledEventHandler"
+      @saved="onSavedEventHandler($event)" />
+
+  <div class="app-content">
+    <template>
+      <div class="card flex justify-content-center">
+        <pv-sidebar v-model:visible="visibleFilter"  position="right" style="width: 25rem;">
+          <room-filter-page @closeFilter="onFilterSelected"
+                            @filter1="onFilter($event)"
+                            @filter-status="onFilterForStatus($event)"
+                            @filter-area="onFilterArea($event)"
+          />
+        </pv-sidebar>
+      </div>
+    </template>
+  </div>
+</template>
+
 <script>
 import RoomView from "../components/room-view.component.vue";
 import { Room } from "../model/room.entity.js";
 import RoomFilterPage from "./room-filter-page.component.vue";
 import RoomCreateAndEdit from "@/king-reserve/admin-rooms/components/room-create-and-edit.vue";
 import { RoomsApiService } from "@/king-reserve/admin-rooms/services/rooms-api.service.js";
-
 
 export default {
   name: "room-management",
@@ -13,7 +73,7 @@ export default {
     return {
       room: {},
       roomsService: null,
-      rooms: [],
+      rooms: [], // Asegúrate de inicializar como un array vacío
       allRooms: [], // array for filter
       selectedRooms: [], // array for delete selected
       isVisibleCard: false,
@@ -174,70 +234,8 @@ export default {
       this.wasFilter = true;
     }
   }
-}
+};
 </script>
-
-<template>
-  <section>
-    <pv-toast />
-    <div class="container-title">
-      <h2 class="title"> My Rooms</h2>
-      <div>
-        <div class="button-group-desktop" v-if="!deleteFlag">
-          <pv-button class="mr-2 title-button btn-new" icon="pi pi-plus" label="New" severity="secondary" @click="onNewItemEventHandler"></pv-button>
-          <pv-button class="mr-2 title-button btn-action" icon="pi pi-filter" label="Filter" severity="secondary" text @click="onFilterSelected"></pv-button>
-          <pv-button class="mr-2 title-button btn-action" icon="pi pi-trash" severity="secondary" text @click="deleteAction"></pv-button>
-        </div>
-        <div class="button-group-mobile" v-if="!deleteFlag">
-          <pv-button class="mr-2 icon-button btn-new" icon="pi pi-plus" severity="secondary" @click="onNewItemEventHandler"></pv-button>
-          <pv-button class="mr-2 icon-button btn-action" icon="pi pi-filter" severity="secondary" text></pv-button>
-          <pv-button class="mr-2 icon-button btn-action" icon="pi pi-trash" severity="secondary" text @click="deleteAction"></pv-button>
-        </div>
-        <div v-if="deleteFlag">
-          <pv-button class="mr-2 title-button" icon="pi pi-trash" severity="success" label="Delete" @click="deleteSelection"></pv-button>
-          <pv-button class="mr-2 title-button" severity="secondary" v-if="deleteFlag" label="Cancel" @click="deleteAction"></pv-button>
-        </div>
-      </div>
-    </div>
-    <div class="on-filter flex display-flex align-items-center flex-direction-row justify-content-space-between" v-if="wasFilter !== false">
-      <div class="filter-total-results flex gap-3">
-        <p> Total Results:</p>
-        <p>{{ rooms.length.toString() }}</p>
-      </div>
-      <pv-button class="mr-2 title-button" icon="pi pi-times" text rounded severity="secondary" @click="closeFilter"></pv-button>
-    </div>
-    <div class="container-cards">
-      <div v-for="room in rooms" :key="room.id">
-        <div class="flex align-items-center" v-if="deleteFlag">
-          <pv-checkbox v-model="selectedRooms" :inputId="room.id" name="room" :value="room.id"></pv-checkbox>
-        </div>
-        <room-view :room="room" @viewDetails="handleViewRoomDetails" @Edit="onEditItemEventHandler" @Delete="onDeleteItemEventHandler" />
-      </div>
-    </div>
-  </section>
-  <room-create-and-edit
-      :item="room"
-      :visible="isVisibleCard"
-      :edit="isEdit"
-      @canceled="onCanceledEventHandler"
-      @saved="onSavedEventHandler($event)" />
-
-  <div class="app-content">
-
-    <template>
-      <div class="card flex justify-content-center">
-        <pv-sidebar v-model:visible="visibleFilter"  position="right" style="width: 25rem;">
-          <room-filter-page @closeFilter="onFilterSelected"
-                             @filter1="onFilter($event)"
-                             @filter-status="onFilterForStatus($event)"
-                             @filter-area="onFilterArea($event)"
-          />
-        </pv-sidebar>
-      </div>
-    </template>
-  </div>
-
-</template>
 
 <style scoped>
 .container-cards {
@@ -257,32 +255,44 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #34d399;
+  border-bottom: 1px solid #4d3b29; /* Marrón oscuro */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
-.title-button {
-  height: 50px;
+.title-button, .icon-button {
+  background-color: #f4a261; /* Naranja */
+  border: none;
   color: white;
-  font-size: 15px;
-  font-weight: 500;
-  text-align: center;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
+
+.title-button:hover, .icon-button:hover {
+  background-color: #e76f51; /* Naranja oscuro al hover */
+}
+
 .btn-action:hover {
-  color: #32C793;
+  color: #e76f51; /* Cambia el texto a naranja oscuro al hover */
 }
+
 .btn-new:hover {
-  color: #32C793;
+  color: #e76f51; /* Cambia el texto a naranja oscuro al hover */
 }
+
 .button-group-desktop {
   display: none;
 }
+
 .button-group-mobile {
   display: flex;
 }
+
 .on-filter{
   width: 100%;
   justify-content: space-between;
 }
+
 @media (min-width: 750px) {
   .container-title {
     display: flex;
