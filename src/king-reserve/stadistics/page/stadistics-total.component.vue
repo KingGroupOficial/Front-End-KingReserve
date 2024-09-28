@@ -20,15 +20,15 @@ export default {
     <div class="dashboard-cards">
       <div class="card">
         <i class="pi pi-users card-icon"></i>
-        <CountPersons />
+        <CountPersons/>
       </div>
       <div class="card">
         <i class="pi pi-chart-bar card-icon"></i>
-        <CountReserve />
+        <CountReserve/>
       </div>
       <div class="card">
         <i class="pi pi-chart-line card-icon"></i>
-        <GraficBarCondition />
+        <GraficBarCondition/>
       </div>
     </div>
   </div>
@@ -44,7 +44,7 @@ h2 {
   color: white;
   margin-bottom: 20px;
   text-align: center;
-  font-size: 3rem
+  font-size: 3rem;
 }
 
 .dashboard-cards {
@@ -74,10 +74,14 @@ h2 {
 
 .card-icon {
   font-size: 2rem;
-  color: #4CAF50; /* Green color of the project */
+  color: #f4a261; /* Naranja del proyecto */
   position: absolute;
   top: 10px;
   right: 10px;
+}
+
+.card-icon:hover {
+  color: #e76f51; /* Naranja oscuro al hover */
 }
 
 .card i {
