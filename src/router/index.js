@@ -9,6 +9,8 @@ import stadisticsTotalComponent from "@/king-reserve/stadistics/page/stadistics-
 import staffManagementComponent from "@/king-reserve/staff/pages/staff-management.component.vue";
 import staffViewComponent from "@/king-reserve/staff/pages/staff-view.component.vue";
 import inventoryComponent from "@/king-reserve/inventory/components/inventory.component.vue";
+import ServiceManagement   from "@/king-reserve/service/pages/Service-Management.vue";
+
 /**
  * Vue Router instance
  * @type {Router} Vue Router instance creation with default configs
@@ -25,6 +27,8 @@ const router = createRouter({
         { path: "/staff", component:staffManagementComponent , meta: { title: "Staff"}},
         { path: "/staf-view", component:staffViewComponent , meta: { title: "Staff-VIEW"}},
         {path: "/inventory", component: inventoryComponent, meta: { title: "Inventory"}},
+        { path: "/service", component:ServiceManagement , meta: { title: "Service"}},
+
         // Path to Stadistics
         { path: "/stadistic", component: stadisticsTotalComponent, meta: { title: "Stadistics"} },
         // Path to handle unmatched URLs, using notFoundComponent
