@@ -175,6 +175,7 @@ export default {
 </script>
 
 <template>
+  <div class="container">
   <section class="reserve-section" :style="{ position: 'relative'} ">
     <pv-toast/>
     <div class="container-title">
@@ -250,6 +251,7 @@ export default {
       </template>
     </div>
   </section>
+  </div>
 </template>
 
 <style scoped>
@@ -367,4 +369,9 @@ export default {
     display: none;
   }
 }
+
+.container {
+  background-color: var(--main-bg-color);
+}
+
 </style>

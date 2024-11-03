@@ -42,6 +42,7 @@ export default {
 </script>
 
 <template>
+  <div class="container">
   <section class="staff-section">
     <pv-toast />
 
@@ -67,6 +68,7 @@ export default {
       </div>
     </div>
   </section>
+  </div>
 </template>
 
 <style scoped>
@@ -89,5 +91,8 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.container {
+  background-color: var(--main-bg-color);
 }
 </style>

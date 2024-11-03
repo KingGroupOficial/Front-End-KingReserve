@@ -1,4 +1,5 @@
 <template>
+  <div class="container">
   <div class="person-management">
     <h3 class="title">{{ t('personsRegistered') }}</h3>
     <div class="custom-toolbar">
@@ -43,6 +44,7 @@
         @canceled="onCanceledEventHandler"
         @saved="onSavedEventHandler"
     />
+  </div>
   </div>
 </template>
 
@@ -405,4 +407,7 @@ h3 {
   color: #32C793;
 }
 
+.container {
+  background-color: var(--main-bg-color);
+}
 </style>

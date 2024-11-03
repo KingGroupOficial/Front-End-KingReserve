@@ -138,6 +138,11 @@
     "noStaffFound": "No se encontró personal.",
     "loadingStaffData": "Cargando datos del personal. Por favor espera."
   },
+  "ServiceManagement": {
+    "new": "Nuevo Servicio",
+    "delete": "Eliminar Servicio",
+    "cancel": "Cancelar"
+  },
   "confirmation": "Confirmación",
   "cancel": "Cancelar",
   "delete": "Eliminar",

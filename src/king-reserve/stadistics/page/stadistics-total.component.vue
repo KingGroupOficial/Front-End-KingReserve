@@ -19,6 +19,7 @@ export default {
 </script>
 
 <template>
+  <div class="container">
   <div class="dashboard">
     <h2>{{ t('statisticsOverview') }}</h2>
     <br>
@@ -36,6 +37,7 @@ export default {
         <GraficBarCondition/>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -90,5 +92,9 @@ h2 {
 
 .card i {
   margin-bottom: 10px;
+}
+
+.container {
+  background-color: var(--main-bg-color);
 }
 </style>

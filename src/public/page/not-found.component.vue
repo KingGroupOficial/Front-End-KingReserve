@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+  <div class="container">
     <div class="card">
       <div class="progress-container">
         <div class="progress-bar"></div>
@@ -10,6 +11,7 @@
         <img class="sad-face" :class="{ 'fade-in': showSadFace }" src="/src/public/page/images/cute-cow-sitting-alone-cartoon-vector.png" alt="page not found" style="max-width: 300px; height: auto;">
       </div>
     </div>
+  </div>
   </div>
 </template>
 

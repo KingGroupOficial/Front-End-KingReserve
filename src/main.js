@@ -54,6 +54,7 @@ import Badge from 'primevue/badge';
 import ProgressBar from 'primevue/progressbar';
 import i18n from "@/i18n.js";
 import SelectButton from "primevue/selectbutton";
+import ColorPicker from "primevue/colorpicker";
 
 
 createApp(App)
@@ -93,6 +94,7 @@ createApp(App)
     .component('pv-checkbox', Checkbox)
     .component('pv-rating', Rating)
     .component('pv-avatar',Avatar)
+    .component('pv-color-picker',ColorPicker)
     .component('pv-select-button', SelectButton)
     .component('pv-speed-dial',SpeedDial)
     .component('pv-calendar',Calendar)

@@ -135,6 +135,7 @@ export default {
 </script>
 
 <template>
+  <div class="container">
   <div class="staff-full principal-container">
     <!-- Staff Data Manager -->
     <staff-edit
@@ -170,6 +171,7 @@ export default {
         @saved="onSavedEventHandler($event)"
     />
   </div>
+  </div>
 </template>
 
 <style scoped>
@@ -204,5 +206,9 @@ export default {
 
 .icon-button:hover {
   background-color: #388E3C; /* Hover en verde más oscuro */
+}
+
+.container {
+  background-color: var(--main-bg-color);
 }
 </style>

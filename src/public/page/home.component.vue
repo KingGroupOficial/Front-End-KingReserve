@@ -16,9 +16,7 @@ export default {
 </script>
 
 <template>
-  <div>
-    <h1 class="animated-title" style="margin-bottom: 80px;">{{ t('welcome') }}</h1>
-  </div>
+  <div class="container">
 
   <div class="container">
     <div class="card">
@@ -137,6 +135,7 @@ export default {
       <i class="pi pi-arrow-up" @click="scrollToTop"></i>
     </pv-button>
   </div>
+</div>
 </template>
 
 <style scoped>
@@ -244,5 +243,8 @@ export default {
 
 .scroll-top-button:hover {
   background-color: #b3683a;
+}
+.container {
+  background-color: var(--main-bg-color);
 }
 </style>

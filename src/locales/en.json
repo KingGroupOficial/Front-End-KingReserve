@@ -138,6 +138,11 @@
     "noStaffFound": "No staff found.",
     "loadingStaffData": "Loading staff data. Please wait."
   },
+  "ServiceManagement": {
+    "new": "New Service",
+    "delete": "Delete Service",
+    "cancel": "Cancel"
+  },
   "confirmation": "Confirmation",
   "cancel": "Cancel",
   "delete": "Delete",

@@ -1,4 +1,5 @@
 <template>
+  <div class="container">
   <section>
     <pv-toast />
     <div class="container-title">
@@ -55,6 +56,7 @@
         </pv-sidebar>
       </div>
     </template>
+  </div>
   </div>
 </template>
 
@@ -316,5 +318,9 @@ export default {
   .button-group-mobile {
     display: none;
   }
+}
+
+.container {
+  background-color: var(--main-bg-color);
 }
 </style>

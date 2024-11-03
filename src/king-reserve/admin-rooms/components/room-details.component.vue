@@ -32,14 +32,19 @@ export default {
 </script>
 
 <template>
+  <div class="container">
   <div class="principal-container">
     <h2>{{ t('roomDetails') }}: {{ room.name }}</h2>
     <person-management :room-id="room.id"/>
+  </div>
   </div>
 </template>
 
 <style scoped>
 .principal-container {
   padding: 20px;
+}
+.container {
+  background-color: var(--main-bg-color);
 }
 </style>

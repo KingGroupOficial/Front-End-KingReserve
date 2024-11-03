@@ -259,7 +259,7 @@ export default {
 <style scoped>
 /* Estilos generales */
 .container {
-  background-color: #e7d5b0;
+  background-color: var(--main-bg-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;

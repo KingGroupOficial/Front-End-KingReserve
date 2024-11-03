@@ -32,10 +32,9 @@ export default {
       <pv-toolbar class="toolbar" fixed>
         <template #start>
           <pv-button class="menu-button" icon="pi pi-bars" @click="toggleDrawer()" />
-          <h1 class="toolbar-title"> {{ $t('kingReserve') }}</h1>
         </template>
-        <template #end>
-          <language-switcher/>
+        <template #center>
+          <h1 class="toolbar-title">{{ $t('kingReserve') }}</h1>
         </template>
       </pv-toolbar>
     </header>
@@ -228,33 +227,19 @@ export default {
 
 <style scoped>
 .toolbar {
-  height: 60px;
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  color: white;
+  background-color: #f4a261; /* Background color */
+  border: none; /* Remove any borders */
+  padding: 1rem; /* Add some padding */
 }
 
 .menu-button {
-  font-size: 24px;
-  color: white;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.menu-button:hover {
-  color: #d4d4d4; /* Change color on hover */
+  background-color: #4d3b29; /* Button color */
+  color: #fff; /* Button text color */
 }
 
 .toolbar-title {
-  margin-left: 16px;
-  font-size: 24px;
-  font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-align: center;
+  font-size: 2rem;
+  color: #4d3b29;
 }
-
-
 </style>
