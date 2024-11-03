@@ -4,10 +4,7 @@ import {Service} from "@/king-reserve/service/model/service.entity.js"
 
 export default {
   name: "service-view",
-  components: {
 
-
-  },
   props: {
     service: Service
   },
