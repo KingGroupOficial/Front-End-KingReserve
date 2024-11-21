@@ -154,6 +154,8 @@
   "viewStaff": "View Staff",
   "manageStaff": "Manage Staff",
   "services": "Services",
-  "settings": "Settings"
-
+  "settings": "Settings",
+  "ServiceManagement": {
+    "new": "Nuevo Servicio"
+  }
 }

@@ -110,7 +110,7 @@ export default {
     </div>
 
     <div class="card">
-      <router-link to="/veterinarians" style="text-decoration: none">
+      <router-link to="/service" style="text-decoration: none">
         <div class="card-header">
           <img alt="user header" src="/src/public/page/images/services-home.jpg">
         </div>

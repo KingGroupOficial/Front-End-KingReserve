@@ -154,6 +154,8 @@
   "viewStaff": "Ver Personal",
   "manageStaff": "Gestionar Personal",
   "services": "Servicios",
-  "settings": "Configuraciones"
-
+  "settings": "Configuraciones",
+  "ServiceManagement": {
+    "new": "New Service"
+  }
 }
