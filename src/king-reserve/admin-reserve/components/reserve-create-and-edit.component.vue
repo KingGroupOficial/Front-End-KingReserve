@@ -85,9 +85,14 @@ export default {
         </div>
 
         <div class="field mt-5">
-          <pv-float-label>
+              <pv-float-label>
             <label for="duration">Duration</label>
-            <pv-input-number id="duration" v-model="item.duration" :class="{'p-invalid': submitted && !item.duration}" />
+            <pv-input-number
+                id="duration"
+                v-model="item.duration"
+                :readonly="true"
+                :class="{'p-invalid': submitted && !item.duration}"
+            />
             <small v-if="submitted && !item.duration" class="p-invalid">Duration is required.</small>
           </pv-float-label>
         </div>
