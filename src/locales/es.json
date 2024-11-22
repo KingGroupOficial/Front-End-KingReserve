@@ -148,7 +148,7 @@
   "cancel": "Cancelar",
   "delete": "Eliminar",
   "new": "Nuevo",
-  "kingReserve": "kingReserve",
+  "kingReserve": "KING RESERVE",
   "inventory": "Inventario",
   "myHotel": "Mi Hotel",
   "home": "Inicio",
@@ -164,5 +164,8 @@
   "welcomeBack": "¡Bienvenido de nuevo a King Reserve!",
   "continueJourney": "Continúa tu viaje hacia una gestión eficiente del hotel.",
   "joinPecuarioPro": "¡Únete a King Reserve!",
-  "embarkJourney": "Emprende tu viaje hacia una gestión eficiente del hotel."
+  "embarkJourney": "Emprende tu viaje hacia una gestión eficiente del hotel.",
+  "welcomeMessage": "Bienvenido"
+
+
 }

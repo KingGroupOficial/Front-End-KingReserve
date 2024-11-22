@@ -1,15 +1,65 @@
-﻿<script>
-import {useAuthenticationStore} from "@/IAM/services/authentication.store.js";
-import {SignInRequest} from "@/IAM/model/sign-in.request.js";
+﻿<template>
+  <div class="login-wrapper">
+    <div class="login-container">
+      <div class="language-switcher-container">
+        <LanguageSwitcher />
+      </div>
+      <h3 class="welcome-title">{{ $t("welcomeBack") }}</h3>
+      <p class="subtitle">{{ $t("continueJourney") }}</p>
+
+      <!-- Notificación de error -->
+      <div v-if="error" class="error-notification">
+        {{ error }}
+      </div>
+
+      <form @submit.prevent="onSignIn" class="form-layout">
+        <div class="fields-container">
+          <!-- Username Field -->
+          <div class="input-group" :class="{ 'input-error': error }">
+            <i class="pi pi-user"></i>
+            <input
+                id="username"
+                v-model="username"
+                class="input-field"
+                placeholder="Username"
+            />
+          </div>
+
+          <!-- Password Field -->
+          <div class="input-group" :class="{ 'input-error': error }">
+            <i class="pi pi-lock"></i>
+            <input
+                id="password"
+                v-model="password"
+                class="input-field"
+                placeholder="Password"
+                type="password"
+            />
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="submit-container">
+          <button type="submit" class="p-button animated-button">LOGIN</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+import { useAuthenticationStore } from "@/IAM/services/authentication.store.js";
+import { SignInRequest } from "@/IAM/model/sign-in.request.js";
 import LanguageSwitcher from "@/public/components/language-swicher.component.vue";
 
 export default {
   name: "sign-in",
-  components: {LanguageSwitcher},
+  components: { LanguageSwitcher },
   data() {
     return {
-      username: '',
-      password: ''
+      username: "",
+      password: "",
+      error: null, // Manejo de errores
     };
   },
   methods: {
@@ -18,108 +68,156 @@ export default {
       let signInRequest = new SignInRequest(this.username, this.password);
 
       try {
-        // Llama al store y espera la respuesta
         const response = await authenticationStore.signIn(signInRequest, this.$router);
 
-        // Si el token está presente, lo guardamos en localStorage
         if (response && response.token) {
-          localStorage.setItem('authToken', response.token);
-          console.log('Token stored successfully:', response.token);
-          localStorage.setItem('userIDSIGN', response.id);
-          console.log('ID USER stored successfully:', response.id);
+          localStorage.setItem("authToken", response.token);
+          console.log("Token stored successfully:", response.token);
+          localStorage.setItem("userIDSIGN", response.id);
+          console.log("User ID stored successfully:", response.id);
         } else {
-          console.error('No token received');
+          console.error("No token received");
         }
       } catch (error) {
-        // Maneja el error si ocurre
-        console.error('Sign-in failed:', error);
+        console.error("Sign-in failed:", error);
+        this.error = "Invalid username or password."; // Mensaje de error
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
-<template>
-  <div class="login-wrapper">
-    <div class="login-container">
-      <LanguageSwitcher />
-      <h3>{{ $t('welcomeBack') }}</h3>
-      <p>{{ $t('continueJourney') }}</p>
-      <form @submit.prevent="onSignIn">
-        <div class="p-fluid">
-          <div class="field mt-5">
-            <div class="input-group">
-              <i class="pi pi-user"></i>
-              <pv-float-label>
-                <pv-input-text id="username" v-model="username" :class="{'p-invalid': !username}"/>
-                <label for="username">Username</label>
-              </pv-float-label>
-            </div>
-            <small v-if="!username" class="p-invalid">Username is required</small>
-          </div>
-          <div class="field mt-5">
-            <div class="input-group">
-              <i class="pi pi-lock"></i>
-              <pv-float-label>
-                <pv-input-text id="password" v-model="password" :class="{'p-invalid': !password}" type="password"/>
-                <label for="password">Password</label>
-              </pv-float-label>
-            </div>
-            <small v-if="!password" class="p-invalid">Password is required</small>
-          </div>
-          <div class="field mt-5">
-            <button type="submit" class="p-button p-button-primary">LOGIN</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</template>
 
 <style scoped>
+/* Wrapper del formulario */
 .login-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #e76f51;
+  background-color: #4d3b29; /* Fondo marrón oscuro */
 }
+
+/* Contenedor principal */
 .login-container {
-  background-color: #A52A2A;
-  padding: 2rem;
-  border-radius: 0.5rem;
+  background: linear-gradient(135deg, #6b4423, #4d3b29); /* Gradiente marrón */
+  padding: 2rem 3rem;
+  border-radius: 1.5rem;
   text-align: center;
-  color: white;
-  width: 400px;
+  width: 700px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 }
-.field {
-  width: 100%;
-  margin-top: 1rem;
+
+/* Switcher de idioma */
+.language-switcher-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
 }
+
+/* Títulos y subtítulos */
+.welcome-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #e9c46a;
+  margin-bottom: 0.5rem;
+}
+.subtitle {
+  font-size: 1.2rem;
+  color: #f4a261;
+  margin-bottom: 2rem;
+}
+
+/* Contenedor de los campos */
+.fields-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+/* Grupo de entrada */
 .input-group {
   display: flex;
   align-items: center;
-  background-color: white;
-  border-radius: 5px;
-  padding: 0.5rem;
+  background-color: #e9c46a; /* Fondo claro */
+  border-radius: 8px;
+  padding: 1rem;
+  flex: 1;
+  max-width: 280px;
+  transition: all 0.3s ease;
 }
+
+/* Efecto de hover */
+.input-group:hover {
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Campo con error */
+.input-group.input-error {
+  background-color: #e63946; /* Fondo rojo */
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Iconos */
 .input-group i {
-  color: #e76f51;
-  margin-right: 0.5rem;
+  color: #4d3b29;
+  margin-right: 1rem;
 }
+
+/* Estilo de los campos */
+.input-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  background: none;
+}
+
+/* Botón */
 .p-button {
-  width: 100%;
-  background-color: #e76f51;
-  color: #A52A2A;
-  text-align: center;
+  background-color: #f4a261; /* Fondo crema */
+  color: white;
   font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
+
 .p-button:hover {
-  background-color: #e76f51;
+  background-color: #e76f51; /* Hover rojo suave */
+  transform: scale(1.05);
 }
-.p-invalid {
-  color: red;
+
+/* Notificación de error */
+.error-notification {
+  background-color: #e63946; /* Rojo */
+  color: white;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 </style>

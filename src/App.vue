@@ -13,7 +13,10 @@
     data() {
       return {
         drawer: false,
+        isSignedIn: false,
         visible:Boolean,
+        currentUsername: "",
+        showWelcome: false,
         items: [
           {label: 'Inventory', to: '/inventory'}
         ],
@@ -23,6 +26,20 @@
     methods: {
       toggleDrawer() {
         this.drawer = !this.drawer
+      },
+      onSignIn() {
+        // Simula el inicio de sesión
+        this.isSignedIn = true; // Cambia el estado de autenticación
+        this.showWelcome = true; // Muestra el banner de bienvenida
+
+        // Oculta el banner después de 3 segundos
+        setTimeout(() => {
+          this.showWelcome = false;
+        }, 3000);
+      },
+      onSignUp() {
+        this.router.push({name: "sign-up"});
+        console.log("Sign Up clicked");
       }
     }
   }
@@ -31,7 +48,7 @@
   <template>
     <div>
       <header>
-        <pv-toolbar class="toolbar" fixed>
+        <pv-toolbar class="toolbar">
           <template #start>
             <pv-button
                 class="menu-button"
@@ -41,15 +58,25 @@
             />
           </template>
           <template #center>
-            <h1 class="toolbar-title">{{ $t('kingReserve') }}</h1>
+            <div style="display: flex;">
+              <div style="width: 20em;"></div>
+              <h1 class="toolbar-title">{{ $t('kingReserve') }}</h1>
+            </div>
           </template>
-
           <template #end>
-            <authentication-section/>
+              <authentication-section />
           </template>
-
         </pv-toolbar>
+
+
+        <!-- Welcome Banner -->
+        <div v-if="showWelcome" class="welcome-banner">
+          <h2 class="welcome-message">{{ $t('welcome') }} a King Reserve</h2>
+          <span class="username">{{ currentUsername }}</span>
+        </div>
       </header>
+
+
 
 
       <div class="app-content" >
@@ -62,7 +89,7 @@
                   <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
                           <span class="inline-flex align-items-center gap-2">
                               <img src="/src/public/page/images/icono.png" alt="logo" class="h-8"  width="75" height="75"/>
-                              <span class="font-semibold text-2xl text-primary">{{ $t('kingReserve') }}</span>
+                              <span class="font-semibold text-2xl toolbar-title">{{ $t('kingReserve') }}</span>
                           </span>
                     <span>
                               <pv-button type="button" @click="closeCallback" icon="pi pi-times" rounded outlined class="h-2rem w-2rem"></pv-button>
@@ -239,20 +266,123 @@
   </template>
 
   <style scoped>
+  /* Toolbar */
   .toolbar {
-    background-color: #f4a261; /* Background color */
-    border: none; /* Remove any borders */
-    padding: 1rem; /* Add some padding */
-  }
-
-  .menu-button {
-    background-color: #4d3b29; /* Button color */
-    color: #fff; /* Button text color */
+    background-color: #f4a261;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
 
   .toolbar-title {
-    text-align: center;
+    color: #4d3b29;
+    font-weight: 600;
     font-size: 2rem;
+    text-align: center;
+  }
+
+  /* Sidebar Button */
+  .menu-button {
+    background-color: #4d3b29;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .menu-button:hover {
+    background-color: #2a9d8f;
+    transform: scale(1.1);
+  }
+
+  /* Auth Buttons */
+  .auth-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .action-button {
+    background-color: #2a9d8f;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .action-button:hover {
+    background-color: #21867a;
+    transform: scale(1.05);
+  }
+
+  .action-button.sign-in {
+    background: linear-gradient(135deg, #2a9d8f, #38ef7d);
+  }
+
+  .action-button.sign-up {
+    background: linear-gradient(135deg, #e63946, #f4a261);
+  }
+
+  /* Welcome Banner */
+  .welcome-banner {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fffbea;
+    color: #2a9d8f;
+    padding: 2rem 3rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 1000;
+    animation: fadeIn 0.5s ease, fadeOut 0.5s 2.5s ease;
+  }
+
+  .welcome-message {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .username {
+    font-size: 1.5rem;
+    font-weight: 600;
     color: #4d3b29;
   }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
+
   </style>
