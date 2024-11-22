@@ -1,35 +1,49 @@
 import axios from "axios";
 
-const url_FakeApi = "https://66f74e74b5d85f31a3426eb5.mockapi.io";
+const url_FakeApi = "http://localhost:5151/api/v1";
 
 const http = axios.create({
     baseURL: url_FakeApi, // Base URL de la API de MockAPI
 });
 
+// Configurar un interceptor para agregar el token de seguridad a cada solicitud
+http.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 export class StaffApiService {
 
     getAll() {
-        return http.get('/staff'); // Obtener todos los registros de staff
+        return http.get('/staffs'); // Obtener todos los registros de staff
     }
 
     getById(id) {
-        return http.get(`/staff/${id}`); // Obtener un registro de staff por su ID
+        return http.get(`/staffs/${id}`); // Obtener un registro de staff por su ID
     }
 
     create(staffResource) {
-        return http.post('/staff', staffResource); // Crear un nuevo registro de staff
+        return http.post('/staffs', staffResource); // Crear un nuevo registro de staff
     }
 
     update(id, staff) {
-        return http.put(`/staff/${id}`, staff); // Actualizar un registro de staff por su ID
+        return http.put(`/staffs/${id}`, staff); // Actualizar un registro de staff por su ID
     }
 
     delete(id) {
-        return http.delete(`/staff/${id}`); // Eliminar un registro de staff por su ID
+        return http.delete(`/staffs/${id}`); // Eliminar un registro de staff por su ID
     }
 
     findByName(name) {
-        return http.get(`/staff?name=${name}`); // Buscar registros de staff por nombre
+        return http.get(`/staffs?name=${name}`); // Buscar registros de staff por nombre
     }
 
     // Obtener todos los staffs agrupados por su ID de batch

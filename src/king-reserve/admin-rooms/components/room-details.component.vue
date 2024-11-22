@@ -23,10 +23,15 @@ export default {
   },
   methods: {
     findRoom() {
-      this.roomService.getRoomById(this.$route.params.roomId).then((response) => {
-        this.room = Room.toDisplayableRoom(response.data);
+      console.log("soy el id del room",this.$route.params.roomId);
+      console.log("soy el id de la reserva",this.$route.params.reservationId);
+      this.roomService.getById(this.$route.params.reservationId,this.$route.params.roomId).then((response) => {
+        console.log(response.data);
+        let _room = response.data;
+        this.room = Room.toDisplayableRoom(_room);
       });
     }
+
   }
 };
 </script>

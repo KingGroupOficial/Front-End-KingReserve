@@ -18,7 +18,9 @@ export default {
       isVisibleCard: false,
       isEdit: false,
       submitted: false,
-      createAndEditDialogIsVisible: false
+      createAndEditDialogIsVisible: false,
+      isCreating: false, // Evitar llamadas repetidas
+
     };
   },
   created() {
@@ -106,19 +108,33 @@ export default {
     },
 
     createStaff() {
-      this.staff = Staff.fromDisplayableStaff(this.staff);
-      this.staffService.create(this.staff)
+      if (this.isCreating) return; // Si ya está creando, evitar más llamadas
+      this.isCreating = true;
+
+      const payload = {
+        reserves_id: this.staff.reserves_id,
+        name: this.staff.name,
+        last_name: this.staff.last_name,
+        job_description: this.staff.job_description,
+        email: this.staff.email,
+        on_job_status: this.staff.on_job_status
+      };
+
+      this.staffService.create(payload)
           .then((response) => {
-            this.staff = Staff.toDisplayableStaff(response.data);
-            this.staffs.push(this.staff);
+            const createdStaff = Staff.toDisplayableStaff(response.data);
+            this.staffs.push(createdStaff);
             this.notifySuccessfulAction(this.$t('staffManagement.staffCreated'));
-            this.createAndEditDialogIsVisible = false;
           })
           .catch((error) => {
             console.error('Error creating staff:', error);
+          })
+          .finally(() => {
+            this.isCreating = false; // Permitir futuras llamadas
+            this.createAndEditDialogIsVisible = false;
           });
-    },
-
+    }
+  },
     updateStaff() {
       this.staff = Staff.fromDisplayableStaff(this.staff);
       this.staffService.update(this.staff.id, this.staff)
@@ -130,7 +146,6 @@ export default {
             console.error('Error updating staff:', error);
           });
     }
-  }
 };
 </script>
 

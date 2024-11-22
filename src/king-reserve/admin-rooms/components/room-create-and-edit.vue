@@ -1,3 +1,4 @@
+
 <script>
 import createAndEdit from "../../../shared/components/create-and-edit.component.vue";
 
@@ -5,37 +6,72 @@ export default {
   name: "room-create-and-edit",
   components: { createAndEdit },
   props: {
-    item: null,
+    item: Object, // Corrige para asegurar que se espera un objeto
     visible: Boolean,
     edit: Boolean
   },
   data() {
     return {
+      reservationId: null,
       submitted: false,
-      dateError: '',
       statusOptions: [
-        'In process',
-        'Waiting',
-        'Completed'
+        { label: 'Available', value: 0 },
+        { label: 'Reserved', value: 1 },
+        { label: 'Occupied', value: 2 },
+        { label: 'Completed', value: 3 },
+        { label: 'Waiting', value: 4 }
       ]
+    };
+  },
+  created() {
+    this.reservationId = parseInt(this.$route.params.reservationId, 10);
+    if (isNaN(this.reservationId)) {
+      console.error("reservationId no está definido en la ruta o no es un número válido");
     }
   },
   methods: {
     canceledEventHandler() {
-      this.$emit('canceled');
+      this.$emit("canceled");
       this.submitted = false;
     },
     savedEventHandler() {
       console.log("Enviar de room", this.item);
+
+      // Asignamos el reservationId
+      if (this.reservationId) {
+        this.item.reservationId = this.reservationId;
+      } else {
+        console.error("reservationId no está definido");
+      }
+
+      // Aseguramos que el área sea un entero
+      this.item.area = parseInt(this.item.area, 10);
+
+      // Aseguramos que el status sea solo el valor (número)
+      if (this.item.status && typeof this.item.status === 'object') {
+        this.item.status = this.item.status.value;
+      }
+
+      // Validamos que los campos estén completos antes de enviarlos
       this.submitted = true;
-      if (this.item.name && this.item.area) {
-        console.log("si entre");
-        this.$emit('saved2', this.item);
+
+      if (this.item.name && !isNaN(this.item.area) && this.item.status !== undefined) {
+        console.log("Datos listos para enviar:", this.item);
+
+        // Emite el evento solo una vez
+        if (!this.submitted) {
+          this.$emit("saved", this.item);
+        }
+      } else {
+        console.error("Datos faltantes: Verifique los campos.");
       }
     }
+
   }
-}
+};
 </script>
+
+
 
 <template>
   <create-and-edit :entity="item" :edit="edit" :visible="visible" entityName="Room" @canceled="canceledEventHandler"
@@ -62,7 +98,8 @@ export default {
         <div class="field mt-5">
           <label for="status" class="label-input">Status</label>
           <pv-float-label>
-            <pv-dropdown v-model="item.status" inputId="status" :options="statusOptions" placeholder="Select a Status"
+            <pv-dropdown v-model="item.status" inputId="status" :options="statusOptions" optionLabel="label"
+                         placeholder="Select a Status"
                          :class="{'p-invalid': submitted && !item.status}"/>
             <small v-if="submitted && !item.status" class="p-invalid">Status is required.</small>
           </pv-float-label>

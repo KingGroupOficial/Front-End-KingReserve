@@ -33,6 +33,7 @@ export default {
     }
   },
   methods: {
+
     viewPersons() {
       this.$emit('viewPersons', this.room.id);
     }

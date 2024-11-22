@@ -87,12 +87,16 @@ export default {
       submitted: false,
       deleteFlag: false,
       visibleFilter: false,
-      wasFilter: false
+      wasFilter: false,
+      reservationId: null
     };
   },
   created() {
     this.roomsService = new RoomsApiService();
+    this.reservationId=this.$route.params.reservationId;
     this.getRooms();
+    console.log("ReservationId", this.reservationId);
+
   },
   methods: {
     notifySuccessfulAction(message) {
@@ -111,11 +115,10 @@ export default {
       });
     },
     getRooms() {
-      this.roomsService.getAll().then((response) => {
+      this.roomsService.getAll(this.reservationId).then((response) => {
         console.log(response.data);
         let rooms = response.data;
         this.rooms = rooms
-            .filter(room => room.reservationId == this.$route.params.reservationId)
             .map(room => new Room(room.id, room.name, room.area, room.status, room.reservationId));
         console.log("Rooms fetched", this.rooms);
         this.allRooms = [...this.rooms];
@@ -129,11 +132,11 @@ export default {
       console.log(`Creating new room, visible: ${this.isVisibleCard}`);
     },
     onEditItemEventHandler(item) {
-      this.room = item;
+      this.room = { ...item }; // Clona el objeto correctamente
       this.submitted = false;
       this.isEdit = true;
       this.isVisibleCard = true;
-      console.log(`Editing room, visible: ${this.isVisibleCard}`);
+      console.log(`Editing room:`, this.room);
     },
     onCanceledEventHandler() {
       this.submitted = false;
@@ -142,20 +145,16 @@ export default {
       console.log(`Canceled operation, visible: ${this.isVisibleCard}`);
     },
     onSavedEventHandler(item) {
-      this.submitted = true;
+      console.log("onSavedEventHandler llamado con item:", item);
       if (this.room.name.trim()) {
         if (item.id) {
-          console.log("Updating room");
+          console.log("Llamando a updateRoom");
           this.updateRoom();
         } else {
-          console.log("Creating room");
+          console.log("Llamando a createRoom");
           this.createRoom();
-          console.log("Finished creating room");
         }
       }
-      this.isVisibleCard = false;
-      console.log(`Room dialog closed, visible: ${this.isVisibleCard}`);
-      this.isEdit = false;
     },
     deleteAction() {
       this.deleteFlag = !this.deleteFlag;
@@ -164,7 +163,7 @@ export default {
       if (this.selectedRooms) {
         this.selectedRooms.forEach((room) => {
           console.log(this.selectedRooms);
-          this.roomsService.delete(room.id).then(() => {
+          this.roomsService.delete(this.reservationId,room).then(() => {
             this.rooms = this.rooms.filter((t) => t.id !== room.id);
           });
         });
@@ -177,25 +176,75 @@ export default {
       this.deleteRoom();
     },
     createRoom() {
+      if (this.submitted) return; // Evita múltiples creaciones
+
       this.room = Room.fromDisplayableRoom(this.room);
-      this.room.reservationId = this.$route.params.reservationId;
-      this.roomsService.create(this.room).then((response) => {
-        this.room = Room.toDisplayableRoom(response.data);
-        this.rooms.push(this.room);
-        this.notifySuccessfulAction("Room Created");
-      });
+      this.room.reservationId = this.reservationId;
+
+      this.roomsService.create(this.room)
+          .then((response) => {
+            this.room = Room.toDisplayableRoom(response.data);
+            this.rooms.push(this.room); // Agregar una sola vez
+            this.notifySuccessfulAction("Room Created");
+            this.getRooms(); // Refrescar la lista
+          })
+          .catch((error) => {
+            console.error("Error al crear la habitación:", error);
+          });
+
+      console.log('Estas son las rooms', this.rooms);
       this.allRooms = [...this.rooms];
+      this.isVisibleCard = false; // Cerrar el modal
     },
     updateRoom() {
-      this.room = Room.fromDisplayableRoom(this.room);
-      this.roomsService.update(this.room.id, this.room).then((response) => {
-        this.rooms[this.findIndexById(response.data.id)] = Room.toDisplayableRoom(response.data);
-        this.notifySuccessfulAction("Room Updated");
-      });
-      this.allRooms = [...this.rooms];
+      const roomId = this.room.id;
+      const reserveId = this.reservationId;
+
+      // Validar que reserveId y roomId son válidos
+      if (!roomId || !reserveId) {
+        console.error("roomId o reserveId no son válidos:", { roomId, reserveId });
+        return;
+      }
+
+      // Construcción de los datos a enviar
+      const roomData = {
+        name: this.room.name,
+        area: this.room.area,
+        status: this.room.status
+      };
+
+      // Validar los datos enviados
+      console.log("Datos enviados al backend:", roomData);
+
+      // Construcción de la URL
+      const url = `/api/v1/reserve/${reserveId}/rooms/${roomId}`;
+      console.log("URL generada:", url);
+
+      // Llamada al servicio
+      this.roomsService.update(reserveId, roomId, roomData)
+          .then(response => {
+            console.log("Respuesta del backend:", response.data);
+            const updatedRoom = response.data;
+
+            // Actualizar la lista localmente
+            const index = this.rooms.findIndex(r => r.id === updatedRoom.id);
+            if (index !== -1) {
+              this.rooms[index] = updatedRoom;
+            }
+            this.allRooms = [...this.rooms];
+          })
+          .catch(error => {
+            console.error("Error al actualizar la habitación:", error);
+
+            // Si hay un error, muestra los datos para depurar
+            console.error("Datos enviados al backend (para depuración):", {
+              url,
+              roomData
+            });
+          });
     },
     deleteRoom() {
-      this.roomsService.delete(this.room.id).then(() => {
+      this.roomsService.delete(this.reservationId,this.room.id).then(() => {
         this.rooms = this.rooms.filter((t) => t.id !== this.room.id);
         this.room = {};
         this.notifySuccessfulAction("Room Deleted");
