@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url_FakeApi = "http://localhost:5151/api/v1";
+const url_FakeApi = "https://kingreserve-gqc8ayfabyghb3cw.brazilsouth-01.azurewebsites.net/api/v1";
 
 const url = axios.create({
     baseURL: url_FakeApi,
