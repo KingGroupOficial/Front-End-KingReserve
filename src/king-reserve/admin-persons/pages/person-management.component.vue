@@ -28,8 +28,19 @@
             <p><strong>{{ t('district') }}:</strong> {{ person.district || t('notSpecified') }}</p>
             <p class="footer"><strong>{{ t('stayingAt') }}:</strong> {{ rooms[person.roomId]?.name || t('roomsAStranger') }}</p>
             <div class="button-container">
-              <button class="button" @click="editPerson(person)"><i class="pi pi-pencil"></i> {{ t('edit') }}</button>
-              <button class="button" @click="deletePerson(person.id)"><i class="pi pi-trash"></i> {{ t('delete') }}</button>
+              <button
+                  class="button"
+                  @click="() => { console.log('Editing person with ID:', person.id || person.personId); editPerson(person); }"
+              >
+                <i class="pi pi-pencil"></i> {{ t('edit') }}
+              </button>
+              <button
+                  class="button"
+                  @click="() => { console.log('Deleting person with ID:', person.id || person.personId); deletePerson(person.id || person.personId); }"
+              >
+                <i class="pi pi-trash"></i> {{ t('delete') }}
+              </button>
+
             </div>
           </div>
         </div>
@@ -123,22 +134,43 @@ export default {
       this.error = null;
 
       try {
+        console.log('Fetching persons and rooms...');
         const [personsResponse, roomsResponse] = await Promise.all([
           this.personService.getAll(),
-          this.roomService.getAll()
+          this.roomService.getAll('1')
         ]);
+
+        console.log('Persons data:', personsResponse.data);
+        console.log('Rooms data:', roomsResponse.data);
 
         this.persons = personsResponse.data;
         this.rooms = roomsResponse.data.reduce((acc, room) => {
+          if (!room.id) {
+            console.warn('Room without ID:', room);
+            return acc;
+          }
           acc[room.id] = room;
           return acc;
         }, {});
         this.roomsArray = roomsResponse.data;
       } catch (error) {
-        console.error("Error fetching data:", error);
-        this.error = "Failed to load data.";
+        console.error('Error fetching data:', error);
+        this.error = 'Failed to load data.';
       } finally {
         this.loading = false;
+      }
+    },
+    async fetchRoomById(id) {
+      if (!id) {
+        console.error('Room ID is undefined or null.');
+        return;
+      }
+      console.log('Fetching room by ID:', id);
+      try {
+        const roomData = await this.roomService.getByIdRoom(id);
+        console.log('Fetched Room Data:', roomData.data);
+      } catch (error) {
+        console.error(`Failed to fetch room with ID ${id}:`, error);
       }
     },
     addPerson() {
@@ -156,38 +188,75 @@ export default {
       this.isVisibleCard = true;
     },
     editPerson(person) {
+      if (!person || !person.personId) {
+        console.error("Invalid person object:", person);
+        this.error = "Cannot edit person: Invalid ID.";
+        return;
+      }
+      console.log("Editing person:", person);
       this.person = { ...person };
       this.isEdit = true;
       this.isVisibleCard = true;
-    },
+    }
+    ,
+
     async deletePerson(personId) {
+      // Verificar que el ID está presente
+      if (!personId) {
+        console.error("Error: Missing ID for delete operation.");
+        this.error = "Cannot delete person: Missing ID.";
+        return;
+      }
+
+      console.log("Deleting person with ID:", personId);
+
       try {
-        await this.personService.delete(personId);
-        this.persons = this.persons.filter(person => person.id !== personId);
+        await this.personService.delete(personId); // Enviar la solicitud DELETE
+        this.persons = this.persons.filter(person => person.id !== personId && person.personId !== personId);
+        console.log(`Person with ID ${personId} deleted successfully.`);
       } catch (error) {
         console.error("Error deleting person:", error);
         this.error = "Failed to delete person.";
       }
-    },
+    }
+    ,
     onCanceledEventHandler() {
       this.isEdit = false;
       this.isVisibleCard = false;
     },
     async onSavedEventHandler(person) {
-      if (this.submitted) return; // Prevent multiple submissions
+      if (this.submitted) return; // Prevenir múltiples envíos
       this.submitted = true;
 
-      if (this.validateForm()) {
+      if (!this.validateForm()) {
+        this.error = "Form validation failed. Please fill all required fields.";
+        this.submitted = false;
+        return;
+      }
+
+      const personId = person.id || person.personId;
+      if (this.isEdit && !personId) {
+        console.error("Error: Missing ID for editing person:", person);
+        this.error = "Cannot save changes: Missing ID.";
+        this.submitted = false;
+        return;
+      }
+
+      try {
         if (this.isEdit) {
           await this.updatePerson(person);
         } else {
           await this.createPerson(person);
         }
         this.isVisibleCard = false;
+      } catch (error) {
+        console.error("Error saving person:", error);
+        this.error = "Failed to save person.";
+      } finally {
+        this.submitted = false;
       }
-
-      this.submitted = false; // Reset after saving
-    },
+    }
+    ,
     async createPerson(person) {
       const exists = this.persons.some(p => p.name === person.name && p.roomId === person.roomId);
       if (exists) {
@@ -204,17 +273,29 @@ export default {
       }
     },
     async updatePerson(person) {
+      // Validar que el ID esté presente
+      if (!person.id && !person.personId) {
+        console.error("Error: Missing person ID.", person);
+        this.error = "Cannot update person: Missing ID.";
+        return;
+      }
+
+      const personId = person.id || person.personId; // Usar 'id' o 'personId'
+      console.log("Updating person with ID:", personId);
+
       try {
-        const response = await this.personService.update(person.id, person);
-        const index = this.persons.findIndex(p => p.id === person.id);
+        const response = await this.personService.update(personId, person); // Asegúrate de pasar el ID correcto
+        const index = this.persons.findIndex(p => p.id === personId || p.personId === personId);
         if (index !== -1) {
           this.persons[index] = response.data;
         }
+        console.log("Person updated successfully:", response.data);
       } catch (error) {
         console.error("Error updating person:", error);
         this.error = "Failed to update person.";
       }
-    },
+    }
+    ,
     validateForm() {
       return this.person.name && this.person.age && this.person.date && this.person.roomId && this.person.country && this.person.city && this.person.district;
     },

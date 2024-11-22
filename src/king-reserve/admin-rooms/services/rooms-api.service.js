@@ -29,6 +29,14 @@ export class RoomsApiService {
         return url.get(`/reserve/${reserveId}/rooms/${roomId}`);
     }
 
+    async getByIdRoom(id) {
+        if (!id) {
+            console.error('Error: Room ID is undefined or null.');
+            throw new Error('Room ID is required');
+        }
+        return url.get(`/reserve/${id}/rooms`);
+    }
+
     create(room) {
         return url.post(`/reserve/add-room`, room);
     }
