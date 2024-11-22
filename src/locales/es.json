@@ -79,7 +79,8 @@
     "filter": "Filtrar",
     "delete": "Eliminar",
     "cancel": "Cancelar",
-    "totalResults": "Resultados Totales"
+    "totalResults": "Resultados Totales",
+    "noEditMessage": "Los cuartos que se registren aquí solo podrán ser creados. No está permitido editar por razones de ética."
   },
   "inventoryManagement": {
     "title": "Gestión de Inventario",

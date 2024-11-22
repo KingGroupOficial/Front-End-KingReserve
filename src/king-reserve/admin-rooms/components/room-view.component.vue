@@ -16,13 +16,6 @@ export default {
     return {
       items: [
         {
-          label: this.t('update'),
-          icon: 'pi pi-pencil',
-          command: () => {
-            this.$emit('Edit', this.room);
-          }
-        },
-        {
           label: this.t('delete'),
           icon: 'pi pi-trash',
           command: () => {

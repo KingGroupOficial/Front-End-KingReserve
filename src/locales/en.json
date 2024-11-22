@@ -79,7 +79,8 @@
     "filter": "Filter",
     "delete": "Delete",
     "cancel": "Cancel",
-    "totalResults": "Total Results"
+    "totalResults": "Total Results",
+    "noEditMessage": "Rooms registered here can only be created. Editing is not allowed for ethical reasons."
   },
   "inventoryManagement": {
     "title": "Management Inventory",

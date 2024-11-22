@@ -5,6 +5,9 @@
     <div class="container-title">
       <h2 class="title">{{ t('roomManagement.myRooms') }}</h2>
       <div>
+        <p class="info-message">
+          {{ t('roomManagement.noEditMessage') }}
+        </p>
         <div class="button-group-desktop" v-if="!deleteFlag">
           <pv-button class="mr-2 title-button btn-new" icon="pi pi-plus" :label="t('roomManagement.new')" severity="secondary" @click="onNewItemEventHandler"></pv-button>
           <pv-button class="mr-2 title-button btn-action" icon="pi pi-filter" :label="t('roomManagement.filter')" severity="secondary" text @click="onFilterSelected"></pv-button>
@@ -372,4 +375,17 @@ export default {
 .container {
   background-color: var(--main-bg-color);
 }
+
+.info-message {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #e76f51; /* Naranja oscuro */
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  background-color: #f4a261; /* Fondo naranja claro */
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 </style>
