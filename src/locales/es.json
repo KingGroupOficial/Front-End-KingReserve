@@ -159,6 +159,9 @@
   "viewStaff": "Ver Personal",
   "manageStaff": "Gestionar Personal",
   "services": "Servicios",
-  "settings": "Configuraciones"
-
+  "settings": "Configuraciones",
+  "welcomeBack": "¡Bienvenido de nuevo a King Reserve!",
+  "continueJourney": "Continúa tu viaje hacia una gestión eficiente del hotel.",
+  "joinPecuarioPro": "¡Únete a King Reserve!",
+  "embarkJourney": "Emprende tu viaje hacia una gestión eficiente del hotel."
 }

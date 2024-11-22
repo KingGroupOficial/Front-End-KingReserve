@@ -56,6 +56,9 @@ import i18n from "@/i18n.js";
 import SelectButton from "primevue/selectbutton";
 import ColorPicker from "primevue/colorpicker";
 
+// Pinia
+import {createPinia} from "pinia";
+const pinia = createPinia();
 
 createApp(App)
     .use(router)
@@ -64,6 +67,7 @@ createApp(App)
     .use(DialogService)
     .use(ConfirmationService)
     .use(i18n)
+    .use(pinia)
     .component('Chart', Chart)
     .component('ConfirmDialog', ConfirmDialog)
     .component('pv-progress-bar',ProgressBar)

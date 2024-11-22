@@ -1,31 +1,55 @@
 import axios from "axios";
 
-const url_FakeApi = "https://66f71709b5d85f31a341fe55.mockapi.io";
+// URL base de la API
+const url_FakeApi = "http://localhost:5151/api/v1";
 
+// Inicializar la instancia de Axios
 const url = axios.create({
-    baseURL: url_FakeApi, // Corrected property name to baseURL
+    baseURL: url_FakeApi,
 });
 
-export class ReserveApiService {
+// Configurar un interceptor para agregar el token de seguridad a cada solicitud
+url.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
+// Servicio de reservas
+export class ReserveApiService {
     getAll() {
-        return url.get('/reservations');
+        return url.get('/reserve');
     }
 
     getById(id) {
-        return url.get(`/reservations/${id}`);
+        return url.get(`/reserve/${id}`);
     }
 
     create(reserve) {
-        return url.post('/reservations', reserve);
+        return url.post('/reserve', reserve);
     }
 
     update(id, reserve) {
-        return url.put(`/reservations/${id}`, reserve);
+        return url.put(`/reserve/${id}`, reserve);
+    }
+
+    setConditionFinished(reserveId) {
+        return url.put(`/reserve/${reserveId}/condition-finished`);
+    }
+
+    setConditionActive(reserveId) {
+        return url.put(`/reserve/${reserveId}/condition-active`);
     }
 
     delete(id) {
-        return url.delete(`/reservations/${id}`);
+        return url.delete(`/reserve/${id}`);
     }
 
     async getTotalReserves() {

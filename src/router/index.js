@@ -12,6 +12,9 @@ import inventoryComponent from "@/king-reserve/inventory/components/inventory.co
 import configurationComponent from "@/king-reserve/configuracion/components/configuration.component.vue";
 import termsAndConditionsComponent from "@/public/components/termsAndConditions.component.vue";
 import ServiceManagement   from "@/king-reserve/service/pages/Service-Management.vue";
+import SignUpComponent from "@/IAM/pages/sign-up.component.vue";
+import SignInComponent from "@/IAM/pages/sign-in.component.vue";
+import {authenticationGuard} from "@/IAM/services/authentication.guard.js";
 
 /**
  * Vue Router instance
@@ -22,6 +25,9 @@ import ServiceManagement   from "@/king-reserve/service/pages/Service-Management
 const router = createRouter({
     history: createWebHistory(),
     routes: [
+        // Path to sign-in and sign-up
+        { path: '/sign-in', name: 'sign-in',    component: SignInComponent,meta: { title: 'Sign In' } },
+        { path: '/sign-up', name: 'sign-up',    component: SignUpComponent,meta: { title: 'Sign Up' } },
         { path: "/home", component: homeComponent, meta: { title: "Home"} },
         // Root path
         { path: "/", component: homeComponent, meta: { title: "home"} },
@@ -53,7 +59,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     let baseTitle = 'King Reserve';
     document.title = `${baseTitle} | ${to.meta['title']}`;
-    next();
+    // Call the authentication guard
+    authenticationGuard(to, from, next);
 });
+
 
 export default router;

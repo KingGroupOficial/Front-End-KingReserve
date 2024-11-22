@@ -2,11 +2,11 @@ export class Reservation {
     constructor(id, name, dateStart, dateEnd, objective, condition, duration) {
         this.id = id;
         this.name = name;
-        this.dateStart = dateStart;
-        this.dateEnd = dateEnd;
+        this.dateStart = dateStart;  // Puede seguir siendo string si el backend lo recibe como tal
+        this.dateEnd = dateEnd;      // Lo mismo para dateEnd
         this.objective = objective;
         this.condition = condition;
-        this.duration = duration !== undefined ? duration : this.calculateDuration();
+        this.duration = duration;    // Usar la duración que viene del backend directamente
     }
 
     static fromDisplayableReservation(displayableReservation) {
@@ -17,7 +17,7 @@ export class Reservation {
             displayableReservation.dateEnd,
             displayableReservation.objective,
             displayableReservation.condition,
-            displayableReservation.duration
+            displayableReservation.duration  // El backend envía la duración calculada
         );
     }
 
@@ -29,12 +29,7 @@ export class Reservation {
             dateEnd: reservation.dateEnd,
             objective: reservation.objective,
             condition: reservation.condition,
-            duration: reservation.duration
+            duration: reservation.duration  // Mantén la duración tal cual como viene del backend
         };
-    }
-
-    calculateDuration() {
-        const diffTime = this.dateEnd.getTime() - this.dateStart.getTime();
-        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     }
 }

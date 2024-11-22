@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url_FakeApi = "https://66f71709b5d85f31a341fe55.mockapi.io";
+const url_FakeApi = "http://localhost:5151/api/v1";
 
 const url = axios.create({
     baseURL: url_FakeApi, // Corrected property name to baseURL
@@ -8,33 +8,35 @@ const url = axios.create({
 
 export class RoomsApiService {
 
-    getAll() {
-        return url.get('/rooms');
+    getAllByReserveId(reserveId) {
+        return url.get(`/reserve/${reserveId}/rooms`);
     }
 
-    getRoomById(id) {
-        return url.get(`/rooms/${id}`);
+    getRoomById(reserveId, roomId) {
+        return url.get(`/reserve/${reserveId}/rooms/${roomId}`);
     }
 
-    create(room) {
-        return url.post('/rooms', room);
+    create(reserveId, room) {
+        return url.post(`/reserve/add-room`, room);
     }
 
-    update(id, room) {
-        return url.put(`/rooms/${id}`, room);
+    update(reserveId, roomId, room) {
+        return url.put(`/reserve/${reserveId}/rooms/${roomId}`, room);
     }
 
-    delete(id) {
-        return url.delete(`/rooms/${id}`);
+    delete(reserveId, roomId) {
+        return url.delete(`/reserve/${reserveId}/room`, { data: { roomId } });
     }
 
-    findByName(name) {
-        return url.get(`/rooms?name=${name}`);
+
+
+    updateRoomStatus(roomId, status) {
+        return url.put(`/reserve/${roomId}/status`, { status });
     }
 
-    async getTotalRooms() {
+    async getTotalRoomsByReserveId(reserveId) {
         try {
-            const response = await this.getAll();
+            const response = await this.getAllByReserveId(reserveId);
             return response.data.length;
         } catch (error) {
             console.error('Error fetching total rooms:', error);
