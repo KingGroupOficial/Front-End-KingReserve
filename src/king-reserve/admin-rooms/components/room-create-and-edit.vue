@@ -35,28 +35,37 @@ export default {
       this.submitted = false;
     },
     savedEventHandler() {
-      console.log("Preparando datos para guardar:", this.item);
+      console.log("Enviar de room", this.item);
 
-      // Asegúrate de que los datos estén en el formato esperado
-      const transformedItem = {
-        name: this.item.name,
-        area: parseInt(this.item.area, 10), // Convertir área a número entero
-        status: typeof this.item.status === 'object' ? this.item.status.value : this.item.status // Convertir status a número
-      };
-
-      console.log("Datos transformados para enviar al backend:", transformedItem);
-
-      // Validación de campos obligatorios
-      if (!transformedItem.name || isNaN(transformedItem.area) || transformedItem.status === undefined) {
-        console.error("Validación fallida: Campos obligatorios faltantes.", transformedItem);
-        this.error = "Please fill in all required fields.";
-        return;
+      // Asignamos el reservationId
+      if (this.reservationId) {
+        this.item.reservationId = this.reservationId;
+      } else {
+        console.error("reservationId no está definido");
       }
 
-      // Emitir evento con datos transformados
-      this.$emit("saved", transformedItem);
-    }
+      // Aseguramos que el área sea un entero
+      this.item.area = parseInt(this.item.area, 10);
 
+      // Aseguramos que el status sea solo el valor (número)
+      if (this.item.status && typeof this.item.status === 'object') {
+        this.item.status = this.item.status.value;
+      }
+
+      // Validamos que los campos estén completos antes de enviarlos
+      this.submitted = true;
+
+      if (this.item.name && !isNaN(this.item.area) && this.item.status !== undefined) {
+        console.log("Datos listos para enviar:", this.item);
+
+        // Emite el evento solo una vez
+        if (!this.submitted) {
+          this.$emit("saved", this.item);
+        }
+      } else {
+        console.error("Datos faltantes: Verifique los campos.");
+      }
+    }
 
   }
 };
